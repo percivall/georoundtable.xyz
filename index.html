@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GeoRoundtable — Philosophy-Informed Engineering</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+
+    /* ── Top accent bar ──────────────────────────────────── */
+    .accent-bar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%);
+    }
+
+    /* ── Navigation ─────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+    }
+    .nav__brand {
+      display: flex; align-items: center; gap: 11px;
+      color: var(--white); font-weight: 700; font-size: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+    .nav__logo {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.22);
+      object-fit: cover; flex-shrink: 0;
+    }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a {
+      color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500;
+      padding: 0.4rem 0.85rem; border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+    .nav__links a.active { color: var(--white); background: var(--blue); }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%);
+      color: var(--white); padding: 6.5rem 0 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%);
+    }
+    .hero__inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 4rem; align-items: center;
+      max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+    }
+    .hero__kicker {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--mint); margin-bottom: 1rem;
+    }
+    .hero__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.6rem, 4.5vw, 4rem);
+      line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .hero__title em {
+      font-style: italic; font-weight: 400;
+      color: var(--mint); font-size: 0.72em; display: block; letter-spacing: 0.01em;
+    }
+    .hero__sub {
+      font-size: 1.08rem; color: rgba(255,255,255,0.75);
+      max-width: 530px; line-height: 1.7; margin: 1.4rem 0 2.2rem;
+    }
+    .hero__pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+    .hero__pill {
+      background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.88); border-radius: 20px;
+      padding: 0.28rem 0.88rem; font-size: 0.8rem; font-weight: 500;
+    }
+    .hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.72rem 1.6rem; border-radius: 8px;
+      font-weight: 600; font-size: 0.9rem; transition: all 0.18s;
+      text-decoration: none !important; border: none; cursor: pointer;
+    }
+    .btn--primary { background: var(--mint); color: var(--navy); }
+    .btn--primary:hover { background: #78dde7; transform: translateY(-1px); }
+    .btn--outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.36); color: var(--white); }
+    .btn--outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    /* Hero logo */
+    .hero__logo-wrap {
+      position: relative; flex-shrink: 0; width: 320px; height: 320px;
+    }
+    .hero__logo-wrap::before {
+      content: ''; position: absolute; inset: -20px; border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle, rgba(13,107,120,0.22) 0%, transparent 68%);
+    }
+    .hero__logo-wrap::after {
+      content: ''; position: absolute; inset: -5px; border-radius: 50%;
+      border: 1px solid rgba(94,207,219,0.20); pointer-events: none;
+    }
+    .hero__logo-img {
+      width: 320px; height: 320px; border-radius: 50%; object-fit: cover;
+      filter: drop-shadow(0 16px 50px rgba(0,0,0,0.45))
+              drop-shadow(0 0 30px rgba(13,107,120,0.28));
+      position: relative; z-index: 1;
+    }
+
+    /* ── Section headings ───────────────────────────────── */
+    .sh { margin-bottom: 3rem; }
+    .sh__label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem;
+    }
+    .sh__title {
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -0.02em; color: var(--navy);
+    }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 640px; line-height: 1.7; }
+
+    /* ── Pillars (service cards) ─────────────────────────── */
+    .pillar-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem;
+    }
+    .pillar {
+      background: var(--white); border: 1px solid var(--border);
+      border-left: 4px solid var(--teal);
+      border-radius: var(--radius); padding: 2rem;
+      box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pillar:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(8,24,64,0.12); }
+    .pillar:nth-child(2) { border-left-color: var(--blue); }
+    .pillar:nth-child(3) { border-left-color: var(--sky); }
+    .pillar:nth-child(4) { border-left-color: var(--navy); }
+    .pillar__icon { font-size: 1.8rem; margin-bottom: 0.9rem; }
+    .pillar__title { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .pillar__body { font-size: 0.92rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Philosophy-bridge section ──────────────────────── */
+    .bridge {
+      background: var(--navy); color: var(--white);
+      padding: 5.5rem 0; position: relative; overflow: hidden;
+    }
+    .bridge::after {
+      content: ''; position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+      width: 460px; height: 460px; border-radius: 50%;
+      background: url('logo.svg') center/cover;
+      opacity: 0.055; pointer-events: none;
+    }
+    .bridge__inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .bridge__quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem; font-style: italic; line-height: 1.5;
+      color: rgba(255,255,255,0.92); margin-bottom: 1rem;
+    }
+    .bridge__quote-attr {
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mint);
+    }
+    .bridge__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
+    .bridge__body p + p { margin-top: 1rem; }
+
+    /* Philosophy dimension chips */
+    .dims { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .dim {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 6px; padding: 0.4rem 0.9rem;
+      font-size: 0.82rem; font-weight: 600; color: var(--mint);
+    }
+
+    /* ── Work cards ─────────────────────────────────────── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.6rem;
+      box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(8,24,64,0.12); }
+    .card__icon { font-size: 1.4rem; margin-bottom: 0.85rem; }
+    .card__label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem;
+    }
+    .card__title { font-size: 1rem; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 0.5rem; }
+    .card__body { font-size: 0.9rem; color: var(--muted); flex: 1; margin-bottom: 1rem; }
+    .card__links { list-style: none; display: flex; flex-direction: column; gap: 0.28rem; }
+    .card__links a { font-size: 0.88rem; color: var(--blue); display: flex; align-items: center; gap: 0.35rem; }
+    .card__links a::before { content: '→'; font-size: 0.8em; flex-shrink: 0; }
+    .card__links a:hover { color: var(--navy); }
+
+    /* ── Standards panels ───────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    .panel {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow);
+    }
+    .panel__head { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+    .panel__icon { width: 40px; height: 40px; border-radius: 9px; background: #e8f2fa; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .panel__role { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); }
+    .panel__title { font-size: 0.97rem; font-weight: 700; color: var(--navy); margin-top: 0.2rem; }
+    .panel__list { list-style: none; }
+    .panel__list li { padding: 0.42rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    .panel__list li:last-child { border-bottom: none; }
+    .panel__list a { color: var(--blue); }
+
+    /* ── About the Principal ────────────────────────────── */
+    .about {
+      display: grid; grid-template-columns: auto 1fr; gap: 3rem; align-items: start;
+    }
+    .about__logo-wrap { position: relative; width: 200px; flex-shrink: 0; }
+    .about__logo {
+      width: 200px; height: 200px; border-radius: 50%; object-fit: cover;
+      border: 3px solid var(--border);
+      filter: drop-shadow(0 8px 24px rgba(8,24,64,0.14));
+    }
+    .about__name { font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+    .about__role { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+    .about__bio { font-size: 0.95rem; color: #3a3a3a; line-height: 1.75; }
+    .about__bio p + p { margin-top: 0.9rem; }
+    .about__creds { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .cred {
+      background: var(--light); border: 1px solid var(--border);
+      border-radius: 6px; padding: 0.3rem 0.75rem;
+      font-size: 0.8rem; font-weight: 600; color: var(--navy);
+    }
+
+    /* ── Profile links ──────────────────────────────────── */
+    .links-row { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .lnk {
+      display: flex; align-items: center; gap: 0.65rem;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 0.85rem 1.2rem;
+      color: var(--navy); font-weight: 500; font-size: 0.88rem;
+      box-shadow: var(--shadow); transition: all 0.18s;
+    }
+    .lnk:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); text-decoration: none; }
+    .lnk__icon { font-size: 1.15rem; }
+
+    /* ── Contact ────────────────────────────────────────── */
+    .contact {
+      background: var(--navy); color: var(--white);
+      padding: 5.5rem 0; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .contact::before {
+      content: ''; position: absolute; right: -70px; top: 50%; transform: translateY(-50%);
+      width: 430px; height: 430px; border-radius: 50%;
+      background: url('logo.svg') center/cover;
+      opacity: 0.05; pointer-events: none;
+    }
+    .contact__inner { position: relative; z-index: 1; }
+    .contact__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .contact__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .contact__cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--mint); color: var(--navy);
+      border-radius: 9px; padding: 0.88rem 2.2rem;
+      font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s;
+    }
+    .contact__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    .footer {
+      background: #05101e; color: rgba(255,255,255,0.35);
+      padding: 2rem 0; font-size: 0.82rem;
+    }
+    .footer__inner {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.75rem; flex-wrap: wrap;
+    }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero__inner  { grid-template-columns: 1fr; text-align: center; }
+      .hero__pills  { justify-content: center; }
+      .hero__ctas   { justify-content: center; }
+      .hero__sub    { margin-left: auto; margin-right: auto; }
+      .hero__logo-wrap { width: 220px; height: 220px; margin: 0 auto; }
+      .hero__logo-img  { width: 220px; height: 220px; }
+      .pillar-grid  { grid-template-columns: 1fr; }
+      .bridge__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .two-col      { grid-template-columns: 1fr; }
+      .about        { grid-template-columns: 1fr; }
+      .about__logo-wrap { margin: 0 auto; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<!-- ── Navigation ──────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="#home" style="display:flex;align-items:center;gap:11px;color:#fff;font-weight:700;font-size:1.1rem;text-decoration:none;">
+      <img class="nav__logo"
+        src="logo.svg"
+        alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#approach">Our Approach</a></li>
+      <li><a href="#work">Featured Work</a></li>
+      <li><a href="#principal">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero" id="home">
+  <div class="hero__inner">
+    <div>
+      <p class="hero__kicker">Engineering Consulting</p>
+      <h1 class="hero__title">
+        GeoRoundtable
+        <em>Philosophy-Informed Engineering</em>
+      </h1>
+      <p class="hero__sub">
+        Socio-technical systems increasingly define the conditions of contemporary life. GeoRoundtable provides engineering consulting that integrates philosophical foundations — epistemology, design, ontology, and ethics — into the architecture, standards, and governance of complex systems.
+      </p>
+      <div class="hero__pills">
+        <span class="hero__pill">Socio-Technical Systems</span>
+        <span class="hero__pill">Spatial Web</span>
+        <span class="hero__pill">IEEE Standards</span>
+        <span class="hero__pill">Agentic AI</span>
+        <span class="hero__pill">Engineering Ethics</span>
+        <span class="hero__pill">Geospatial</span>
+      </div>
+      <div class="hero__ctas">
+        <a href="#services" class="btn btn--primary">Our Services</a>
+        <a href="#contact" class="btn btn--outline">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero__logo-wrap">
+      <img class="hero__logo-img"
+        src="logo.svg"
+        alt="GeoRoundtable — globe with radiating stripes" />
+    </div>
+  </div>
+</section>
+
+<!-- ── Services ──────────────────────────────────────────── -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">What We Do</p>
+      <h2 class="sh__title">Engineering Consulting Services</h2>
+      <p class="sh__desc">GeoRoundtable brings decades of practice across safety-critical, cyber-physical, and AI-driven systems — guided by philosophical principles that make complex engineering responsible, coherent, and durable.</p>
+    </div>
+    <div class="pillar-grid">
+
+      <div class="pillar">
+        <div class="pillar__icon">🏛️</div>
+        <h3 class="pillar__title">Socio-Technical Systems Engineering</h3>
+        <p class="pillar__body">Engineering is inherently a philosophical enterprise. We help organisations design, operate, and govern complex socio-technical systems by making explicit the stakeholder concerns — responsibility, authority, meaning, and value — that traditional methods leave tacit. Applied from requirements through assurance and governance.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">🌐</div>
+        <h3 class="pillar__title">Spatial Web &amp; Standards Leadership</h3>
+        <p class="pillar__body">Deep expertise in the Spatial Web architecture (HSML, HSTP, Universal Domain Graph) and the IEEE P2874 standard. We advise on interoperability strategy, standards development, and the deployment of shared world models for AI agents, robots, digital twins, and human operators across geospatial and cyber-physical domains.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">🤖</div>
+        <h3 class="pillar__title">Agentic AI Architecture &amp; Governance</h3>
+        <p class="pillar__body">As AI systems grow less explainable and more autonomous, governance frameworks must be grounded in philosophy — not just compliance. We provide analysis and design guidance for complex agentic systems, drawing on epistemology and the evolutionary theory of agency to ensure accountability and alignment at the system level.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">⚖️</div>
+        <h3 class="pillar__title">Philosophy-Informed Standards &amp; Policy</h3>
+        <p class="pillar__body">We examine normative assumptions embedded in automation strategies, assess social and political implications of location-aware infrastructures, and interrogate how organisational culture and institutional incentives shape risk, safety, and accountability — informing IEEE, OGC, and NSF standards processes from a rigorous philosophical standpoint.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Our Approach (philosophy bridge) ──────────────────── -->
+<section class="bridge" id="approach">
+  <div class="container">
+    <div class="bridge__inner">
+      <div>
+        <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--mint);margin-bottom:1rem;">Our Approach</p>
+        <blockquote class="bridge__quote">
+          "Engineering is inherently a philosophical enterprise — and explicit philosophical engagement is now indispensable for responsible socio-technical engineering."
+        </blockquote>
+        <p class="bridge__quote-attr">— George Percivall, fPET 2026</p>
+        <div class="dims">
+          <span class="dim">Epistemology</span>
+          <span class="dim">Design</span>
+          <span class="dim">Ontology</span>
+          <span class="dim">Ethics</span>
+          <span class="dim">Governance</span>
+          <span class="dim">Agency</span>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--mint);margin-bottom:1rem;">The Philosopher-Builder</p>
+        <div class="bridge__body">
+          <p>Contemporary systems and software engineering standards codify much of current practice — but they require refinement to remain adequate for today's software-centric, data-intensive, and societally-driven products. Stakeholder concerns regarding responsibility, authority, meaning, and value must be made integral to engineering design, assurance, and governance.</p>
+          <p>GeoRoundtable revives the tradition of the <strong style="color:#fff;">"philosopher-builder"</strong> — combining the engineering discipline as exemplified by IEEE with the deeply humanising educational practices of St. John's College. This enables systematic integration of philosophical inquiry into engineering workflows.</p>
+          <p>These methods have already been applied in developing the IEEE 2874 Spatial Web standard, AI governance frameworks, and participatory socio-technical design processes for critical infrastructure. The goal: engineering practice that is <strong style="color:#fff;">conceptually robust, practically grounded, and responsive to contemporary ethical and political challenges</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Featured Work ──────────────────────────────────────── -->
+<section class="section section--alt" id="work">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Featured Work</p>
+      <h2 class="sh__title">Projects &amp; Publications</h2>
+      <p class="sh__desc">Representative engagements across spatial web standards, agentic systems, geospatial infrastructure, and philosophy of engineering.</p>
+    </div>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card__icon">📜</div>
+        <p class="card__label">IEEE Standard</p>
+        <h3 class="card__title">IEEE 2874-2025 Spatial Web Standard</h3>
+        <p class="card__body">The foundational standard for the Spatial Web, defining how AI agents, robots, and people share a common world model. Approved May 2025. Socio-technical methods were central to its development.</p>
+        <ul class="card__links">
+          <li><a href="https://www.georoundtable.xyz/ieee-spatial-web-standard-approved" target="_blank">Standard approval announcement</a></li>
+          <li><a href="https://www.georoundtable.xyz/spatial-web-to-the-open-geospatial-consortium" target="_blank">Presentation to OGC, Oct 2025</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card__icon">🏛️</div>
+        <p class="card__label">Philosophy of Engineering</p>
+        <h3 class="card__title">Philosophy Must Inform Socio-Technical Systems Engineering</h3>
+        <p class="card__body">Proposed for Track 1 at fPET 2026. Argues that engineering is a philosophical enterprise and that epistemology, design, ontology, and ethics must be systematically integrated into engineering workflows.</p>
+        <ul class="card__links">
+          <li><a href="https://www.georoundtable.xyz/" target="_blank">Read the abstract</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card__icon">🧬</div>
+        <p class="card__label">Agentic Systems</p>
+        <h3 class="card__title">Evolution of Agency — Michael Tomasello</h3>
+        <p class="card__body">Analysis of Tomasello's four types of natural agency in evolutionary order — foundational framing for GeoRoundtable's approach to designing and governing complex agentic systems.</p>
+        <ul class="card__links">
+          <li><a href="https://www.georoundtable.xyz/evolution-of-agency-m-tomasello" target="_blank">Explore the analysis</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card__icon">🔬</div>
+        <p class="card__label">Paper</p>
+        <h3 class="card__title">Epistemology in an Ecosystem of Agents</h3>
+        <p class="card__body">How knowledge, belief, and shared understanding function within multi-agent ecosystems — with direct implications for AI architecture, safety assurance, and explainability.</p>
+        <ul class="card__links">
+          <li><a href="https://www.georoundtable.xyz/" target="_blank">Read paper</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card__icon">🎓</div>
+        <p class="card__label">Seminar — July 2025</p>
+        <h3 class="card__title">St John's College Thinking Machines Seminar</h3>
+        <p class="card__body">Part of a sustained collaboration between GeoRoundtable and St. John's College Graduate Institute on ethical technology and participatory socio-technical design for AI.</p>
+        <ul class="card__links">
+          <li><a href="https://www.georoundtable.xyz/st-johns-college-thinking-machines-seminar-july-2025" target="_blank">View seminar materials</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card__icon">🌍</div>
+        <p class="card__label">Geospatial Projects</p>
+        <h3 class="card__title">NSF I-GUIDE &amp; Geospatial Web Services</h3>
+        <p class="card__body">NSF I-GUIDE Council of Geospatial Leaders; NSF HDR Ecosystem and the Spatial Web; UCGIS Body of Knowledge for Geospatial Web Services — assessing social and political implications of location-aware infrastructures.</p>
+        <ul class="card__links">
+          <li><a href="https://i-guide.io" target="_blank">NSF I-GUIDE project</a></li>
+          <li><a href="https://www.georoundtable.xyz/" target="_blank">NSF HDR Spatial Web</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Standards panels -->
+    <div style="margin-top:3rem;">
+      <h3 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:1.5rem;">IEEE Standards Leadership</h3>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel__head">
+            <div class="panel__icon">🛰️</div>
+            <div>
+              <p class="panel__role">Vice Chair</p>
+              <h4 class="panel__title">Spatial Web Protocol, Architecture &amp; Governance (P2874)</h4>
+            </div>
+          </div>
+          <ul class="panel__list">
+            <li><a href="https://standards.ieee.org/ieee/P2874/10255/" target="_blank">Join the IEEE Spatial Web Working Group</a></li>
+            <li><a href="https://www.georoundtable.xyz/" target="_blank">Subscribe to the mailing list</a></li>
+            <li><a href="https://www.georoundtable.xyz/" target="_blank">Overview presentation &amp; introduction document</a></li>
+            <li><a href="https://www.georoundtable.xyz/" target="_blank">P2874/D3.1 Jun 2024 — IEEE Draft Standard</a></li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel__head">
+            <div class="panel__icon">🌍</div>
+            <div>
+              <p class="panel__role">Vice Chair — Standards Committee</p>
+              <h4 class="panel__title">IEEE Geoscience &amp; Remote Sensing Society (GRSS)</h4>
+            </div>
+          </div>
+          <ul class="panel__list">
+            <li><a href="https://www.georoundtable.xyz/" target="_blank">Analysis-Ready Data &amp; FAIR-AI — GRSS Magazine, June 2023</a></li>
+            <li><a href="https://www.georoundtable.xyz/" target="_blank">IGARSS 2023: ARD, FAIR Earth Observation Principles</a></li>
+            <li><a href="https://www.georoundtable.xyz/" target="_blank">IGARSS 2023: GRSS Enterprise Model — Standards &amp; Best Practices</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── About the Principal ────────────────────────────────── -->
+<section class="section" id="principal">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Leadership</p>
+      <h2 class="sh__title">About the Principal</h2>
+    </div>
+    <div class="about">
+      <div class="about__logo-wrap">
+        <img class="about__logo"
+          src="headshot.jpg"
+          alt="George Percivall" />
+      </div>
+      <div>
+        <h3 class="about__name">George Percivall</h3>
+        <p class="about__role">Distinguished Engineering Fellow · GeoRoundtable &amp; Spatial Web Foundation</p>
+        <div class="about__bio">
+          <p>George Percivall is the founder and Distinguished Engineering Fellow of GeoRoundtable, and a Distinguished Engineering Fellow of the Spatial Web Foundation. He is an officer in IEEE AISC and chairs the IEEE Spatial Web standard working group (P2874).</p>
+          <p>His engineering career spans safety-critical, cyber-physical, and large-scale geospatial systems: previously CTO of the Open Geospatial Consortium (OGC); Chief Engineer on NASA's Earth Science Enterprise; Systems Engineer for the GM–Hughes program including Vehicle Systems Engineer for the EV1 electric vehicle; and Control Systems Engineer for GOES/GMS weather satellites at Hughes Aircraft.</p>
+          <p>He holds a BS in Engineering Physics and MS in Electrical Engineering from the University of Illinois – Urbana, and is currently enrolled in the Master of Arts in Liberal Arts (MALA) programme at St. John's College, Annapolis MD — grounding GeoRoundtable's philosophy-informed engineering practice in a rigorous classical tradition.</p>
+        </div>
+        <div class="about__creds">
+          <span class="cred">IEEE Fellow</span>
+          <span class="cred">Spatial Web Foundation</span>
+          <span class="cred">OGC (former CTO)</span>
+          <span class="cred">NASA</span>
+          <span class="cred">St. John's College MALA</span>
+          <span class="cred">U. of Illinois B.S./M.S.</span>
+        </div>
+
+        <!-- Profile links inline -->
+        <div style="margin-top:1.5rem;">
+          <div class="links-row">
+            <a href="https://www.linkedin.com/company/georoundtable" target="_blank" class="lnk"><span class="lnk__icon">💼</span> LinkedIn</a>
+            <a href="https://ieeexplore.ieee.org" target="_blank" class="lnk"><span class="lnk__icon">📚</span> IEEE Xplore</a>
+            <a href="https://scholar.google.com" target="_blank" class="lnk"><span class="lnk__icon">🎓</span> Google Scholar</a>
+            <a href="https://twitter.com" target="_blank" class="lnk"><span class="lnk__icon">🐦</span> Twitter / X</a>
+            <a href="https://www.slideshare.net" target="_blank" class="lnk"><span class="lnk__icon">📊</span> SlideShare</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ───────────────────────────────────────────── -->
+<section class="contact" id="contact">
+  <div class="contact__inner container">
+    <h2 class="contact__title">Work with GeoRoundtable</h2>
+    <p class="contact__sub">Interested in engineering consulting that integrates philosophical rigour with practical systems expertise? Get in touch to discuss your project.</p>
+    <a href="mailto:percivall@ieee.org" class="contact__cta">✉️&nbsp; percivall@ieee.org</a>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo"
+        src="logo.svg"
+        alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav__links a');
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting)
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { threshold: 0.3 }).observe && sections.forEach(s =>
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting)
+          navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      });
+    }, { threshold: 0.3 }).observe(s)
+  );
+</script>
+</body>
+</html>
