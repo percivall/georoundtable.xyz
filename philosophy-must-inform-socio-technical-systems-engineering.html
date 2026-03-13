@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Philosophy Must Inform Socio-Technical Systems Engineering — GeoRoundtable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+
+    .accent-bar { height: 3px; background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%); }
+
+    /* ── Navigation ─────────────────────────────────────── */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .nav__brand { display: flex; align-items: center; gap: 11px; color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; text-decoration: none; }
+    .nav__logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); object-fit: cover; flex-shrink: 0; }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%);
+      color: var(--white); padding: 6rem 0 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%);
+    }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28);
+      border-radius: 20px; padding: 0.3rem 1rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--mint);
+      letter-spacing: 0.05em; margin-bottom: 1.5rem;
+    }
+    .hero__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1.5rem; max-width: 820px;
+    }
+    .hero__meta {
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 1.5rem;
+    }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* ── Section headings ───────────────────────────────── */
+    .sh { margin-bottom: 3rem; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+    .sh__title { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 640px; line-height: 1.7; }
+
+    /* ── Abstract body ──────────────────────────────────── */
+    .abstract-body {
+      max-width: 760px;
+      font-size: 1rem; color: #2a3a50; line-height: 1.9;
+    }
+    .abstract-body p + p { margin-top: 1.25rem; }
+
+    /* ── Two-col layout ─────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: start; }
+
+    /* ── Key themes sidebar ─────────────────────────────── */
+    .sidebar-block {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem;
+      box-shadow: var(--shadow); position: sticky; top: 90px;
+    }
+    .sidebar-block__label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+    .theme-item { display: flex; gap: 0.9rem; margin-bottom: 1.1rem; align-items: flex-start; }
+    .theme-item:last-child { margin-bottom: 0; }
+    .theme-item__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 0.55rem; }
+    .theme-item__text { font-size: 0.88rem; color: #2a3a50; line-height: 1.55; font-weight: 500; }
+
+    /* ── Pillar cards ───────────────────────────────────── */
+    .pillar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+    .pillar {
+      background: var(--white); border: 1px solid var(--border);
+      border-left: 4px solid var(--teal);
+      border-radius: var(--radius); padding: 2rem;
+      box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pillar:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(8,24,64,0.12); }
+    .pillar:nth-child(2) { border-left-color: var(--blue); }
+    .pillar:nth-child(3) { border-left-color: var(--sky); }
+    .pillar:nth-child(4) { border-left-color: var(--navy); }
+    .pillar__icon { font-size: 1.7rem; margin-bottom: 0.9rem; }
+    .pillar__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .pillar__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Case studies list ──────────────────────────────── */
+    .case-list { list-style: none; }
+    .case-item {
+      padding: 1.3rem 0; border-bottom: 1px solid var(--border);
+      display: flex; gap: 1.5rem; align-items: flex-start;
+    }
+    .case-item:last-child { border-bottom: none; }
+    .case-item__icon {
+      width: 40px; height: 40px; border-radius: 9px;
+      background: var(--light); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .case-item__title { font-size: 0.97rem; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }
+    .case-item__body { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Philosophy highlight ───────────────────────────── */
+    .highlight {
+      background: var(--navy); color: var(--white);
+      padding: 5rem 0; position: relative; overflow: hidden;
+    }
+    .highlight::after {
+      content: ''; position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+      width: 460px; height: 460px; border-radius: 50%;
+      background: url('logo.svg') center/cover;
+      opacity: 0.055; pointer-events: none;
+    }
+    .highlight__inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 1rem; }
+    .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 1rem; }
+
+    /* ── Dimension chips ────────────────────────────────── */
+    .dims { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .dim { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.82rem; font-weight: 600; color: var(--mint); }
+
+    /* ── Bio section ────────────────────────────────────── */
+    .bio-panel {
+      display: grid; grid-template-columns: auto 1fr; gap: 2.5rem; align-items: start;
+    }
+    .bio-avatar {
+      width: 120px; height: 120px; border-radius: 50%;
+      object-fit: cover; border: 3px solid var(--border);
+      filter: drop-shadow(0 6px 18px rgba(8,24,64,0.14));
+    }
+    .bio-avatar-placeholder {
+      width: 120px; height: 120px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--teal));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; color: var(--mint);
+      border: 3px solid var(--border);
+      flex-shrink: 0;
+    }
+    .bio__name { font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+    .bio__role { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.9rem; }
+    .bio__body { font-size: 0.93rem; color: #3a3a3a; line-height: 1.75; }
+    .bio__body p + p { margin-top: 0.85rem; }
+    .creds { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+    .cred { background: var(--light); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.75rem; font-size: 0.8rem; font-weight: 600; color: var(--navy); }
+
+    /* ── Buttons ────────────────────────────────────────── */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.18s; text-decoration: none !important; border: none; cursor: pointer; white-space: nowrap; }
+    .btn--primary { background: var(--teal); color: var(--white); }
+    .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
+    .btn--outline-navy { background: transparent; border: 1.5px solid var(--border); color: var(--navy); }
+    .btn--outline-navy:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* ── CTA ────────────────────────────────────────────── */
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; right: -70px; top: 50%; transform: translateY(-50%); width: 430px; height: 430px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.05; pointer-events: none; }
+    .cta-section__inner { position: relative; z-index: 1; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 1000px) {
+      .two-col { grid-template-columns: 1fr; }
+      .sidebar-block { position: static; }
+    }
+    @media (max-width: 900px) {
+      .highlight__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .bio-panel { grid-template-columns: 1fr; }
+      .bio-avatar-placeholder { margin: 0 auto; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<!-- ── Navigation ──────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>›</span>
+      Philosophy of Engineering
+    </div>
+    <div class="hero__badge">🏛️ Abstract · fPET 2026 Conference · Track 1</div>
+    <h1 class="hero__title">Philosophy Must Inform Socio-Technical Systems Engineering</h1>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Author</span>
+        <span class="hero__meta-value">George Percivall</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Venue</span>
+        <span class="hero__meta-value">Forum on Philosophy, Engineering &amp; Technology (fPET 2026)</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Track</span>
+        <span class="hero__meta-value">Track 1: Philosophy of Engineering &amp; Technology</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Contact</span>
+        <span class="hero__meta-value">gspercivall@sjc.edu</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Abstract ──────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <div class="sh">
+          <p class="sh__label">Abstract</p>
+          <h2 class="sh__title">The Presentation</h2>
+        </div>
+        <div class="abstract-body">
+          <p>Socio-technical systems increasingly define the conditions of contemporary life, yet the engineering of these complex systems lacks clear philosophical foundations for their design, operation, and governance. Drawing on development experience from large-scale, safety-critical, and cyber-physical domains, this presentation argues that engineering is inherently a philosophical enterprise and that explicit philosophical engagement is now indispensable for responsible socio-technical engineering. It is proposed for Track 1: Philosophy of Engineering and Technology at the 2026 Forum on Philosophy, Engineering and Technology (fPET).</p>
+
+          <p>The fPET community has long recognized that engineers exercise significant, often tacit, power in shaping societal infrastructures, such as cyber-physical systems-of-systems, internet and web architectures, automated commercial products, and AI-driven agents. As these systems grow in complexity and interdependence, while becoming less explainable, traditional methods for engineering are no longer sufficient. Stakeholder concerns regarding responsibility, authority, meaning, and value must be made integral to engineering design, assurance, and governance. To meet this need, the presentation combines practical engineering experience across multiple technologies with long-standing philosophical themes in epistemology, design, ontology, and ethics.</p>
+
+          <p>Contemporary systems and software engineering standards codify much of current practice and have been essential to developing large cyber-physical systems. However, these practices require refinement to remain adequate for today's software-centric, data-intensive, and societally driven products. Central to the presentation is a series of case-informed analyses from systems engineering practice. By revisiting and extending methodologies for systems design and formal standard-setting processes (e.g., IEEE), the paper revives and updates themes such as the "philosopher-builder" and the claim that "engineers should study philosophy."</p>
+
+          <p>A basis for this revival is the history and mission of fPET itself, which exemplifies the kind of sustained cross-disciplinary conversation needed to move beyond superficial treatments of ethics in engineering. The work draws on the engineering discipline as exemplified by IEEE and on a renaissance of deeply humanizing educational practices as exemplified by St. John's College. Combining these traditions enables explicit philosophical inquiry to be systematically integrated into engineering workflows, with the aim of reinvigorating systems engineering through philosophical practices and developing a coherent set of socio-technical standards and practices.</p>
+
+          <p>These emerging practices are being applied and tested in ongoing projects. Examples include assessing the social and political implications of location-aware infrastructures; interrogating normative assumptions embedded in automation strategies; and examining how organizational culture and institutional incentives shape risk, safety, and accountability. Experience on these projects highlights both the promise and the difficulty of standards and practices that seek genuinely to bridge the social–technical divide.</p>
+
+          <p>The presentation will report on progress to date and outline plans for further development. Socio-technical methods have already been employed in the development of the IEEE 2874 Spatial Web and other IEEE AI standards. The methods will be further developed at the St. John's College Graduate Institute which has already conducted seminars on ethical technology and participatory socio-technical design, particularly for AI. The paper will invite discussion with the fPET community on a proposed framework for socio-technical engineering that is conceptually robust, practically grounded, and responsive to contemporary ethical and political challenges, offering engineering practitioners a synthesis of philosophical practice alongside concrete tools and conceptual resources for developing humanity's critical systems.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-block">
+          <p class="sidebar-block__label">Key Themes</p>
+          <div class="theme-item">
+            <div class="theme-item__dot"></div>
+            <p class="theme-item__text">Engineering as an inherently philosophical enterprise</p>
+          </div>
+          <div class="theme-item">
+            <div class="theme-item__dot"></div>
+            <p class="theme-item__text">Epistemology, design, ontology &amp; ethics as engineering foundations</p>
+          </div>
+          <div class="theme-item">
+            <div class="theme-item__dot"></div>
+            <p class="theme-item__text">Limits of traditional engineering methods for socio-technical systems</p>
+          </div>
+          <div class="theme-item">
+            <div class="theme-item__dot"></div>
+            <p class="theme-item__text">The "philosopher-builder" and why engineers should study philosophy</p>
+          </div>
+          <div class="theme-item">
+            <div class="theme-item__dot"></div>
+            <p class="theme-item__text">Responsibility, authority, meaning &amp; value in system design</p>
+          </div>
+          <div class="theme-item">
+            <div class="theme-item__dot"></div>
+            <p class="theme-item__text">IEEE standards &amp; St. John's College as complementary traditions</p>
+          </div>
+          <div class="theme-item">
+            <div class="theme-item__dot"></div>
+            <p class="theme-item__text">Case analyses from real engineering practice</p>
+          </div>
+          <div class="theme-item">
+            <div class="theme-item__dot"></div>
+            <p class="theme-item__text">A proposed framework for socio-technical engineering</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Four Philosophical Dimensions ─────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Philosophical Foundations</p>
+      <h2 class="sh__title">Four Dimensions of Philosophy-Informed Engineering</h2>
+      <p class="sh__desc">The presentation integrates four long-standing philosophical traditions into engineering practice — treating each not as an academic supplement but as a core design discipline.</p>
+    </div>
+    <div class="pillar-grid">
+      <div class="pillar">
+        <div class="pillar__icon">🔍</div>
+        <h3 class="pillar__title">Epistemology</h3>
+        <p class="pillar__body">The philosophy of knowledge — how systems come to represent, validate, and share information. For socio-technical engineering, epistemology governs how requirements are known, how AI systems form beliefs, and how uncertainty is handled in design. As systems grow more opaque, epistemological clarity becomes a safety-critical concern.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">🏗️</div>
+        <h3 class="pillar__title">Design</h3>
+        <p class="pillar__body">Design as a philosophical discipline — not merely a technical activity but a normative one. The choices engineers make in system architecture embed assumptions about value, priority, and purpose. Making these assumptions explicit, and subjecting them to rigorous scrutiny, is essential to responsible engineering of systems that affect the conditions of human life.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">🌐</div>
+        <h3 class="pillar__title">Ontology</h3>
+        <p class="pillar__body">The study of what exists and how it is categorized — foundational for systems that must model the real world. From spatial web data models to AI agent representations, the ontological commitments embedded in technical standards have profound downstream consequences for what can be represented, shared, and governed across complex systems-of-systems.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">⚖️</div>
+        <h3 class="pillar__title">Ethics</h3>
+        <p class="pillar__body">Not as a checklist appended to completed designs, but as an integral part of the engineering process from the outset. Engineers exercise tacit power in shaping societal infrastructures; making that power visible and accountable requires sustained engagement with the traditions of moral philosophy — including questions of responsibility, authority, meaning, and value.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Quote ─────────────────────────────────────────────── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "Engineering is inherently a philosophical enterprise — and explicit philosophical engagement is now indispensable for responsible socio-technical engineering."
+        </blockquote>
+        <p class="highlight__attr">— George Percivall, fPET 2026 Conference</p>
+        <div class="dims">
+          <span class="dim">Epistemology</span>
+          <span class="dim">Design</span>
+          <span class="dim">Ontology</span>
+          <span class="dim">Ethics</span>
+          <span class="dim">IEEE Standards</span>
+          <span class="dim">Socio-Technical Systems</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>The fPET community has long recognized that engineers exercise significant, often tacit, power in shaping societal infrastructures. This presentation takes that recognition seriously — arguing not merely that engineers should be aware of philosophical questions, but that philosophy must be systematically integrated into the workflows, standards, and governance frameworks of engineering practice.</p>
+        <p>Two institutional traditions provide the foundations for this synthesis: the IEEE, which has long led the development of rigorous engineering standards; and St. John's College, whose commitment to primary-text education and cross-disciplinary seminar offers a model of what genuinely humanizing engineering education can look like.</p>
+        <p>Together, these traditions point toward a new kind of engineering practitioner — one who brings philosophical fluency alongside technical mastery to the design of the systems that increasingly define the conditions of contemporary life.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Case Studies ───────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Applied Practice</p>
+      <h2 class="sh__title">Case-Informed Engineering Analysis</h2>
+      <p class="sh__desc">The presentation draws on ongoing projects where philosophy-informed methods are being applied and tested in real engineering practice.</p>
+    </div>
+    <ul class="case-list">
+      <li class="case-item">
+        <div class="case-item__icon">📍</div>
+        <div>
+          <p class="case-item__title">Social &amp; Political Implications of Location-Aware Infrastructures</p>
+          <p class="case-item__body">Assessment of how location-aware systems — from GPS-tagged data to spatial web infrastructure — embed normative assumptions about surveillance, privacy, jurisdiction, and the relationship between individuals and institutions. Engineering decisions about precision, logging, and access have far-reaching social and political consequences that must be made explicit at the design stage.</p>
+        </div>
+      </li>
+      <li class="case-item">
+        <div class="case-item__icon">🤖</div>
+        <div>
+          <p class="case-item__title">Normative Assumptions in Automation Strategies</p>
+          <p class="case-item__body">Interrogation of the normative assumptions embedded in automation strategies — examining how choices about what to automate, at what level of autonomy, and with what human oversight mechanisms encode value judgments about efficiency, accountability, and the proper division of agency between humans and machines.</p>
+        </div>
+      </li>
+      <li class="case-item">
+        <div class="case-item__icon">🏢</div>
+        <div>
+          <p class="case-item__title">Organizational Culture, Risk, Safety &amp; Accountability</p>
+          <p class="case-item__body">Examination of how organizational culture and institutional incentives shape risk assessment, safety assurance, and accountability in large-scale engineering programs. Drawing on case experience from NASA, OGC, and IEEE standards development — where institutional context proved as consequential as technical design decisions.</p>
+        </div>
+      </li>
+      <li class="case-item">
+        <div class="case-item__icon">📡</div>
+        <div>
+          <p class="case-item__title">IEEE 2874 Spatial Web &amp; IEEE AI Standards</p>
+          <p class="case-item__body">Socio-technical methods have already been applied in the development of the IEEE 2874 Spatial Web standard and other IEEE AI standards — demonstrating that philosophy-informed engineering is not a theoretical ambition but an active practice, with measurable outcomes in the standards that govern AI systems at global scale.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── Author Bio ─────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">About the Author</p>
+      <h2 class="sh__title">George Percivall</h2>
+    </div>
+    <div class="bio-panel">
+      <div class="bio-avatar-placeholder">👤</div>
+      <div>
+        <p class="bio__name">George Percivall</p>
+        <p class="bio__role">Distinguished Engineering Fellow · GeoRoundtable &amp; Spatial Web Foundation</p>
+        <div class="bio__body">
+          <p>George Percivall is Distinguished Engineering Fellow with GeoRoundtable and the Spatial Web Foundation. He is an officer in IEEE AISC and chairs the Spatial Web standard working group, having led the five-year development of IEEE 2874-2025 — the foundational Spatial Web standard approved in May 2025.</p>
+          <p>Previously he served as CTO of the Open Geospatial Consortium (OGC); Chief Engineer for several projects in NASA's Earth Science Enterprise; and Systems Engineer for GM Hughes, including vehicle systems engineer for the EV1. He began his career with Hughes Aircraft as a Control System Engineer on weather satellites.</p>
+          <p>He holds a BS in Engineering Physics and an MS in Electrical Engineering from the University of Illinois – Urbana, and is currently enrolled in the Master of Arts in Liberal Arts (MALA) program at St. John's College, Annapolis MD — grounding GeoRoundtable's philosophy-informed engineering practice in a rigorous classical tradition.</p>
+        </div>
+        <div class="creds">
+          <span class="cred">IEEE AISC Officer</span>
+          <span class="cred">Spatial Web WG Chair</span>
+          <span class="cred">Former OGC CTO</span>
+          <span class="cred">NASA Chief Engineer</span>
+          <span class="cred">MALA — St. John's College</span>
+          <span class="cred">BS/MS UIUC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Related ────────────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Further Reading</h2>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="https://fpet.org" target="_blank" class="btn btn--primary">↗ fPET 2026 Conference</a>
+      <a href="ieee-spatial-web-standard-approved.html" class="btn btn--outline-navy">IEEE 2874-2025 Standard →</a>
+      <a href="st-johns-college-thinking-machines-seminar-july-2025.html" class="btn btn--outline-navy">St. John's Thinking Machines Seminar →</a>
+      <a href="evolution-of-agency-m-tomasello.html" class="btn btn--outline-navy">Evolution of Agency Analysis →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-section__inner">
+      <h2 class="cta-section__title">Discuss Philosophy-Informed Engineering</h2>
+      <p class="cta-section__sub">Interested in integrating philosophical foundations into your engineering practice, standards work, or AI governance? Get in touch.</p>
+      <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
