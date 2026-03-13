@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>St. John's College Thinking Machines Seminar — GeoRoundtable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+
+    .accent-bar { height: 3px; background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%); }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .nav__brand { display: flex; align-items: center; gap: 11px; color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; text-decoration: none; }
+    .nav__logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); object-fit: cover; flex-shrink: 0; }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    .hero { background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%); color: var(--white); padding: 6rem 0 5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%), radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%); }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
+    .hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28); border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600; color: var(--mint); letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+    .hero__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; max-width: 820px; }
+    .hero__sub { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 640px; line-height: 1.7; margin-bottom: 1.5rem; }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 2rem; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    .sh { margin-bottom: 3rem; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+    .sh__title { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 640px; line-height: 1.7; }
+
+    .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; }
+    .prose p + p { margin-top: 1.1rem; }
+
+    /* ── Summary box ────────────────────────────────────── */
+    .summary-box { background: var(--light); border-left: 4px solid var(--teal); border-radius: 0 var(--radius) var(--radius) 0; padding: 2rem 2.2rem; box-shadow: var(--shadow); font-size: 1.02rem; color: #2a3a50; line-height: 1.8; }
+    .summary-box p + p { margin-top: 1rem; }
+
+    /* ── Two col ────────────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+    /* ── Detail cards ───────────────────────────────────── */
+    .detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .detail-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+    .detail-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(8,24,64,0.12); }
+    .detail-card__icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+    .detail-card__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
+    .detail-card__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .detail-card__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Reading list ───────────────────────────────────── */
+    .reading-list { list-style: none; }
+    .reading-item { padding: 1.2rem 0; border-bottom: 1px solid var(--border); display: flex; gap: 1.2rem; align-items: flex-start; }
+    .reading-item:last-child { border-bottom: none; }
+    .reading-item__era { width: 36px; height: 36px; border-radius: 8px; background: var(--light); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--teal); flex-shrink: 0; }
+    .reading-item__content { flex: 1; }
+    .reading-item__title { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+    .reading-item__author { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── Highlight quote ────────────────────────────────── */
+    .highlight { background: var(--navy); color: var(--white); padding: 5rem 0; position: relative; overflow: hidden; }
+    .highlight::after { content: ''; position: absolute; right: -80px; top: 50%; transform: translateY(-50%); width: 460px; height: 460px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.055; pointer-events: none; }
+    .highlight__inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 1rem; }
+    .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 1rem; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.82rem; font-weight: 600; color: var(--mint); }
+
+    /* ── Context list ───────────────────────────────────── */
+    .context-item { display: flex; gap: 1.2rem; margin-bottom: 1.4rem; }
+    .context-item:last-child { margin-bottom: 0; }
+    .context-item__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 0.55rem; }
+    .context-item__label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.2rem; }
+    .context-item__text { font-size: 0.92rem; color: #3a3a3a; line-height: 1.65; }
+
+    /* ── Dims ───────────────────────────────────────────── */
+    .dims { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .dim { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.82rem; font-weight: 600; color: var(--mint); }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.18s; text-decoration: none !important; border: none; cursor: pointer; white-space: nowrap; }
+    .btn--primary { background: var(--teal); color: var(--white); }
+    .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
+    .btn--outline-navy { background: transparent; border: 1.5px solid var(--border); color: var(--navy); }
+    .btn--outline-navy:hover { border-color: var(--teal); color: var(--teal); }
+
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; right: -70px; top: 50%; transform: translateY(-50%); width: 430px; height: 430px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.05; pointer-events: none; }
+    .cta-section__inner { position: relative; z-index: 1; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    @media (max-width: 900px) {
+      .highlight__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>›</span>
+      Seminar
+    </div>
+    <div class="hero__badge">🎓 Seminar · July 2025 · St. John's College</div>
+    <h1 class="hero__title">Thinking Machines: St. John's College Seminar</h1>
+    <p class="hero__sub">A sustained collaboration between GeoRoundtable and St. John's College Graduate Institute exploring the philosophical foundations of artificial intelligence — from Pascal's calculator to the age of large language models.</p>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Dates</span>
+        <span class="hero__meta-value">July 7–11, 2025</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Institution</span>
+        <span class="hero__meta-value">St. John's College Graduate Institute</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Location</span>
+        <span class="hero__meta-value">Santa Fe, New Mexico</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Focus</span>
+        <span class="hero__meta-value">Ethics, AI &amp; Participatory Design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Overview ─────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <div class="sh">
+          <p class="sh__label">Seminar Overview</p>
+          <h2 class="sh__title">Thinking Machines: Three Centuries of Inquiry</h2>
+        </div>
+        <div class="summary-box">
+          <p>The <em>Thinking Machines</em> seminar, part of the St. John's College Summer Classics program, studies the nature of the thinking machine — reading philosophical and scientific texts from the past three centuries that have investigated and proposed machines that represent, model, and even simulate human thought.</p>
+          <p>From Pascal's mechanical calculator to Leibniz's universal calculus, from Turing's theoretical machines to the neural networks and large language models of today, the seminar traces the intellectual lineage of the question: can machines think? And what would it mean if they could?</p>
+          <p>GeoRoundtable's participation in this seminar reflects a core conviction: that the responsible development of AI requires engagement with exactly these philosophical questions — not as abstract diversions from engineering work, but as its necessary foundations.</p>
+        </div>
+      </div>
+      <div>
+        <div class="sh">
+          <p class="sh__label">Collaboration Context</p>
+          <h3 class="sh__title" style="font-size: 1.3rem;">GeoRoundtable &amp; St. John's</h3>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Partnership</p>
+            <p class="context-item__text">GeoRoundtable has maintained a sustained collaboration with St. John's College Graduate Institute focused on ethical technology and participatory socio-technical design for AI — bringing together engineering practitioners and humanist scholars.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Approach</p>
+            <p class="context-item__text">St. John's pedagogy centers the close reading of original texts — not textbooks or surveys. This approach, applied to AI, surfaces questions that engineering education often skips: what is intelligence? what is agency? what do we owe the systems we create?</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Relevance to Engineering</p>
+            <p class="context-item__text">The seminar directly informs GeoRoundtable's philosophy-informed engineering practice — particularly the integration of epistemology, ontology, and ethics into the design of agentic systems, AI governance frameworks, and socio-technical standards work.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Format</p>
+            <p class="context-item__text">Seminar sessions ran from 10am–noon and 2–4pm MDT, July 7–11, 2025. Led by Halley Barnet and Brendon Lasell of the St. John's College faculty. Offered in-person at the Santa Fe campus.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Themes ─────────────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Seminar Themes</p>
+      <h2 class="sh__title">What the Seminar Explores</h2>
+      <p class="sh__desc">Six interlocking questions that the Thinking Machines seminar returns to across its primary texts — and that GeoRoundtable brings back to engineering practice.</p>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-card">
+        <div class="detail-card__icon">🧮</div>
+        <p class="detail-card__label">Historical Arc</p>
+        <h3 class="detail-card__title">From Calculator to Language Model</h3>
+        <p class="detail-card__body">The seminar traces three centuries of thinking about thinking machines — from Pascal's Pascaline and Leibniz's Stepped Reckoner, through Babbage's Analytical Engine, Boole's logic, Turing's universal machine, Shannon's information theory, and into the era of deep learning and large language models.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card__icon">🤔</div>
+        <p class="detail-card__label">Core Question</p>
+        <h3 class="detail-card__title">Can Machines Think?</h3>
+        <p class="detail-card__body">The seminar engages directly with the question Turing famously posed — and the decades of philosophical debate it provoked. What is the relationship between computation and cognition? Between information processing and understanding? Between simulation and reality?</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card__icon">⚖️</div>
+        <p class="detail-card__label">Ethics</p>
+        <h3 class="detail-card__title">Responsibility &amp; Accountability</h3>
+        <p class="detail-card__body">Who is responsible when an autonomous system causes harm? How do we design systems that can be held accountable? The seminar reads classical and contemporary texts on moral responsibility, intentionality, and the conditions under which agency entails obligation.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card__icon">🧠</div>
+        <p class="detail-card__label">Mind &amp; Machine</p>
+        <h3 class="detail-card__title">Intelligence, Understanding, and Meaning</h3>
+        <p class="detail-card__body">The seminar engages with philosophy of mind — reading Descartes on the mind-body problem, Searle on the Chinese Room, Dreyfus on the limits of formalization, and contemporary work on embodied cognition — to probe what AI systems can and cannot do in principle.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card__icon">🏛️</div>
+        <p class="detail-card__label">Governance</p>
+        <h3 class="detail-card__title">Democratic Technology &amp; Participatory Design</h3>
+        <p class="detail-card__body">Who decides how AI is built, deployed, and governed? The seminar examines traditions of participatory design and democratic technology assessment — asking how communities can shape the systems that shape them, and what legitimate AI governance requires.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card__icon">🔭</div>
+        <p class="detail-card__label">Engineering Implications</p>
+        <h3 class="detail-card__title">Philosophy as Engineering Practice</h3>
+        <p class="detail-card__body">For GeoRoundtable, the seminar is not merely academic — it is a design practice. The philosophical questions raised connect directly to architectural choices, standards development, and governance frameworks for complex agentic systems. Engineering is a philosophical enterprise.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Quote ─────────────────────────────────────────────── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "The responsible development of AI requires engagement with philosophical questions — not as abstract diversions from engineering work, but as its necessary foundations."
+        </blockquote>
+        <p class="highlight__attr">— GeoRoundtable · Philosophy-Informed Engineering</p>
+        <div class="dims">
+          <span class="dim">Epistemology</span>
+          <span class="dim">Ontology</span>
+          <span class="dim">Ethics</span>
+          <span class="dim">Engineering Design</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>St. John's College is unusual in the American academy for its commitment to reading primary texts in seminar — students and tutors working through original sources together, without the mediation of textbook summaries or lecture notes. This pedagogy, applied to the history of thinking about thinking machines, produces a distinctive kind of engagement with AI: slower, deeper, and more attentive to what the field has inherited and what it has forgotten.</p>
+        <p>GeoRoundtable's collaboration with St. John's reflects the conviction that this kind of engagement is not a luxury but a necessity — especially as AI systems grow more capable and more consequential. The engineers and architects of autonomous systems need to grapple with the philosophical tradition that asks the hardest questions about what those systems are and what they owe to the people they affect.</p>
+        <p>This is what philosophy-informed engineering means in practice: not the application of ethical checklists after the fact, but the integration of humanistic inquiry into the design process from the beginning.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Sample Reading Arc ────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Intellectual Arc</p>
+      <h2 class="sh__title">Three Centuries of Thinking Machines</h2>
+      <p class="sh__desc">The seminar's reading arc — tracing the philosophical lineage from early mechanical computation to contemporary AI.</p>
+    </div>
+    <ul class="reading-list">
+      <li class="reading-item">
+        <div class="reading-item__era">17c</div>
+        <div class="reading-item__content">
+          <p class="reading-item__title">Pascal, Leibniz — Mechanical Calculation and Universal Logic</p>
+          <p class="reading-item__author">The earliest mechanical calculators and Leibniz's vision of a universal calculus that could automate reasoning itself — raising the question of whether thought is computation.</p>
+        </div>
+      </li>
+      <li class="reading-item">
+        <div class="reading-item__era">19c</div>
+        <div class="reading-item__content">
+          <p class="reading-item__title">Babbage, Lovelace — The Analytical Engine and Its Limits</p>
+          <p class="reading-item__author">Babbage's design for a general-purpose mechanical computer and Ada Lovelace's prescient analysis of what such a machine could — and could not — do. Lovelace's note on the impossibility of machines originating anything remains a touchstone.</p>
+        </div>
+      </li>
+      <li class="reading-item">
+        <div class="reading-item__era">20c</div>
+        <div class="reading-item__content">
+          <p class="reading-item__title">Turing — Computing Machinery and Intelligence</p>
+          <p class="reading-item__author">Turing's 1950 paper introducing the imitation game and proposing a behavioral criterion for machine intelligence — reframing the question from metaphysics to observation, and opening a debate that continues today.</p>
+        </div>
+      </li>
+      <li class="reading-item">
+        <div class="reading-item__era">20c</div>
+        <div class="reading-item__content">
+          <p class="reading-item__title">Searle, Dreyfus — The Limits of Formalization</p>
+          <p class="reading-item__author">The Chinese Room argument and Dreyfus's phenomenological critique of classical AI — challenging the identification of intelligence with symbol manipulation and raising questions about embodiment, context, and understanding.</p>
+        </div>
+      </li>
+      <li class="reading-item">
+        <div class="reading-item__era">21c</div>
+        <div class="reading-item__content">
+          <p class="reading-item__title">Contemporary AI — Large Language Models and the Return of the Question</p>
+          <p class="reading-item__author">With the emergence of transformer-based language models, the old questions return with new urgency: what is understanding? what is agency? how do we govern systems that can converse, plan, and act — and that no one fully understands?</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── Related ────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Philosophy-Informed Engineering at GeoRoundtable</h2>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="evolution-of-agency-m-tomasello.html" class="btn btn--primary">Evolution of Agency Analysis →</a>
+      <a href="ieee-spatial-web-standard-approved.html" class="btn btn--outline-navy">IEEE 2874-2025 Standard →</a>
+      <a href="https://www.sjc.edu/lifelong-learning/summer-classics/seminar-schedule" target="_blank" class="btn btn--outline-navy">↗ St. John's Summer Classics</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-section__inner">
+      <h2 class="cta-section__title">Collaborate on Ethical AI Design</h2>
+      <p class="cta-section__sub">Interested in philosophy-informed approaches to AI architecture, governance, or participatory design? Get in touch.</p>
+      <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

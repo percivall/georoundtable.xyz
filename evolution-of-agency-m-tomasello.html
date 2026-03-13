@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evolution of Agency — Michael Tomasello — GeoRoundtable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+
+    .accent-bar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%);
+    }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .nav__brand { display: flex; align-items: center; gap: 11px; color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; text-decoration: none; }
+    .nav__logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); object-fit: cover; flex-shrink: 0; }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    .hero { background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%); color: var(--white); padding: 6rem 0 5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%), radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%); }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
+    .hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28); border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600; color: var(--mint); letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+    .hero__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; max-width: 820px; }
+    .hero__sub { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 640px; line-height: 1.7; margin-bottom: 1.5rem; }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 2rem; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    .sh { margin-bottom: 3rem; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+    .sh__title { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 640px; line-height: 1.7; }
+
+    .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; }
+    .prose p + p { margin-top: 1.1rem; }
+
+    /* ── Agency type cards ──────────────────────────────── */
+    .agency-timeline { display: flex; flex-direction: column; gap: 0; }
+    .agency-step {
+      display: grid; grid-template-columns: 80px 1fr;
+      gap: 0 2rem; padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .agency-step:last-child { border-bottom: none; }
+    .agency-step__number-col { display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .agency-step__num {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: 800; color: var(--white);
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .agency-step__num--1 { background: linear-gradient(135deg, #0d6b78, #3b9edd); }
+    .agency-step__num--2 { background: linear-gradient(135deg, #1d6fa4, #0d6b78); }
+    .agency-step__num--3 { background: linear-gradient(135deg, #081840, #1d6fa4); }
+    .agency-step__num--4 { background: linear-gradient(135deg, #081840, #0d6b78); }
+    .agency-step__connector { width: 2px; flex: 1; background: var(--border); margin: 4px 0; min-height: 20px; }
+    .agency-step:last-child .agency-step__connector { display: none; }
+    .agency-step__content { padding-top: 0.2rem; }
+    .agency-step__era { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
+    .agency-step__title { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+    .agency-step__subtitle { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-bottom: 0.7rem; }
+    .agency-step__body { font-size: 0.92rem; color: #3a3a3a; line-height: 1.7; }
+    .agency-step__implications { margin-top: 0.9rem; }
+    .agency-step__impl-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.3rem; }
+    .agency-step__impl-text { font-size: 0.88rem; color: var(--blue); line-height: 1.6; background: #f0f7ff; border-radius: 6px; padding: 0.7rem 1rem; border-left: 3px solid var(--sky); }
+
+    /* ── Pillar cards ───────────────────────────────────── */
+    .pillar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+    .pillar { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); transition: transform 0.2s; }
+    .pillar:hover { transform: translateY(-3px); }
+    .pillar:nth-child(2) { border-left-color: var(--blue); }
+    .pillar:nth-child(3) { border-left-color: var(--sky); }
+    .pillar:nth-child(4) { border-left-color: var(--navy); }
+    .pillar__icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+    .pillar__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .pillar__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Highlight quote ────────────────────────────────── */
+    .highlight { background: var(--navy); color: var(--white); padding: 5rem 0; position: relative; overflow: hidden; }
+    .highlight::after { content: ''; position: absolute; right: -80px; top: 50%; transform: translateY(-50%); width: 460px; height: 460px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.055; pointer-events: none; }
+    .highlight__inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 1rem; }
+    .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 1rem; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.82rem; font-weight: 600; color: var(--mint); }
+
+    /* ── Book info ──────────────────────────────────────── */
+    .book-panel { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap; }
+    .book-spine { width: 90px; min-width: 90px; height: 130px; border-radius: 6px; background: linear-gradient(160deg, #081840 0%, #0d2660 100%); display: flex; align-items: center; justify-content: center; color: var(--mint); font-size: 2rem; box-shadow: 4px 4px 16px rgba(0,0,0,0.2); }
+    .book-info { flex: 1; min-width: 200px; }
+    .book-info__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
+    .book-info__title { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+    .book-info__subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.7rem; font-style: italic; }
+    .book-info__meta { font-size: 0.88rem; color: #3a3a3a; line-height: 1.65; }
+
+    /* ── Resource / CTA ─────────────────────────────────── */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.18s; text-decoration: none !important; border: none; cursor: pointer; white-space: nowrap; }
+    .btn--primary { background: var(--teal); color: var(--white); }
+    .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
+    .btn--outline-navy { background: transparent; border: 1.5px solid var(--border); color: var(--navy); }
+    .btn--outline-navy:hover { border-color: var(--teal); color: var(--teal); }
+
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; right: -70px; top: 50%; transform: translateY(-50%); width: 430px; height: 430px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.05; pointer-events: none; }
+    .cta-section__inner { position: relative; z-index: 1; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    @media (max-width: 900px) {
+      .highlight__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .agency-step { grid-template-columns: 60px 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>›</span>
+      Agentic Systems
+    </div>
+    <div class="hero__badge">🧬 Analysis · Agentic Systems</div>
+    <h1 class="hero__title">Evolution of Agency — Michael Tomasello</h1>
+    <p class="hero__sub">Tomasello's four types of natural agency in evolutionary order — foundational framing for GeoRoundtable's approach to designing and governing complex agentic AI systems.</p>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Source</span>
+        <span class="hero__meta-value">Michael Tomasello, MIT Press</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Application</span>
+        <span class="hero__meta-value">Agentic AI Design &amp; Governance</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Analysis by</span>
+        <span class="hero__meta-value">George Percivall, GeoRoundtable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Overview ─────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Overview</p>
+      <h2 class="sh__title">Why Agency Matters for Agentic AI</h2>
+      <p class="sh__desc">Before designing systems of autonomous agents, it is worth understanding what agency actually is — and how it evolved across hundreds of millions of years of biological history.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+      <div class="prose">
+        <p>Michael Tomasello's <em>The Evolution of Agency: Behavioral Organization from Lizards to Humans</em> (MIT Press) offers a rigorous evolutionary typology of psychological agency — tracing how increasingly complex forms of goal-directed behavior emerged across vertebrate lineages on the path to human cognition.</p>
+        <p>Tomasello identifies four distinct types of agency, each representing a qualitative leap in behavioral organization: new capacities for planning, decision-making, executive control, and — ultimately — the normative regulation of behavior within social groups.</p>
+        <p>For GeoRoundtable, this typology provides essential grounding for work on agentic AI systems. When designing multi-agent architectures, it matters enormously whether the agents in question are merely goal-directed, or intentional, or rational — and whether the system as a whole requires socially normative coordination. These are not just philosophical distinctions; they have direct architectural and governance implications.</p>
+        <p>The framework also illuminates what is genuinely novel — and genuinely risky — about contemporary AI systems that aspire to socially normative agency: the capacity to pursue shared goals, regulate behavior according to group norms, and hold others accountable. This is the territory where engineering, ethics, and philosophy must converge.</p>
+      </div>
+      <div>
+        <div class="book-panel">
+          <div class="book-spine">🧬</div>
+          <div class="book-info">
+            <p class="book-info__label">Book</p>
+            <p class="book-info__title">The Evolution of Agency</p>
+            <p class="book-info__subtitle">Behavioral Organization from Lizards to Humans</p>
+            <p class="book-info__meta"><strong>Author:</strong> Michael Tomasello<br /><strong>Publisher:</strong> MIT Press<br /><strong>ISBN:</strong> 9780262047005<br /><br />Tomasello advances a typology of the main forms of psychological agency that emerged on the evolutionary pathway to human beings — and explores what each new form reveals about the nature of mind, intention, and social life.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── The Four Types ────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Tomasello's Framework</p>
+      <h2 class="sh__title">The Four Types of Agency</h2>
+      <p class="sh__desc">In evolutionary order of emergence — each representing a qualitative increase in behavioral complexity, planning capacity, and social integration.</p>
+    </div>
+    <div class="agency-timeline">
+
+      <div class="agency-step">
+        <div class="agency-step__number-col">
+          <div class="agency-step__num agency-step__num--1">1</div>
+          <div class="agency-step__connector"></div>
+        </div>
+        <div class="agency-step__content">
+          <p class="agency-step__era">Ancient Vertebrates (e.g., Lizards)</p>
+          <h3 class="agency-step__title">Goal-Directed Agency</h3>
+          <p class="agency-step__subtitle">Flexible goal-pursuit through simple means-end organization</p>
+          <p class="agency-step__body">The most fundamental form of agency: the capacity to flexibly direct actions toward goals. An organism with goal-directed agency can vary its behavior to achieve a desired end state, selecting from a repertoire of actions based on what the environment affords. This is the baseline of purposive behavior — present in lizards and ancient vertebrates — and does not require planning, mental simulation, or social awareness.</p>
+          <div class="agency-step__implications">
+            <p class="agency-step__impl-label">Implication for Agentic AI</p>
+            <p class="agency-step__impl-text">Rule-based and reactive AI systems operate at this level — executing fixed goal-pursuit routines without modeling the intentions of other agents or simulating future states. Appropriate for narrow, well-defined automation tasks.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="agency-step">
+        <div class="agency-step__number-col">
+          <div class="agency-step__num agency-step__num--2">2</div>
+          <div class="agency-step__connector"></div>
+        </div>
+        <div class="agency-step__content">
+          <p class="agency-step__era">Ancient Mammals (e.g., Squirrels)</p>
+          <h3 class="agency-step__title">Intentional Agency</h3>
+          <p class="agency-step__subtitle">Planning, mental simulation, and causal understanding</p>
+          <p class="agency-step__body">Intentional agents can plan sequences of actions in advance, mentally simulating outcomes before committing to a course of behavior. This requires a causal model of the world — understanding that actions produce effects through physical and temporal chains. Intentional agency emerges in ancient mammals and involves a qualitatively new layer of executive control over behavior, enabling flexible responses to novel situations.</p>
+          <div class="agency-step__implications">
+            <p class="agency-step__impl-label">Implication for Agentic AI</p>
+            <p class="agency-step__impl-text">Planning-capable AI systems — including modern LLM-based agents with chain-of-thought reasoning and tool use — operate at this level. The key capability is sequential action planning in service of a goal, with the ability to adapt plans mid-execution.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="agency-step">
+        <div class="agency-step__number-col">
+          <div class="agency-step__num agency-step__num--3">3</div>
+          <div class="agency-step__connector"></div>
+        </div>
+        <div class="agency-step__content">
+          <p class="agency-step__era">Ancient Great Apes (e.g., Chimpanzees)</p>
+          <h3 class="agency-step__title">Rational Agency</h3>
+          <p class="agency-step__subtitle">Logical inference, reflective control, and decision under uncertainty</p>
+          <p class="agency-step__body">Rational agents reason about alternatives, weigh evidence, and apply logical inference to reach conclusions — including in novel situations with incomplete information. This involves reflective control over one's own reasoning processes, the ability to inhibit impulsive responses in favor of deliberated ones, and a capacity to evaluate competing options against abstract criteria. Present in great apes, rational agency introduces a new relationship between the agent and its own mental states.</p>
+          <div class="agency-step__implications">
+            <p class="agency-step__impl-label">Implication for Agentic AI</p>
+            <p class="agency-step__impl-text">AI systems with multi-step reasoning, self-correction, and decision-making under uncertainty approach this level. Key design questions concern how agents represent and evaluate competing options — and how their reasoning can be made transparent and auditable.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="agency-step">
+        <div class="agency-step__number-col">
+          <div class="agency-step__num agency-step__num--4">4</div>
+          <div class="agency-step__connector"></div>
+        </div>
+        <div class="agency-step__content">
+          <p class="agency-step__era">Ancient Humans</p>
+          <h3 class="agency-step__title">Socially Normative Agency</h3>
+          <p class="agency-step__subtitle">Shared goals, mutual accountability, and normative self-regulation</p>
+          <p class="agency-step__body">The most complex form of agency, unique to humans: the capacity to pursue shared goals collaboratively, regulate behavior according to group norms, and hold both oneself and others accountable to those norms. Socially normative agents experience the world as an objective and normative environment — one governed by standards that apply to all members of the group. This requires not just reasoning about other minds, but internalizing shared values and participating in collective intentionality.</p>
+          <div class="agency-step__implications">
+            <p class="agency-step__impl-label">Implication for Agentic AI</p>
+            <p class="agency-step__impl-text">Multi-agent AI systems coordinating toward shared goals — especially in socio-technical systems involving humans — aspire to this level. This is where engineering, governance, and philosophy must converge: the design of normative constraints, accountability mechanisms, and value alignment in multi-agent ecosystems.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Quote ─────────────────────────────────────────────── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "Each new form of psychological organization represented increased complexity in planning, decision-making, and executive control — ultimately leading to humans' experience of an objective and normative world."
+        </blockquote>
+        <p class="highlight__attr">— Michael Tomasello, The Evolution of Agency</p>
+        <div class="tags">
+          <span class="tag">Agency</span>
+          <span class="tag">Agentic AI</span>
+          <span class="tag">Multi-Agent Systems</span>
+          <span class="tag">Governance</span>
+          <span class="tag">Normative Reasoning</span>
+          <span class="tag">Collective Intelligence</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>Tomasello's framework is foundational for GeoRoundtable's approach to agentic systems because it reframes the question of AI agency from a purely technical problem into an evolutionary and philosophical one: what kind of agency are we designing for, and what capabilities and constraints does that entail?</p>
+        <p>For socio-technical systems where AI agents collaborate with humans and each other toward shared goals, the architecture must account for all four levels of agency. Goal-directedness is the minimum; social normativity is the horizon. The distance between them is where most of the hard engineering problems — and the most serious governance challenges — reside.</p>
+        <p>This analysis directly informs GeoRoundtable's work on the IEEE 2874-2025 Spatial Web Standard, which establishes the infrastructure for ecosystems of intelligent agents coordinating toward shared goals at global scale.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Design Implications ───────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">GeoRoundtable Application</p>
+      <h2 class="sh__title">From Typology to Architecture</h2>
+      <p class="sh__desc">How Tomasello's framework shapes GeoRoundtable's approach to agentic AI design and governance.</p>
+    </div>
+    <div class="pillar-grid">
+      <div class="pillar">
+        <div class="pillar__icon">🎯</div>
+        <h3 class="pillar__title">Capability Profiling</h3>
+        <p class="pillar__body">The four types provide a structured vocabulary for profiling the agency level of AI systems under design — distinguishing goal-directed automation from intentional planners from rational decision-makers from normative collaborators. This prevents both over-engineering (designing for socially normative agency when goal-direction suffices) and under-engineering (deploying goal-directed systems in contexts requiring rational judgment).</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">⚖️</div>
+        <h3 class="pillar__title">Governance Calibration</h3>
+        <p class="pillar__body">Each level of agency entails distinct governance requirements. Goal-directed agents need constraint specification. Intentional agents need plan auditability. Rational agents need transparent reasoning and value alignment. Socially normative agents need accountability mechanisms, norm representation, and multi-stakeholder oversight. Governance design should be calibrated to the actual agency level of the system.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">🔬</div>
+        <h3 class="pillar__title">Safety Thresholds</h3>
+        <p class="pillar__body">The transition from rational to socially normative agency marks a critical threshold for AI safety: the emergence of systems that can internalize and enforce norms, participate in shared goal-pursuit, and hold other agents accountable. Understanding this threshold is essential for identifying where human oversight becomes most important — and most difficult to maintain.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">🌐</div>
+        <h3 class="pillar__title">Spatial Web Alignment</h3>
+        <p class="pillar__body">The IEEE 2874-2025 Spatial Web Standard envisions "an ecosystem of intelligent agents coordinating activities toward shared goals." Tomasello's framework makes precise what this requires: the Spatial Web infrastructure must support all four levels of agency, with particular attention to the normative layer — shared world models, trust protocols, and governance mechanisms — that enables socially normative coordination at scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Resources ─────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related</p>
+      <h2 class="sh__title">Further Reading</h2>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="https://mitpress.mit.edu/9780262047005/the-evolution-of-agency/" target="_blank" class="btn btn--primary">↗ MIT Press: The Evolution of Agency</a>
+      <a href="ieee-spatial-web-standard-approved.html" class="btn btn--outline-navy">IEEE 2874-2025 Standard →</a>
+      <a href="spatial-web-to-the-open-geospatial-consortium.html" class="btn btn--outline-navy">OGC Presentation →</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-section__inner">
+      <h2 class="cta-section__title">Discuss Agentic Systems Design</h2>
+      <p class="cta-section__sub">Interested in applying evolutionary agency theory to your AI architecture or governance framework? Get in touch.</p>
+      <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
