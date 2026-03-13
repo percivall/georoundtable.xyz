@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Innovation, Maturation, and Adaptation in Standards Development — GeoRoundtable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+
+    .accent-bar { height: 3px; background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%); }
+
+    /* ── Navigation ─────────────────────────────────────── */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .nav__brand { display: flex; align-items: center; gap: 11px; color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; text-decoration: none; }
+    .nav__logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); object-fit: cover; flex-shrink: 0; }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%);
+      color: var(--white); padding: 6rem 0 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%);
+    }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28);
+      border-radius: 20px; padding: 0.3rem 1rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--mint);
+      letter-spacing: 0.05em; margin-bottom: 1.5rem;
+    }
+    .hero__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1rem; max-width: 820px;
+    }
+    .hero__sub {
+      font-size: 1.05rem; color: rgba(255,255,255,0.72);
+      max-width: 680px; line-height: 1.7; margin-bottom: 1.75rem;
+    }
+    .hero__meta {
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem;
+    }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* ── Section headings ───────────────────────────────── */
+    .sh { margin-bottom: 3rem; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+    .sh__title { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 640px; line-height: 1.7; }
+
+    /* ── Intro prose ────────────────────────────────────── */
+    .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; max-width: 760px; }
+    .prose p + p { margin-top: 1.1rem; }
+
+    /* ── Seven heuristics ───────────────────────────────── */
+    .heuristics { display: flex; flex-direction: column; gap: 0; }
+    .heuristic {
+      display: grid; grid-template-columns: 72px 1fr;
+      gap: 0 2.2rem; padding: 2.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .heuristic:last-child { border-bottom: none; }
+
+    .heuristic__num-col { display: flex; flex-direction: column; align-items: center; }
+    .heuristic__badge {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 800; color: var(--white);
+      flex-shrink: 0;
+    }
+    .heuristic__badge--1 { background: linear-gradient(135deg, #0d6b78, #3b9edd); }
+    .heuristic__badge--2 { background: linear-gradient(135deg, #1d6fa4, #0d6b78); }
+    .heuristic__badge--3 { background: linear-gradient(135deg, #3b9edd, #1d6fa4); }
+    .heuristic__badge--4 { background: linear-gradient(135deg, #0d6b78, #081840); }
+    .heuristic__badge--5 { background: linear-gradient(135deg, #081840, #1d6fa4); }
+    .heuristic__badge--6 { background: linear-gradient(135deg, #1d6fa4, #081840); }
+    .heuristic__badge--7 { background: linear-gradient(135deg, #081840, #0d6b78); }
+    .heuristic__connector { width: 2px; flex: 1; background: var(--border); margin: 6px 0; min-height: 16px; }
+    .heuristic:last-child .heuristic__connector { display: none; }
+
+    .heuristic__content { padding-top: 0.15rem; }
+    .heuristic__title {
+      font-size: 1.15rem; font-weight: 700; color: var(--navy);
+      margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem;
+    }
+    .heuristic__title-text { flex: 1; }
+    .heuristic__icon { font-size: 1.2rem; }
+    .heuristic__body { font-size: 0.93rem; color: #3a3a3a; line-height: 1.75; }
+    .heuristic__example {
+      margin-top: 0.9rem;
+      background: #f0f7ff; border-left: 3px solid var(--sky);
+      border-radius: 0 6px 6px 0; padding: 0.7rem 1rem;
+      font-size: 0.88rem; color: var(--blue); line-height: 1.6;
+    }
+    .heuristic__example-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 0.2rem;
+    }
+
+    /* ── Two-col ────────────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+    /* ── OGC impact stats ───────────────────────────────── */
+    .stat-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .stat-card {
+      flex: 1 1 160px; background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); text-align: center;
+    }
+    .stat-card__value { font-size: 2rem; font-weight: 800; color: var(--teal); line-height: 1; margin-bottom: 0.4rem; }
+    .stat-card__label { font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── Context list ───────────────────────────────────── */
+    .context-item { display: flex; gap: 1.2rem; margin-bottom: 1.4rem; }
+    .context-item:last-child { margin-bottom: 0; }
+    .context-item__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 0.55rem; }
+    .context-item__label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.2rem; }
+    .context-item__text { font-size: 0.92rem; color: #3a3a3a; line-height: 1.65; }
+
+    /* ── Quote / highlight ──────────────────────────────── */
+    .highlight {
+      background: var(--navy); color: var(--white);
+      padding: 5rem 0; position: relative; overflow: hidden;
+    }
+    .highlight::after {
+      content: ''; position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+      width: 460px; height: 460px; border-radius: 50%;
+      background: url('logo.svg') center/cover;
+      opacity: 0.055; pointer-events: none;
+    }
+    .highlight__inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-style: italic; line-height: 1.6; color: rgba(255,255,255,0.92); margin-bottom: 1rem; }
+    .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 1rem; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.82rem; font-weight: 600; color: var(--mint); }
+
+    /* ── Buttons ────────────────────────────────────────── */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.18s; text-decoration: none !important; border: none; cursor: pointer; white-space: nowrap; }
+    .btn--primary { background: var(--teal); color: var(--white); }
+    .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
+    .btn--outline-navy { background: transparent; border: 1.5px solid var(--border); color: var(--navy); }
+    .btn--outline-navy:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* ── CTA ────────────────────────────────────────────── */
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; right: -70px; top: 50%; transform: translateY(-50%); width: 430px; height: 430px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.05; pointer-events: none; }
+    .cta-section__inner { position: relative; z-index: 1; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .highlight__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .two-col { grid-template-columns: 1fr; }
+      .heuristic { grid-template-columns: 56px 1fr; gap: 0 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<!-- ── Navigation ──────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>›</span>
+      Standards Development
+    </div>
+    <div class="hero__badge">📐 LinkedIn Article · Standards Development · OGC</div>
+    <h1 class="hero__title">Innovation, Maturation, and Adaptation in Standards Development</h1>
+    <p class="hero__sub">Seven heuristics for standards development drawn from personal experience with the Open Geospatial Consortium — with history as a guide for future standards work.</p>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Author</span>
+        <span class="hero__meta-value">George Percivall</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Organisation</span>
+        <span class="hero__meta-value">GeoRoundtable</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Published</span>
+        <span class="hero__meta-value">LinkedIn Pulse</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Grounded In</span>
+        <span class="hero__meta-value">Open Geospatial Consortium (OGC)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Introduction ──────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <div class="sh">
+          <p class="sh__label">Introduction</p>
+          <h2 class="sh__title">Standards as Living Systems</h2>
+        </div>
+        <div class="prose">
+          <p>Innovation, Maturation, and Adaptation are essential for standards development. This article describes seven heuristics for standards development based on personal experience with the Open Geospatial Consortium. With history as a guide, these heuristics can be valuable for future standards developments.</p>
+          <p>OGC Standards provide operational access to 2 million geospatial datasets. OGC brings together leading technologists to envision and enable geospatial information innovations. These seven heuristics capture a perspective on how this has come about — and what principles underlie the longevity and widespread adoption of open geospatial standards.</p>
+          <p>A theme running through all seven heuristics has much in common with the lessons of <em>The Innovators</em>: "most successful innovators of the digital age have had one thing in common: they were product people. They cared about, and deeply understood, the engineering and design."</p>
+        </div>
+      </div>
+      <div>
+        <div class="sh">
+          <p class="sh__label">OGC at a Glance</p>
+          <h3 class="sh__title" style="font-size:1.3rem;">Scale of Impact</h3>
+        </div>
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-card__value">2M+</div>
+            <div class="stat-card__label">Geospatial datasets accessible via OGC standards</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__value">7</div>
+            <div class="stat-card__label">Heuristics for standards development</div>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Origin</p>
+            <p class="context-item__text">Heuristics drawn from decades of personal experience leading OGC's technical strategy, interoperability program, and standards development as CTO and Chief Engineer.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Application</p>
+            <p class="context-item__text">Offered for use in future standards development — including emerging areas such as AI standards, Spatial Web governance, and the IEEE 2874-2025 ecosystem.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Perspective</p>
+            <p class="context-item__text">Standards are not static artifacts — they are stable intermediate forms that enable innovation and evolution in a complex adaptive technology ecosystem.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Seven Heuristics ───────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">The Seven Heuristics</p>
+      <h2 class="sh__title">Principles for Standards Development</h2>
+      <p class="sh__desc">Each heuristic captures a lesson learned from OGC's decades of open standards work — from the first testbed in 1999 to the current generation of AI and Spatial Web standards.</p>
+    </div>
+
+    <div class="heuristics">
+
+      <div class="heuristic">
+        <div class="heuristic__num-col">
+          <div class="heuristic__badge heuristic__badge--1">1</div>
+          <div class="heuristic__connector"></div>
+        </div>
+        <div class="heuristic__content">
+          <h3 class="heuristic__title">
+            <span class="heuristic__icon">🔭</span>
+            <span class="heuristic__title-text">Think Big, Start Small</span>
+          </h3>
+          <p class="heuristic__body">Have a broad vision of the goal; begin with focused activities that build toward the vision. Development toward the vision is achieved in a thousand small steps. Experience based on implementations evolves the vision over time.</p>
+          <div class="heuristic__example">
+            <p class="heuristic__example-label">OGC Example</p>
+            The <em>OpenGIS Guide</em> written in 1996 provided the initial OGC vision of "Geodata interoperability." In 2013, the Ideas4OGC activity refined that vision. Each focused initiative moved the needle — without ever losing sight of the larger goal.
+          </div>
+        </div>
+      </div>
+
+      <div class="heuristic">
+        <div class="heuristic__num-col">
+          <div class="heuristic__badge heuristic__badge--2">2</div>
+          <div class="heuristic__connector"></div>
+        </div>
+        <div class="heuristic__content">
+          <h3 class="heuristic__title">
+            <span class="heuristic__icon">🌐</span>
+            <span class="heuristic__title-text">Open Wins</span>
+          </h3>
+          <p class="heuristic__body">Standards work best when they are open — developed in an open community process and published freely for use with minimal restrictions. By recognizing externally developed standards as Community Standards, OGC builds on an open community. The OGC approach to open consensus standards reaches beyond individual standards, participating as a leading member of the evolving geo tech ecosystem.</p>
+          <div class="heuristic__example">
+            <p class="heuristic__example-label">OGC Example</p>
+            OGC actively coordinates with other organizations relevant to the mission of open geospatial standards — including ISO, IEEE, W3C, and the Metaverse Standards Forum — building a broader interoperability fabric rather than a closed proprietary stack.
+          </div>
+        </div>
+      </div>
+
+      <div class="heuristic">
+        <div class="heuristic__num-col">
+          <div class="heuristic__badge heuristic__badge--3">3</div>
+          <div class="heuristic__connector"></div>
+        </div>
+        <div class="heuristic__content">
+          <h3 class="heuristic__title">
+            <span class="heuristic__icon">🔬</span>
+            <span class="heuristic__title-text">STEM</span>
+          </h3>
+          <p class="heuristic__body">Standards based on Science, Technology, Engineering, and Math are more resilient and long lasting. Basing standards on STEM helps establish consensus and provides a principled basis for adaptation as technology evolves. The OGC Abstract Specification continues the process of capturing general STEM principles that are refined by implementation using current software development.</p>
+          <div class="heuristic__example">
+            <p class="heuristic__example-label">OGC Example</p>
+            In 1997, OGC and NCGIA co-hosted a conference that began the habit of OGC using STEM in standards development — grounding geospatial standards in rigorous mathematical and scientific foundations rather than purely in market or vendor preferences.
+          </div>
+        </div>
+      </div>
+
+      <div class="heuristic">
+        <div class="heuristic__num-col">
+          <div class="heuristic__badge heuristic__badge--4">4</div>
+          <div class="heuristic__connector"></div>
+        </div>
+        <div class="heuristic__content">
+          <h3 class="heuristic__title">
+            <span class="heuristic__icon">⚙️</span>
+            <span class="heuristic__title-text">Implementation</span>
+          </h3>
+          <p class="heuristic__body">The first OGC testbed in 1999 adopted the IETF mantra of "running code wins." A key consideration for the OGC Community Standard process is very strong evidence of implementation. Implementation in small steps, iteratively refined using STEM, provides evidence for building consensus and demonstrates the value of the standards.</p>
+          <div class="heuristic__example">
+            <p class="heuristic__example-label">OGC Example</p>
+            OGC API development sprints place highest priority on implementation. The Community Standard process requires concrete, working implementations — not just theoretical specifications — before a standard can achieve recognition.
+          </div>
+        </div>
+      </div>
+
+      <div class="heuristic">
+        <div class="heuristic__num-col">
+          <div class="heuristic__badge heuristic__badge--5">5</div>
+          <div class="heuristic__connector"></div>
+        </div>
+        <div class="heuristic__content">
+          <h3 class="heuristic__title">
+            <span class="heuristic__icon">💡</span>
+            <span class="heuristic__title-text">Innovation</span>
+          </h3>
+          <p class="heuristic__body">Technology advances based on past achievements. Novel combination of related technologies — typically developed in small groups over multiple iterations — is the source of innovation. Early identification of emergent innovations by tracking research and industry developments became systematized in OGC Tech Forecasting.</p>
+          <div class="heuristic__example">
+            <p class="heuristic__example-label">OGC Example</p>
+            OGC Simple Features was a synthesis of many inputs that remain key to its longevity and widespread implementation. Ideas4OGC brought attention to the Innovator's Dilemma of adopting technology innovations before the customer is asking for change — building in structural awareness of disruption risk.
+          </div>
+        </div>
+      </div>
+
+      <div class="heuristic">
+        <div class="heuristic__num-col">
+          <div class="heuristic__badge heuristic__badge--6">6</div>
+          <div class="heuristic__connector"></div>
+        </div>
+        <div class="heuristic__content">
+          <h3 class="heuristic__title">
+            <span class="heuristic__icon">📈</span>
+            <span class="heuristic__title-text">Maturation</span>
+          </h3>
+          <p class="heuristic__body">Increasing the technology readiness level through testing, refinement of the standard, and widespread community use is essential to operational use of standards and a robust standards baseline. The more prototypes and prototyping cycles per unit of time, the more technically polished the final product.</p>
+          <div class="heuristic__example">
+            <p class="heuristic__example-label">OGC Example</p>
+            The OGC Interoperability Program drives maturity of potential solutions and increases technology adoption in the marketplace — progressing through testbeds (TRL 4), pilots (TRL 7), and operational deployment. Each cycle increases the readiness level and builds community confidence.
+          </div>
+        </div>
+      </div>
+
+      <div class="heuristic">
+        <div class="heuristic__num-col">
+          <div class="heuristic__badge heuristic__badge--7">7</div>
+          <div class="heuristic__connector"></div>
+        </div>
+        <div class="heuristic__content">
+          <h3 class="heuristic__title">
+            <span class="heuristic__icon">🔄</span>
+            <span class="heuristic__title-text">Adaptation</span>
+          </h3>
+          <p class="heuristic__body">Standards evolve in a complex adaptive ecosystem of technology development and operational systems. Changes to the OGC Standards Baseline based on experience from various applications and communities result in emergent adaptation. Standards are stable intermediate forms necessary for innovation and evolution in a technology ecosystem. Complex adaptive system models provide a framework for technology evolution and their disruptive effects.</p>
+          <div class="heuristic__example">
+            <p class="heuristic__example-label">OGC Example</p>
+            Future application of complex adaptive system models will benefit standards development — treating the standards baseline not as a fixed canon but as an evolving system that responds to environmental pressures from new technologies, communities, and use cases.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Quote ─────────────────────────────────────────────── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "Most successful innovators of the digital age had one thing in common: they were product people. They cared about, and deeply understood, the engineering and design."
+        </blockquote>
+        <p class="highlight__attr">— <em>The Innovators</em>, Walter Isaacson · Referenced by George Percivall</p>
+        <div class="tags">
+          <span class="tag">Open Standards</span>
+          <span class="tag">OGC</span>
+          <span class="tag">Innovation</span>
+          <span class="tag">Maturation</span>
+          <span class="tag">Adaptation</span>
+          <span class="tag">TRL</span>
+          <span class="tag">Geospatial</span>
+          <span class="tag">IEEE</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>These seven heuristics are not abstract principles — they are lessons extracted from decades of work building the open geospatial standards infrastructure that underpins operational access to millions of datasets worldwide. They reflect the lived experience of navigating the tension between visionary ambition and pragmatic implementation, between scientific rigor and community consensus, between stability and adaptation.</p>
+        <p>They are offered for use in future standards development — including the rapidly evolving domains of AI standards, Spatial Web governance, and the broader ecosystem of socio-technical systems engineering that GeoRoundtable addresses today.</p>
+        <p>The underlying conviction is that standards are not bureaucratic artifacts but living systems: stable intermediate forms that make innovation possible by providing a shared foundation from which new ideas can safely depart.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Related ────────────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Standards Ecosystem</h2>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="https://www.linkedin.com/pulse/innovation-maturation-adaptation-standards-development-/?trackingId=T9c8580snBZeaO5c2UgpsA%3D%3D" target="_blank" class="btn btn--primary">↗ Original LinkedIn Article</a>
+      <a href="ieee-spatial-web-standard-approved.html" class="btn btn--outline-navy">IEEE 2874-2025 Standard →</a>
+      <a href="nsf-hdr-ecosystem-and-the-spatial-web.html" class="btn btn--outline-navy">NSF HDR Ecosystem →</a>
+      <a href="spatial-web-to-the-open-geospatial-consortium.html" class="btn btn--outline-navy">OGC Presentation →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-section__inner">
+      <h2 class="cta-section__title">Discuss Standards Development</h2>
+      <p class="cta-section__sub">Interested in applying these heuristics to your standards work, AI governance, or open ecosystem strategy? Get in touch.</p>
+      <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
