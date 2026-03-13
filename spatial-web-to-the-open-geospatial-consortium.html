@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spatial Web to the Open Geospatial Consortium — GeoRoundtable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+
+    /* ── Top accent bar ──────────────────────────────────── */
+    .accent-bar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%);
+    }
+
+    /* ── Navigation ─────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+    }
+    .nav__brand {
+      display: flex; align-items: center; gap: 11px;
+      color: var(--white); font-weight: 700; font-size: 1.1rem;
+      letter-spacing: -0.01em; text-decoration: none;
+    }
+    .nav__logo {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.22);
+      object-fit: cover; flex-shrink: 0;
+    }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a {
+      color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500;
+      padding: 0.4rem 0.85rem; border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+    .nav__back {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500;
+      padding: 0.4rem 0.85rem; border-radius: 6px;
+      transition: background 0.15s, color 0.15s; text-decoration: none;
+    }
+    .nav__back:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%);
+      color: var(--white); padding: 6rem 0 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%);
+    }
+    .hero__inner {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+    }
+    .hero__breadcrumb {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
+    .hero__event-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28);
+      border-radius: 20px; padding: 0.3rem 1rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--mint);
+      letter-spacing: 0.05em; margin-bottom: 1.5rem;
+    }
+    .hero__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1.5rem; max-width: 820px;
+    }
+    .hero__meta {
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 1.5rem; margin-top: 0.5rem;
+    }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* ── Section headings ───────────────────────────────── */
+    .sh { margin-bottom: 3rem; }
+    .sh__label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem;
+    }
+    .sh__title {
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -0.02em; color: var(--navy);
+    }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 640px; line-height: 1.7; }
+
+    /* ── Abstract / Intro ───────────────────────────────── */
+    .abstract {
+      background: var(--white);
+      border-left: 4px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 2rem 2.2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 3rem;
+      font-size: 1.02rem; color: #2a3a50; line-height: 1.8;
+    }
+    .abstract p + p { margin-top: 1rem; }
+
+    /* ── Slide summary cards ────────────────────────────── */
+    .topic-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;
+    }
+    .topic-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem;
+      box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .topic-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(8,24,64,0.12); }
+    .topic-card__number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--light); border: 1px solid var(--border);
+      font-size: 0.8rem; font-weight: 700; color: var(--teal);
+      margin-bottom: 1rem;
+    }
+    .topic-card__label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem;
+    }
+    .topic-card__title {
+      font-size: 1.02rem; font-weight: 700; color: var(--navy);
+      line-height: 1.3; margin-bottom: 0.6rem;
+    }
+    .topic-card__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Key findings / standards panel ────────────────── */
+    .standard-block {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 2.2rem;
+      box-shadow: var(--shadow); margin-bottom: 1.5rem;
+    }
+    .standard-block__head {
+      display: flex; align-items: flex-start; gap: 1.2rem;
+      margin-bottom: 1.25rem; padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .standard-block__icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: #e8f2fa; display: flex; align-items: center;
+      justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+    }
+    .standard-block__org {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.2rem;
+    }
+    .standard-block__name {
+      font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem;
+    }
+    .standard-block__id { font-size: 0.85rem; color: var(--muted); }
+    .standard-block__body { font-size: 0.92rem; color: #3a3a3a; line-height: 1.75; }
+    .standard-block__body p + p { margin-top: 0.85rem; }
+
+    /* ── Quote / highlight ──────────────────────────────── */
+    .highlight {
+      background: var(--navy); color: var(--white);
+      padding: 5rem 0; position: relative; overflow: hidden;
+    }
+    .highlight::after {
+      content: ''; position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+      width: 460px; height: 460px; border-radius: 50%;
+      background: url('logo.svg') center/cover;
+      opacity: 0.055; pointer-events: none;
+    }
+    .highlight__inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .highlight__quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-style: italic; line-height: 1.55;
+      color: rgba(255,255,255,0.92); margin-bottom: 1rem;
+    }
+    .highlight__attr {
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mint);
+    }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 1rem; }
+
+    /* ── Tags / chips ───────────────────────────────────── */
+    .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .tag {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 6px; padding: 0.4rem 0.9rem;
+      font-size: 0.82rem; font-weight: 600; color: var(--mint);
+    }
+
+    /* ── Resource CTA ───────────────────────────────────── */
+    .resource-strip {
+      background: var(--light); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 2.2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap; box-shadow: var(--shadow);
+    }
+    .resource-strip__info { flex: 1 1 300px; }
+    .resource-strip__label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem;
+    }
+    .resource-strip__title { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+    .resource-strip__meta { font-size: 0.88rem; color: var(--muted); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.72rem 1.5rem; border-radius: 8px;
+      font-weight: 600; font-size: 0.9rem; transition: all 0.18s;
+      text-decoration: none !important; border: none; cursor: pointer; white-space: nowrap;
+    }
+    .btn--primary { background: var(--teal); color: var(--white); }
+    .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
+    .btn--outline-navy {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--navy);
+    }
+    .btn--outline-navy:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* ── Two-col layout ─────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+
+    /* ── Context about section ──────────────────────────── */
+    .context-item { display: flex; gap: 1.2rem; margin-bottom: 1.5rem; }
+    .context-item:last-child { margin-bottom: 0; }
+    .context-item__dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--teal); flex-shrink: 0; margin-top: 0.55rem;
+    }
+    .context-item__label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.2rem; }
+    .context-item__text { font-size: 0.92rem; color: #3a3a3a; line-height: 1.65; }
+
+    /* ── Contact / CTA ──────────────────────────────────── */
+    .cta-section {
+      background: var(--navy); color: var(--white);
+      padding: 5rem 0; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; right: -70px; top: 50%; transform: translateY(-50%);
+      width: 430px; height: 430px; border-radius: 50%;
+      background: url('logo.svg') center/cover;
+      opacity: 0.05; pointer-events: none;
+    }
+    .cta-section__inner { position: relative; z-index: 1; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub {
+      color: rgba(255,255,255,0.66); margin-bottom: 2.25rem;
+      max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65;
+    }
+    .cta-section__cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--mint); color: var(--navy);
+      border-radius: 9px; padding: 0.88rem 2.2rem;
+      font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s;
+    }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    .footer {
+      background: #05101e; color: rgba(255,255,255,0.35);
+      padding: 2rem 0; font-size: 0.82rem;
+    }
+    .footer__inner {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.75rem; flex-wrap: wrap;
+    }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .highlight__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .two-col          { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav__links  { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+      .resource-strip { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<!-- ── Navigation ──────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>›</span>
+      OGC Presentation
+    </div>
+    <div class="hero__event-badge">
+      🌐 GeoPose Summit 2025 · Metaverse Standards Forum
+    </div>
+    <h1 class="hero__title">Spatial Web to the Open Geospatial Consortium</h1>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Presenter</span>
+        <span class="hero__meta-value">George Percivall &amp; Stephane Fellah</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Date</span>
+        <span class="hero__meta-value">October 27, 2025</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Event</span>
+        <span class="hero__meta-value">GeoPose Summit 2025</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Organization</span>
+        <span class="hero__meta-value">Spatial Web Foundation / IEEE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Overview ─────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <div class="sh">
+          <p class="sh__label">Overview</p>
+          <h2 class="sh__title">Bringing the Spatial Web to OGC</h2>
+          <p class="sh__desc">How the newly approved IEEE 2874-2025 standard integrates with OGC's GeoPose and the broader open geospatial ecosystem.</p>
+        </div>
+        <div class="abstract">
+          <p>The Spatial Web is moving beyond the screen. As AI, robotics, and IoT converge into Cyber-Physical Systems (CPS), a shared, open world model becomes essential for safe and trustworthy autonomous intelligent systems operating in the physical world.</p>
+          <p>This presentation, delivered at the GeoPose Summit 2025, explains how the IEEE 2874-2025 Spatial Web standard — approved in May 2025 — defines that shared world model through the Hyperspace Modeling Language (HSML) and Hyperspace Transaction Protocol (HSTP), and how OGC GeoPose serves as a normative reference anchoring Spatial Web entities to precise real-world positions and orientations.</p>
+          <p>George Percivall, IEEE Spatial Web Chair and former CTO of the Open Geospatial Consortium, outlines the technical architecture and the path toward a decentralized, interoperable, and trustworthy Spatial Web.</p>
+        </div>
+      </div>
+      <div>
+        <div style="margin-bottom: 1.5rem;">
+          <div class="sh">
+            <p class="sh__label">Event Context</p>
+            <h3 class="sh__title" style="font-size:1.3rem;">GeoPose Summit 2025</h3>
+          </div>
+          <div class="context-item">
+            <div class="context-item__dot"></div>
+            <div>
+              <p class="context-item__label">Hosted by</p>
+              <p class="context-item__text">Metaverse Standards Forum Real/Virtual World Integration Working Group, in collaboration with OGC and W3C WebVMT</p>
+            </div>
+          </div>
+          <div class="context-item">
+            <div class="context-item__dot"></div>
+            <div>
+              <p class="context-item__label">Focus</p>
+              <p class="context-item__text">Advancing OGC GeoPose adoption across spatial computing, AI, robotics, and immersive environments</p>
+            </div>
+          </div>
+          <div class="context-item">
+            <div class="context-item__dot"></div>
+            <div>
+              <p class="context-item__label">Significance</p>
+              <p class="context-item__text">First major presentation of IEEE 2874-2025 to the geospatial standards community following its May 2025 approval</p>
+            </div>
+          </div>
+          <div class="context-item">
+            <div class="context-item__dot"></div>
+            <div>
+              <p class="context-item__label">George Percivall's Role</p>
+              <p class="context-item__text">IEEE Spatial Web Chair; formerly Chief Technology Officer &amp; Chief Engineer at the Open Geospatial Consortium</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Key Standards ─────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Core Standards</p>
+      <h2 class="sh__title">The Standards Foundation</h2>
+      <p class="sh__desc">The presentation centered on two interlocking standards — one newly approved, one established — that together anchor AI agents and autonomous systems to the physical world.</p>
+    </div>
+
+    <div class="standard-block">
+      <div class="standard-block__head">
+        <div class="standard-block__icon">📡</div>
+        <div>
+          <p class="standard-block__org">IEEE Standard · Approved May 2025</p>
+          <p class="standard-block__name">IEEE 2874-2025 — Spatial Web Protocol, Architecture &amp; Governance</p>
+          <p class="standard-block__id">Hyperspace Modeling Language (HSML) · Hyperspace Transaction Protocol (HSTP)</p>
+        </div>
+      </div>
+      <div class="standard-block__body">
+        <p>IEEE 2874-2025 defines a secure, interoperable, and intelligent Spatial Web that enables collaboration between AI agents, IoT devices, robotic systems, and digital infrastructure. The standard's architecture rests on an open, interoperable reference model built on ISO/IEC/IEEE 42010 System Architecture and the IEEE 7000 series on the Ethics of Autonomous and Intelligent Systems.</p>
+        <p>The <strong>Hyperspace Modeling Language (HSML)</strong> encodes the entities and properties of the Spatial Web Ontology — covering space, structure, behavior, and trust. HSML entities are specifically bounded by GeoPose, making OGC's position/orientation standard a normative reference within IEEE 2874-2025.</p>
+        <p>The <strong>Hyperspace Transaction Protocol (HSTP)</strong> governs how agents, devices, and systems interact within the Spatial Web — enabling secure, governed, real-time exchange of spatial context, sensor data, and instructions.</p>
+      </div>
+    </div>
+
+    <div class="standard-block">
+      <div class="standard-block__head">
+        <div class="standard-block__icon">🌍</div>
+        <div>
+          <p class="standard-block__org">OGC Standard · Normative Reference in IEEE 2874-2025</p>
+          <p class="standard-block__name">OGC GeoPose 1.0 Data Exchange Standard</p>
+          <p class="standard-block__id">OGC Standard 21-056r11</p>
+        </div>
+      </div>
+      <div class="standard-block__body">
+        <p>OGC GeoPose 1.0 defines a standardized way to express the position and orientation of real or virtual objects in relation to Earth's surface — a foundational capability for any system that must situate digital entities in physical space.</p>
+        <p>Within the Spatial Web architecture, GeoPose provides the geospatial anchor for HSML entities: every object, agent, or structure modeled in HSML is localized through GeoPose. This integration ensures that Spatial Web deployments maintain a rigorous, interoperable connection to real-world geography, critical for physical AI, autonomous vehicles, smart infrastructure, and digital twins.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Key Topics ─────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Presentation Topics</p>
+      <h2 class="sh__title">What the Presentation Covers</h2>
+      <p class="sh__desc">Six interconnected themes explored across the GeoPose Summit talk.</p>
+    </div>
+    <div class="topic-grid">
+
+      <div class="topic-card">
+        <div class="topic-card__number">1</div>
+        <p class="topic-card__label">Architecture</p>
+        <h3 class="topic-card__title">AI Beyond the Screen</h3>
+        <p class="topic-card__body">The Spatial Web extends AI from digital environments into the physical world. Software integrates with robotic and IoT systems to create Cyber-Physical Systems (CPS). AI combined with CPS produces Autonomous Intelligent Systems (AIS) — requiring a common, trustworthy world model.</p>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card__number">2</div>
+        <p class="topic-card__label">Standard</p>
+        <h3 class="topic-card__title">IEEE 2874-2025 Approval</h3>
+        <p class="topic-card__body">The Spatial Web Protocol, Architecture &amp; Governance specification was approved in May 2025 as IEEE 2874-2025. This landmark approval establishes the foundational standard for how AI agents, robots, and people share a common world model at global scale.</p>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card__number">3</div>
+        <p class="topic-card__label">Modeling Language</p>
+        <h3 class="topic-card__title">HSML: Spatial Web Ontology</h3>
+        <p class="topic-card__body">The Hyperspace Modeling Language encodes entities across four dimensions: space, structure, behavior, and trust. Each entity is spatially bounded by an OGC GeoPose, ensuring all modeled objects have a precise, interoperable real-world anchor.</p>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card__number">4</div>
+        <p class="topic-card__label">Integration</p>
+        <h3 class="topic-card__title">GeoPose as Normative Reference</h3>
+        <p class="topic-card__body">OGC GeoPose 1.0 (21-056r11) is a normative reference in IEEE 2874-2025. This makes the OGC standard a required building block of the Spatial Web — bridging geospatial expertise with the emerging AI-driven spatial computing ecosystem.</p>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card__number">5</div>
+        <p class="topic-card__label">Governance</p>
+        <h3 class="topic-card__title">Decentralized &amp; Trustworthy</h3>
+        <p class="topic-card__body">The Spatial Web is designed to be decentralized, trustworthy, and governed — addressing the ethics and accountability challenges of autonomous systems. The architecture draws on IEEE 7000 series ethics standards and ISO/IEC/IEEE 42010 to integrate governance at the foundational level.</p>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card__number">6</div>
+        <p class="topic-card__label">Industry Context</p>
+        <h3 class="topic-card__title">Gartner Radar: Spatial AI</h3>
+        <p class="topic-card__body">The October 2025 Gartner Radar recognizes key Spatial Web components — HSML and HSTP (Spatial Web Protocols) and Universal Digital Governance (Spatial Web Systems) — signaling growing industry awareness of the standard's relevance to enterprise spatial AI deployments.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Highlight Quote ───────────────────────────────────── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "The Spatial Web provides a decentralized, trustworthy, and useful foundation — guiding physical AI to serve the needs of people and society."
+        </blockquote>
+        <p class="highlight__attr">— George Percivall, GeoPose Summit 2025</p>
+        <div class="tags">
+          <span class="tag">IEEE 2874-2025</span>
+          <span class="tag">OGC GeoPose</span>
+          <span class="tag">HSML</span>
+          <span class="tag">HSTP</span>
+          <span class="tag">Physical AI</span>
+          <span class="tag">Spatial Web</span>
+          <span class="tag">Cyber-Physical Systems</span>
+        </div>
+      </div>
+      <div>
+        <p class="highlight__body">
+          <p>George Percivall brings a unique vantage point to this intersection: as IEEE Spatial Web Chair, he led the development and approval of IEEE 2874-2025; as former CTO &amp; Chief Engineer of the Open Geospatial Consortium, he has long championed the open standards ecosystem that makes GeoPose possible.</p>
+          <p style="margin-top:1rem;">This presentation represents a direct bridge between the two communities — bringing the newly ratified IEEE standard to the geospatial world, and making the case for deep interoperability between spatial computing and geospatial infrastructure.</p>
+          <p style="margin-top:1rem;">The GeoPose Summit 2025 was jointly organized by the Metaverse Standards Forum, OGC, and W3C WebVMT — making it a natural venue for this standards convergence.</p>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Resources ─────────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Resources</p>
+      <h2 class="sh__title">Access the Presentation</h2>
+      <p class="sh__desc">The full slide deck is available from the Metaverse Standards Forum archive.</p>
+    </div>
+    <div class="resource-strip">
+      <div class="resource-strip__info">
+        <p class="resource-strip__label">Slide Deck · PDF</p>
+        <p class="resource-strip__title">Spatial Web Foundation — Presentation to GeoPose Summit</p>
+        <p class="resource-strip__meta">George Percivall &amp; Stephane Fellah · October 27, 2025 · Metaverse Standards Forum</p>
+      </div>
+      <a href="https://metaverse-standards.org/wp-content/uploads/2025-10-27-Spatial-Web-to-GeoPose-Summit.pdf"
+         target="_blank" class="btn btn--primary">
+        ↗ View PDF
+      </a>
+    </div>
+    <div style="margin-top: 1.25rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="https://spatialwebfoundation.org/spatial-web-foundation-announces-ieee-approval-of-spatial-web-standard/"
+         target="_blank" class="btn btn--outline-navy">
+        IEEE 2874-2025 Announcement →
+      </a>
+      <a href="https://metaverse-standards.org/event/geopose-summit-2025/"
+         target="_blank" class="btn btn--outline-navy">
+        GeoPose Summit 2025 →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact CTA ───────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-section__inner">
+      <h2 class="cta-section__title">Discuss the Spatial Web</h2>
+      <p class="cta-section__sub">Interested in how IEEE 2874-2025 and OGC GeoPose apply to your systems, standards work, or research? Get in touch.</p>
+      <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
