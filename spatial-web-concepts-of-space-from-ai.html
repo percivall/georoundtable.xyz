@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spatial Web: Concepts of Space from AI — GeoRoundtable</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(8,24,64,.08);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; color: #1a2235; background: #fff; line-height: 1.6; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; }
+
+    /* ── Accent bar ── */
+    .accent-bar { height: 4px; background: linear-gradient(90deg, var(--navy), var(--blue), var(--teal), var(--mint)); }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy); color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .85rem 2rem; gap: 1rem;
+    }
+    .nav__brand { font-weight: 700; font-size: 1.05rem; letter-spacing: .02em; color: #fff; text-decoration: none; white-space: nowrap; }
+    .nav__links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,.82); font-size: .88rem; font-weight: 500; }
+    .nav__links a:hover { color: #fff; text-decoration: none; }
+    .nav__cta {
+      background: var(--sky); color: #fff; font-size: .83rem; font-weight: 600;
+      padding: .45rem 1rem; border-radius: 6px; white-space: nowrap;
+    }
+    .nav__cta:hover { background: var(--blue); text-decoration: none; }
+
+    /* ── Container ── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #0e2a6e 55%, var(--teal) 100%);
+      color: #fff; padding: 4.5rem 1.5rem 3.5rem;
+    }
+    .hero__inner { max-width: 1080px; margin: 0 auto; }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+      border-radius: 20px; padding: .35rem .9rem; font-size: .8rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1.2rem;
+      color: var(--mint);
+    }
+    .hero__title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.18; margin-bottom: .9rem; max-width: 820px;
+    }
+    .hero__sub {
+      font-size: 1.08rem; color: rgba(255,255,255,.82); max-width: 700px; line-height: 1.65;
+      margin-bottom: 1.8rem;
+    }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 1.2rem; font-size: .85rem; color: rgba(255,255,255,.7); }
+    .hero__meta span { display: flex; align-items: center; gap: .35rem; }
+
+    /* ── Section headings ── */
+    .sh { text-align: center; margin-bottom: 2.5rem; }
+    .sh__label { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .5rem; }
+    .sh__title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--navy); margin-bottom: .7rem; }
+    .sh__desc { font-size: 1rem; color: var(--muted); max-width: 640px; margin: 0 auto; }
+
+    /* ── Section spacing ── */
+    section { padding: 4rem 0; }
+    section:nth-child(even) { background: var(--light); }
+
+    /* ── Two-col layout ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Prose ── */
+    .prose { font-size: 1rem; line-height: 1.75; color: #2a3348; }
+    .prose p + p { margin-top: 1em; }
+    .prose strong { color: var(--navy); font-weight: 600; }
+
+    /* ── Highlight block ── */
+    .highlight {
+      background: var(--navy); color: #fff; border-radius: var(--radius);
+      padding: 2rem 2.2rem; margin: 2.5rem 0;
+    }
+    .highlight__quote {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 1.25rem; line-height: 1.55; margin-bottom: 1rem;
+      color: rgba(255,255,255,.92);
+    }
+    .highlight__attr { font-size: .85rem; color: var(--mint); font-weight: 600; letter-spacing: .04em; }
+    .highlight__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem; }
+    .highlight__tag {
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px; padding: .25rem .75rem; font-size: .75rem; font-weight: 600;
+      letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,.8);
+    }
+
+    /* ── Pillar cards ── */
+    .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .pillar {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.6rem 1.4rem; box-shadow: var(--shadow);
+      border-top: 3px solid var(--teal);
+    }
+    .pillar__icon { font-size: 1.8rem; margin-bottom: .8rem; }
+    .pillar__title { font-weight: 700; color: var(--navy); margin-bottom: .5rem; font-size: .95rem; }
+    .pillar__body { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Space types grid ── */
+    .space-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .space-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.8rem 1.6rem; box-shadow: var(--shadow);
+    }
+    .space-card__era {
+      font-size: .73rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: .5rem;
+    }
+    .space-card__title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); margin-bottom: .7rem; }
+    .space-card__body { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+    .space-card__examples {
+      margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .4rem;
+    }
+    .space-card__ex {
+      background: var(--light); border: 1px solid var(--border);
+      border-radius: 4px; padding: .2rem .6rem; font-size: .75rem; color: var(--navy); font-weight: 500;
+    }
+
+    /* ── Concept flow diagram ── */
+    .concept-flow {
+      background: var(--light); border-radius: var(--radius); padding: 2rem;
+      border: 1px solid var(--border); margin: 2rem 0;
+    }
+    .concept-flow__title {
+      font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      color: var(--teal); margin-bottom: 1.5rem; text-align: center;
+    }
+    .flow-steps { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: center; }
+    .flow-step {
+      background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      padding: .7rem 1.1rem; font-size: .85rem; font-weight: 600; color: var(--navy);
+      text-align: center; min-width: 120px;
+    }
+    .flow-step--highlight { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .flow-arrow { color: var(--teal); font-size: 1.2rem; font-weight: 700; }
+
+    /* ── Inset box ── */
+    .inset {
+      background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--sky);
+      border-radius: var(--radius); padding: 1.4rem 1.6rem; margin: 1.5rem 0;
+    }
+    .inset__label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--sky); margin-bottom: .5rem; }
+    .inset__body { font-size: .92rem; color: #2a3348; line-height: 1.65; }
+    .inset__body strong { color: var(--navy); }
+
+    /* ── Resource strip ── */
+    .resource-strip { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .resource-link {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--light); border: 1px solid var(--border); border-radius: 8px;
+      padding: .6rem 1.1rem; font-size: .85rem; font-weight: 600; color: var(--navy);
+      transition: background .15s;
+    }
+    .resource-link:hover { background: var(--border); text-decoration: none; }
+    .resource-link__icon { font-size: 1rem; }
+
+    /* ── CTA section ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, #0e2a6e 60%, var(--teal) 100%);
+      color: #fff; padding: 3.5rem 1.5rem; text-align: center;
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: .9rem;
+    }
+    .cta-section p { color: rgba(255,255,255,.8); max-width: 560px; margin: 0 auto 1.8rem; }
+    .cta-btn {
+      display: inline-block; background: var(--sky); color: #fff; font-weight: 700;
+      font-size: .95rem; padding: .85rem 2rem; border-radius: 8px;
+    }
+    .cta-btn:hover { background: var(--mint); color: var(--navy); text-decoration: none; }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--navy); color: rgba(255,255,255,.6); font-size: .82rem;
+      padding: 2rem 1.5rem; text-align: center;
+    }
+    .footer a { color: rgba(255,255,255,.75); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .nav__cta { display: none; }
+      .hero { padding: 2.5rem 1rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <a class="nav__brand" href="index.html">GeoRoundtable</a>
+  <ul class="nav__links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#standards">Standards</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+  <a class="nav__cta" href="index.html#contact">Contact</a>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero__inner">
+    <div class="hero__badge">🌐 Spatial Web Foundation</div>
+    <h1 class="hero__title">Spatial Web: Concepts of Space from AI</h1>
+    <p class="hero__sub">
+      Artificial intelligence is transforming humanity's understanding of space itself — expanding from the geographic and physical to hyperspace, tensors, and the high-dimensional worlds of machine cognition. The Spatial Web is the infrastructure that integrates them all.
+    </p>
+    <div class="hero__meta">
+      <span>📐 IEEE P2874 Working Group</span>
+      <span>🔬 Hyperspace Modeling Language</span>
+      <span>🤖 Agentic AI Integration</span>
+    </div>
+  </div>
+</header>
+
+<!-- Overview -->
+<section>
+  <div class="container">
+    <div class="two-col">
+      <div class="prose">
+        <p>
+          <strong>Space and time are humanity's primary tools for organizing information.</strong> From the earliest maps of the ancient world to GPS satellites and digital twins, spatial reasoning has been foundational to how we understand, communicate, and act on knowledge about the world.
+        </p>
+        <p>
+          But artificial intelligence — particularly the large language models, graph networks, and tensor-based systems that define modern AI — is introducing radically new concepts of space. These are not the Cartesian coordinates of classical geography, nor the three-dimensional physics of Newton. They are <strong>high-dimensional, relational, and abstract</strong>: tensor spaces in which concepts like "apple" and "orange" can be compared, semantic spaces where similarity is a kind of distance, and graph spaces where non-coordinate relationships define structure.
+        </p>
+        <p>
+          The <strong>Spatial Web</strong>, defined by IEEE 2874-2025, accommodates and unifies these expanded notions of space. Its concept of <em>Hyperspace</em> — entities connected by relationships — is deliberately general enough to encompass geographic space, physical 3D space, tensor/vector space, semantic space, and more. This generality is what makes the Spatial Web a foundational infrastructure for the age of agentic AI.
+        </p>
+        <p>
+          George Percivall, Vice Chair of the IEEE P2874 Working Group, has argued that the Spatial Web's most important innovation is precisely this generalization: <em>"Space and time help us organize information. We've got the most general version of space and time in hyperspace."</em>
+        </p>
+      </div>
+
+      <div>
+        <div class="inset">
+          <div class="inset__label">Core Insight</div>
+          <div class="inset__body">
+            <strong>AI doesn't just operate in space — it creates new kinds of space.</strong> Neural networks build high-dimensional vector spaces where meaning can be computed geometrically. The Spatial Web extends this insight: every entity in the world can be represented as a node in hyperspace, with relationships as the geometry that connects them.
+          </div>
+        </div>
+
+        <div class="inset">
+          <div class="inset__label">Word-to-Vector → World-to-Vector</div>
+          <div class="inset__body">
+            Large language models transform words into vectors, enabling conceptual comparison in high-dimensional space. The Spatial Web generalizes this principle to the entire physical and digital world: <strong>cyber-physical entities</strong> — people, buildings, sensors, agents, and objects — are represented as vectors in hyperspace, enabling integration, reasoning, and interoperability at unprecedented scale.
+          </div>
+        </div>
+
+        <div class="inset">
+          <div class="inset__label">IEEE 2874-2025</div>
+          <div class="inset__body">
+            The IEEE Spatial Web Standard defines Hyperspace Modeling Language (HSML) and Hyperspace Transaction Protocol (HSTP) — providing a <strong>Rosetta stone</strong> for integrating 3D worlds, AI vector spaces, business analytics, and geographic information systems within a single coherent framework.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Concepts of Space -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Expanding Concepts</p>
+      <h2 class="sh__title">A History of Space — From Euclid to Hyperspace</h2>
+      <p class="sh__desc">Each era of science and technology has expanded the concept of space. AI represents the most recent — and most radical — expansion yet.</p>
+    </div>
+
+    <div class="space-grid">
+
+      <div class="space-card">
+        <div class="space-card__era">Classical — c. 300 BCE</div>
+        <h3 class="space-card__title">Euclidean Space</h3>
+        <p class="space-card__body">The foundational geometry of points, lines, and planes. Three-dimensional, flat, and absolute — the space of everyday physical intuition. Remains essential for engineering, construction, and physical modeling.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">3D geometry</span>
+          <span class="space-card__ex">surveying</span>
+          <span class="space-card__ex">architecture</span>
+        </div>
+      </div>
+
+      <div class="space-card">
+        <div class="space-card__era">Enlightenment — 17th c.</div>
+        <h3 class="space-card__title">Cartesian Coordinate Space</h3>
+        <p class="space-card__body">Descartes united algebra and geometry, enabling precise numerical representation of location. This foundation underpins all of geographic information systems (GIS), GPS, and location-based services.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">GIS</span>
+          <span class="space-card__ex">GPS coordinates</span>
+          <span class="space-card__ex">mapping</span>
+        </div>
+      </div>
+
+      <div class="space-card">
+        <div class="space-card__era">Modern Physics — 1905</div>
+        <h3 class="space-card__title">Spacetime</h3>
+        <p class="space-card__body">Einstein's relativity unified space and time into a four-dimensional continuum, curved by mass and energy. Space is no longer absolute but relational — dependent on the observer's reference frame.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">relativity</span>
+          <span class="space-card__ex">GPS corrections</span>
+          <span class="space-card__ex">cosmology</span>
+        </div>
+      </div>
+
+      <div class="space-card">
+        <div class="space-card__era">Machine Learning — 2010s</div>
+        <h3 class="space-card__title">Vector / Tensor Space</h3>
+        <p class="space-card__body">Neural networks embed concepts, words, and objects as high-dimensional vectors. Semantic similarity becomes geometric proximity. Word2Vec, embeddings, and transformer attention all operate in this abstract space of meaning.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">word embeddings</span>
+          <span class="space-card__ex">LLMs</span>
+          <span class="space-card__ex">tensors</span>
+        </div>
+      </div>
+
+      <div class="space-card">
+        <div class="space-card__era">Graph AI — 2010s–2020s</div>
+        <h3 class="space-card__title">Relational / Graph Space</h3>
+        <p class="space-card__body">Graph neural networks bring non-coordinate relationships to the fore — connections between entities define structure without requiring Cartesian placement. Knowledge graphs, social networks, and ontologies all inhabit this relational space.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">knowledge graphs</span>
+          <span class="space-card__ex">ontologies</span>
+          <span class="space-card__ex">GNNs</span>
+        </div>
+      </div>
+
+      <div class="space-card" style="border-top: 3px solid var(--teal);">
+        <div class="space-card__era">Spatial Web — 2025</div>
+        <h3 class="space-card__title">Hyperspace</h3>
+        <p class="space-card__body">The Spatial Web's Hyperspace unifies all prior concepts of space. Entities — physical, digital, biological, computational — are nodes; relationships of any kind define the geometry. Geographic, semantic, temporal, and physical spaces are all instances of Hyperspace.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">HSML</span>
+          <span class="space-card__ex">IEEE 2874</span>
+          <span class="space-card__ex">world-to-vector</span>
+          <span class="space-card__ex">unified AI</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Highlight quote -->
+<div class="container">
+  <div class="highlight">
+    <div class="highlight__quote">
+      "AI and big data systems can efficiently handle terabytes and petabytes of information using tensors — very high-dimensional spaces. We generalize the notion of space to hyperspace. Space and time help us organize information. We've got the most general version of space and time in hyperspace."
+    </div>
+    <div class="highlight__attr">George Percivall — Vice Chair, IEEE P2874 Spatial Web Working Group</div>
+    <div class="highlight__tags">
+      <span class="highlight__tag">Hyperspace</span>
+      <span class="highlight__tag">Tensors</span>
+      <span class="highlight__tag">IEEE 2874</span>
+      <span class="highlight__tag">Agentic AI</span>
+      <span class="highlight__tag">World Models</span>
+    </div>
+  </div>
+</div>
+
+<!-- The Word-to-Vector Shift -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Core Concept</p>
+      <h2 class="sh__title">From Word-to-Vector to World-to-Vector</h2>
+      <p class="sh__desc">Large language models transformed language into geometry. The Spatial Web extends this transformation to the entire world.</p>
+    </div>
+
+    <div class="concept-flow">
+      <div class="concept-flow__title">The Spatial Generalization of AI</div>
+      <div class="flow-steps">
+        <div class="flow-step">Words as text<br><small style="font-weight:400;color:var(--muted)">pre-2013</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Word2Vec<br><small style="font-weight:400;color:var(--muted)">semantic vectors</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">LLM Embeddings<br><small style="font-weight:400;color:var(--muted)">context + meaning</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step flow-step--highlight">World-to-Vectors<br><small style="font-weight:400;color:rgba(255,255,255,.7)">Spatial Web / IEEE 2874</small></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="prose">
+        <p>
+          <strong>Word2Vec and its successors</strong> demonstrated a profound insight: language could be understood geometrically. Words are points in high-dimensional space, and their relationships — synonymy, analogy, association — are vectors. "King minus Man plus Woman equals Queen" is a geometric fact about the structure of meaning.
+        </p>
+        <p>
+          Large language models extended this principle dramatically. Transformer architectures build attention-weighted representations in which every concept is locatable in a shared semantic space. This is not merely a metaphor — it is the operational reality of how modern AI processes meaning.
+        </p>
+        <p>
+          <strong>The Spatial Web extends this spatial metaphor beyond language to the full world.</strong> Just as Word2Vec maps words to vectors, the Spatial Web maps cyber-physical entities — sensors, buildings, agents, digital twins, geographic features — into hyperspace. This "World-to-Vectors" principle enables AI systems to reason about physical reality with the same geometric power they currently apply to language.
+        </p>
+      </div>
+      <div class="prose">
+        <p>
+          This generalization is not merely theoretical. The <strong>Hyperspace Modeling Language (HSML)</strong> provides the formal vocabulary for representing entities in hyperspace — defining their properties, relationships, and behaviors in a machine-readable form that any conforming AI agent can interpret.
+        </p>
+        <p>
+          The <strong>Hyperspace Transaction Protocol (HSTP)</strong> defines how agents exchange information about entities in hyperspace — enabling the real-time synchronization of world models across distributed AI systems.
+        </p>
+        <p>
+          Together, these specifications create the infrastructure for <strong>collective spatial intelligence</strong>: many AI agents, robots, and human users sharing a single, coherent, continuously updated model of the world — grounded in the generalized spatial framework of hyperspace.
+        </p>
+        <p>
+          Where traditional GIS handles geographic space and AI handles semantic space, the Spatial Web handles <em>all spaces simultaneously</em> — making it the natural integration layer for AI systems that must act in the physical world.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GeoRoundtable Implications -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">GeoRoundtable Application</p>
+      <h2 class="sh__title">Engineering for Expanded Concepts of Space</h2>
+      <p class="sh__desc">Understanding how AI transforms the concept of space has direct consequences for how we design and govern socio-technical systems.</p>
+    </div>
+
+    <div class="pillar-grid">
+
+      <div class="pillar">
+        <div class="pillar__icon">🗺️</div>
+        <h4 class="pillar__title">Geospatial Integration</h4>
+        <p class="pillar__body">Traditional GIS represents geographic space as coordinates, layers, and features. AI-driven systems require dynamic, relational, high-dimensional representations — and the Spatial Web provides the bridge between these paradigms.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">🤖</div>
+        <h4 class="pillar__title">Agentic World Models</h4>
+        <p class="pillar__body">AI agents need coherent world models to act purposefully. Hyperspace gives agents a common spatial framework — enabling coordination, shared situational awareness, and interoperability without requiring a central authority.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">🔗</div>
+        <h4 class="pillar__title">Multi-Domain Interoperability</h4>
+        <p class="pillar__body">When space means hyperspace, systems from radically different domains — enterprise analytics, autonomous vehicles, environmental sensors, social graphs — can all be positioned in a shared representational framework.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">📐</div>
+        <h4 class="pillar__title">Standards as Spatial Grammar</h4>
+        <p class="pillar__body">IEEE 2874 provides the formal grammar for hyperspace — the shared language that allows AI systems, robots, and people to describe their understanding of the world in mutually interpretable terms. This is the prerequisite for collective intelligence.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Resources -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Explore Further</h2>
+      <p class="sh__desc">GeoRoundtable work connecting concepts of space, AI, and the Spatial Web.</p>
+    </div>
+
+    <div class="resource-strip">
+      <a class="resource-link" href="ieee-spatial-web-standard-approved.html">
+        <span class="resource-link__icon">📜</span> IEEE 2874-2025 Standard Approval
+      </a>
+      <a class="resource-link" href="spatial-web-to-the-open-geospatial-consortium.html">
+        <span class="resource-link__icon">🌍</span> Spatial Web to OGC Presentation
+      </a>
+      <a class="resource-link" href="nsf-hdr-ecosystem-and-the-spatial-web.html">
+        <span class="resource-link__icon">🔬</span> NSF HDR Ecosystem &amp; Spatial Web
+      </a>
+      <a class="resource-link" href="evolution-of-agency-m-tomasello.html">
+        <span class="resource-link__icon">🧬</span> Evolution of Agency
+      </a>
+      <a class="resource-link" href="philosophy-must-inform-socio-technical-systems-engineering.html">
+        <span class="resource-link__icon">🏛️</span> Philosophy of Engineering
+      </a>
+      <a class="resource-link" href="https://sagroups.ieee.org/2874/" target="_blank">
+        <span class="resource-link__icon">🔗</span> IEEE P2874 Working Group
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Work with GeoRoundtable on the Spatial Web</h2>
+    <p>GeoRoundtable brings together expertise in geospatial standards, agentic AI, and philosophy of engineering to help organizations navigate the Spatial Web ecosystem.</p>
+    <a class="cta-btn" href="index.html#contact">Get in Touch</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2025 GeoRoundtable · <a href="index.html">Home</a> · <a href="https://www.linkedin.com/company/geo-roundtable" target="_blank">LinkedIn</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

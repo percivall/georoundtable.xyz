@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JHU Natural Philosophy Symposium 2025 — GeoRoundtable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+    .accent-bar { height: 3px; background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%); }
+
+    /* ── Navigation ── */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .nav__brand { display: flex; align-items: center; gap: 11px; color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; text-decoration: none; }
+    .nav__logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); object-fit: cover; flex-shrink: 0; }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    /* ── Hero ── */
+    .hero { background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%); color: var(--white); padding: 6rem 0 5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%), radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%); }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
+    .hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28); border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600; color: var(--mint); letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+    .hero__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; max-width: 820px; }
+    .hero__sub { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 680px; line-height: 1.7; margin-bottom: 1.75rem; }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 2rem; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* ── Section headings ── */
+    .sh { margin-bottom: 3rem; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+    .sh__title { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 640px; line-height: 1.7; }
+
+    /* ── Prose ── */
+    .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; }
+    .prose p + p { margin-top: 1.1rem; }
+
+    /* ── Two-col ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .two-col--wide { display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: start; }
+
+    /* ── Inset box ── */
+    .inset { background: var(--light); border-left: 4px solid var(--teal); border-radius: 0 var(--radius) var(--radius) 0; padding: 1.75rem 2rem; box-shadow: var(--shadow); }
+    .inset p { font-size: 0.95rem; color: #2a3a50; line-height: 1.8; }
+    .inset p + p { margin-top: 0.9rem; }
+    .inset--blue { border-left-color: var(--blue); }
+    .inset--sky  { border-left-color: var(--sky); }
+
+    /* ── Takeaway cards ── */
+    .takeaway-list { display: flex; flex-direction: column; gap: 1.8rem; }
+    .takeaway {
+      background: var(--white); border: 1px solid var(--border);
+      border-left: 4px solid var(--teal); border-radius: var(--radius);
+      padding: 1.75rem 2rem; box-shadow: var(--shadow);
+    }
+    .takeaway:nth-child(2) { border-left-color: var(--blue); }
+    .takeaway:nth-child(3) { border-left-color: var(--sky); }
+    .takeaway:nth-child(4) { border-left-color: var(--navy); }
+    .takeaway:nth-child(5) { border-left-color: var(--teal); }
+    .takeaway:nth-child(6) { border-left-color: #7c4dbc; }
+    .takeaway__header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.9rem; }
+    .takeaway__icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .takeaway__name { font-size: 1.05rem; font-weight: 700; color: var(--navy); }
+    .takeaway__talk { font-size: 0.88rem; font-style: italic; color: var(--teal); margin-top: 0.15rem; font-weight: 500; }
+    .takeaway__body { font-size: 0.93rem; color: #2a3a50; line-height: 1.8; }
+    .takeaway__body p + p { margin-top: 0.7rem; }
+    .takeaway__link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.9rem; background: var(--light); border: 1px solid var(--border); border-radius: 6px; padding: 0.35rem 0.85rem; font-size: 0.8rem; font-weight: 600; color: var(--navy); }
+    .takeaway__link:hover { background: var(--border); text-decoration: none; }
+    .takeaway__tag { display: inline-block; margin-top: 0.7rem; background: var(--light); border: 1px solid var(--border); border-radius: 5px; padding: 0.2rem 0.6rem; font-size: 0.72rem; font-weight: 700; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* ── Highlight keywords ── */
+    .kw { font-weight: 700; color: var(--navy); }
+    .kw--teal { color: var(--teal); }
+    .kw--blue { color: var(--blue); }
+
+    /* ── Mind map figure ── */
+    .figure-wrap {
+      margin: 2.5rem 0; text-align: center;
+    }
+    .figure-wrap img {
+      margin: 0 auto; border-radius: var(--radius);
+      box-shadow: 0 4px 24px rgba(8,24,64,0.13);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+    .figure-caption {
+      margin-top: 0.75rem; font-size: 0.82rem; color: var(--muted);
+      font-style: italic; text-align: center;
+    }
+
+    /* ── Pillar cards ── */
+    .pillar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+    .pillar { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); transition: transform 0.2s; }
+    .pillar:hover { transform: translateY(-3px); }
+    .pillar:nth-child(2) { border-left-color: var(--blue); }
+    .pillar:nth-child(3) { border-left-color: var(--sky); }
+    .pillar:nth-child(4) { border-left-color: var(--navy); }
+    .pillar__icon { font-size: 1.7rem; margin-bottom: 0.9rem; }
+    .pillar__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .pillar__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Quote / highlight ── */
+    .highlight { background: var(--navy); color: var(--white); padding: 5rem 0; position: relative; overflow: hidden; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 1rem; }
+    .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 1rem; }
+    .highlight__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+
+    .dims { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .dim { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.82rem; font-weight: 600; color: var(--mint); }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.18s; text-decoration: none !important; border: none; cursor: pointer; white-space: nowrap; }
+    .btn--primary { background: var(--teal); color: var(--white); }
+    .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
+    .btn--outline-navy { background: transparent; border: 1.5px solid var(--border); color: var(--navy); }
+    .btn--outline-navy:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    /* ── Footer ── */
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .highlight__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .two-col, .two-col--wide { grid-template-columns: 1fr; }
+      .pillar-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<!-- ── Navigation ── -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>›</span>
+      Natural Philosophy
+    </div>
+    <div class="hero__badge">🏛️ Symposium · May 2025 · Johns Hopkins University</div>
+    <h1 class="hero__title">Johns Hopkins Natural Philosophy Symposium 2025</h1>
+    <p class="hero__sub">An international symposium on all aspects of natural philosophy — exploring the frontiers of understanding of ourselves and the universe at all scales. Reviewed by George Percivall from the perspective of AI engineering and the Spatial Web.</p>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Dates</span>
+        <span class="hero__meta-value">May 29–31, 2025</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Location</span>
+        <span class="hero__meta-value">Baltimore Marriott Waterfront, Baltimore MD</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Hosted by</span>
+        <span class="hero__meta-value">Johns Hopkins Natural Philosophy Forum</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Chairs</span>
+        <span class="hero__meta-value">Sean Carroll &amp; Jenann Ismael</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Overview ── -->
+<section class="section">
+  <div class="container">
+    <div class="two-col--wide">
+      <div>
+        <div class="sh">
+          <p class="sh__label">Overview</p>
+          <h2 class="sh__title">Where Science Meets Philosophy</h2>
+          <p class="sh__desc">George Percivall's review and evaluation of the JHU Natural Philosophy Symposium 2025, with focus on AI/Neuroscience and Social themes.</p>
+        </div>
+        <div class="prose">
+          <p>The Johns Hopkins Natural Philosophy Forum hosted an <span class="kw">international symposium on all aspects of natural philosophy</span> on May 29–31, 2025. It featured a broad set of topics on the frontiers of understanding of ourselves and the universe at all scales. The symposium was superbly hosted by <span class="kw">Sean Carroll</span> and <span class="kw">Jenann Ismael</span>.</p>
+          <p>The program ranged across Math, Time, Physics, Biology, AI and Neuroscience, and Social themes — as captured in the mind map below. My main takeaways were in the AI/Neuroscience and Social categories, which have the most direct relevance to GeoRoundtable's work on agentic systems, the Spatial Web, and philosophy-informed engineering.</p>
+          <p>Based on what started at the JHU Symposium, I look forward to further development and conversations on these topics.</p>
+        </div>
+
+        <div class="figure-wrap">
+          <img src="jhu-symposium-mindmap.png" alt="JHU Natural Philosophy Symposium 2025 — Mind Map of all talks across Math, Time, Physics, Biology, AI/Neuroscience, and Social themes" />
+          <p class="figure-caption">Mind map of the JHU Natural Philosophy Symposium 2025 — organized by theme: Math, Time, Physics, Biology, AI &amp; Neuroscience, and Social.</p>
+        </div>
+      </div>
+      <div>
+        <div class="sh">
+          <p class="sh__label">GeoRoundtable Connection</p>
+          <h3 class="sh__title" style="font-size:1.3rem;">Why This Matters for Engineering</h3>
+        </div>
+        <div class="inset">
+          <p>Natural philosophy is not a historical curiosity — it is a living discipline asking questions engineering cannot afford to ignore. As AI systems grow more capable, questions about the nature of intelligence, consciousness, agency, and knowledge become directly relevant to architectural and governance decisions.</p>
+          <p>The symposium's themes map directly onto GeoRoundtable's core interests: emergent world models and AI evaluation (Mitchell), biological naturalism and the Spatial Web agent framework (Seth), network epistemology and the Universal Domain Graph (Zollman), and collective intelligence as public infrastructure (Levin).</p>
+          <p>George Percivall's sustained engagement with the MALA program at St. John's College reflects the same conviction: rigorous classical education in natural philosophy is continuous with the most pressing challenges in contemporary AI engineering.</p>
+        </div>
+
+        <div class="inset inset--blue" style="margin-top:1.5rem;">
+          <p><strong style="color:var(--navy);">Program Themes</strong></p>
+          <p style="margin-top:0.6rem; font-size:0.88rem;">Math · Time · Physics · Biology · AI &amp; Neuroscience · Social</p>
+          <p style="margin-top:0.6rem; font-size:0.88rem; color:var(--muted);">Speakers included DeDeo, Riehl, Albert, Ismael, Arkani-Hamed, Guth, Adlam, S. Mitchell, Kempes, Lane, Chalmers, MacIver, Seth, M. Mitchell, Zollman, Nagel, Levin, Tomasello, and others.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Main Takeaways ── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Main Takeaways — AI/Neuroscience &amp; Social</p>
+      <h2 class="sh__title">Key Themes for Agentic AI &amp; the Spatial Web</h2>
+      <p class="sh__desc">Six talks from the symposium with direct relevance to GeoRoundtable's work on agentic systems, the Spatial Web, and network epistemology.</p>
+    </div>
+
+    <div class="takeaway-list">
+
+      <!-- Mitchell -->
+      <div class="takeaway">
+        <div class="takeaway__header">
+          <div class="takeaway__icon">🤖</div>
+          <div>
+            <div class="takeaway__name">Melanie Mitchell — Santa Fe Institute</div>
+            <div class="takeaway__talk">"How do we know smart systems?"</div>
+          </div>
+        </div>
+        <div class="takeaway__body">
+          <p>Mitchell's talk discussed benchmarks for AI and methods to probe for <span class="kw">"emergent world models."</span> The central question: does a GPT <span class="kw">create a world model</span> or merely <span class="kw">a bag of heuristics</span>? Mitchell argues that standard NLP benchmarks are insufficient to answer this — they measure performance on tasks that can be solved by pattern matching without genuine understanding.</p>
+          <p>An <span class="kw">Abstraction &amp; Reasoning Corpus (ARC) Benchmark</span> may be a better way to assess AI abilities on a number of basic spatial and semantic concepts — requiring genuine compositional reasoning rather than statistical pattern completion. This has direct implications for how we evaluate and trust AI systems in safety-critical roles.</p>
+        </div>
+        <span class="takeaway__tag">AI Evaluation · World Models · Benchmarks</span>
+      </div>
+
+      <!-- Seth -->
+      <div class="takeaway">
+        <div class="takeaway__header">
+          <div class="takeaway__icon">🧠</div>
+          <div>
+            <div class="takeaway__name">Anil Seth — University of Sussex</div>
+            <div class="takeaway__talk">"Can AI be conscious?"</div>
+          </div>
+        </div>
+        <div class="takeaway__body">
+          <p>Seth makes the case that consciousness depends on our nature as living organisms — a form of <span class="kw">biological naturalism</span>. The presentation argues for biological naturalism grounded in <span class="kw">active inference</span>, <span class="kw">cybernetics</span>, <span class="kw">autopoiesis</span>, and the <span class="kw">free energy principle</span>. On this account, current AI systems, however sophisticated, lack the biological and physiological grounding that underpins subjective experience.</p>
+          <p>Seth's approach is of particular interest to the <span class="kw">Spatial Web Foundation</span> development of an agent framework — providing a principled philosophical basis for distinguishing AI agents from conscious agents, and for calibrating governance and oversight accordingly. There is an open call for comments on <a href="#" class="kw--blue"><span class="kw">Seth's draft BBS paper</span></a>.</p>
+        </div>
+        <span class="takeaway__tag">Consciousness · Biological Naturalism · Agent Framework</span>
+      </div>
+
+      <!-- Chalmers -->
+      <div class="takeaway">
+        <div class="takeaway__header">
+          <div class="takeaway__icon">📐</div>
+          <div>
+            <div class="takeaway__name">David Chalmers — NYU</div>
+            <div class="takeaway__talk">"Can there be a mathematical theory of consciousness?"</div>
+          </div>
+        </div>
+        <div class="takeaway__body">
+          <p>Core to Chalmers' talk was assessing the prospects for <span class="kw">objective phenomenology</span> — and the need to translate phenomenology into math to achieve it. Chalmers aimed to define a <span class="kw">"Rosetta Stone" vocabulary</span> for connecting Integrated Information Theory of consciousness to phenomenology.</p>
+          <p>His thesis: <span class="kw">math may be central to an objective theory of subjective experience</span>. This parallels the Spatial Web's use of mathematics (hyperspace, tensors, HSML) to formalize world models — and raises a deeper question about whether formal mathematical representations can capture the full structure of experience and knowledge.</p>
+        </div>
+        <span class="takeaway__tag">Phenomenology · IIT · Mathematical Consciousness</span>
+      </div>
+
+      <!-- Tomasello -->
+      <div class="takeaway">
+        <div class="takeaway__header">
+          <div class="takeaway__icon">🧬</div>
+          <div>
+            <div class="takeaway__name">Michael Tomasello — Duke University</div>
+            <div class="takeaway__talk">"What makes humans human?"</div>
+          </div>
+        </div>
+        <div class="takeaway__body">
+          <p>Tomasello discussed <span class="kw">main types of psychological agency</span> and describes them in evolutionary order of emergence — from goal-directed agency in ancient vertebrates through intentional, rational, and finally socially normative agency unique to humans.</p>
+          <p>This evolutionary typology forms a cornerstone of GeoRoundtable's approach to agentic AI design and governance. Understanding where artificial agents sit on this continuum — and what capacities distinguish each level — is not optional background but essential design knowledge for building and governing AI systems. I look forward to more in reading Tomasello's <a href="evolution-of-agency-m-tomasello.html"><span class="kw">"The Evolution of Agency: Behavioral Organization from Lizards to Humans."</span></a></p>
+        </div>
+        <a class="takeaway__link" href="evolution-of-agency-m-tomasello.html">Explore the Evolution of Agency analysis →</a>
+      </div>
+
+      <!-- Zollman -->
+      <div class="takeaway">
+        <div class="takeaway__header">
+          <div class="takeaway__icon">🔗</div>
+          <div>
+            <div class="takeaway__name">Kevin Zollman — Carnegie Mellon University</div>
+            <div class="takeaway__talk">Network Epistemology</div>
+          </div>
+        </div>
+        <div class="takeaway__body">
+          <p>Zollman's talk, and our subsequent side conversation, focused on <span class="kw">Network Epistemology</span> — "how does the structure of our social networks influence our ability to learn about the world?" Zollman's <span class="kw">Independence Thesis</span> — that the norms of social epistemology are independent of the norms of individual epistemology — is key to understanding the difference between intelligent agents and the knowledge created by an <span class="kw">ecosystem of agents</span>.</p>
+          <p>This is a key topic in the design of the <span class="kw">Universal Domain Graph of the Spatial Web</span>: how the structure of agent connections shapes the collective knowledge that emerges. Zollman made the point that <span class="kw">epistemic governance</span> is at the forefront of epistemic communities. Be sure to keep an eye out for Zollman's forthcoming book — <span class="kw">"How Social Connections Shape Knowledge."</span></p>
+        </div>
+        <span class="takeaway__tag">Network Epistemology · Universal Domain Graph · Epistemic Governance</span>
+      </div>
+
+      <!-- Levin -->
+      <div class="takeaway">
+        <div class="takeaway__header">
+          <div class="takeaway__icon">🌀</div>
+          <div>
+            <div class="takeaway__name">Simon Levin — Princeton University</div>
+            <div class="takeaway__talk">"Mathematics of Consilience"</div>
+          </div>
+        </div>
+        <div class="takeaway__body">
+          <p>Levin's talk included discussion of <span class="kw">collective intelligence as a public good</span>. Levin pointed out the role of the commons and reference to <span class="kw">Elinor Ostrom's work on polycentric governance</span> — a framework for managing shared resources through distributed, overlapping governance structures rather than central control.</p>
+          <p>Levin's work on measures of <span class="kw">collective intelligence in evolved and designed self-organizing ensembles</span> is directly relevant to the design and implementation of <span class="kw">Spatial Web collective intelligence</span>: understanding how collective knowledge and coordinated action emerge from networks of agents, and how governance of those networks can be structured to produce public goods rather than tragedies of the commons.</p>
+        </div>
+        <span class="takeaway__tag">Collective Intelligence · Polycentric Governance · Spatial Web</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Quote ── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "Based on what started at the JHU Symposium, I look forward to further development and conversations on these topics."
+        </blockquote>
+        <p class="highlight__attr">— George Percivall · GeoRoundtable</p>
+        <div class="dims">
+          <span class="dim">Natural Philosophy</span>
+          <span class="dim">AI Consciousness</span>
+          <span class="dim">Network Epistemology</span>
+          <span class="dim">Collective Intelligence</span>
+          <span class="dim">Spatial Web</span>
+          <span class="dim">Agency</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>The JHU Natural Philosophy Symposium brought together scientists and philosophers across Math, Time, Physics, Biology, AI &amp; Neuroscience, and Social themes — with direct implications for how we design, evaluate, and govern agentic AI systems.</p>
+        <p>The threads run deep: Mitchell's question about emergent world models goes to the heart of AI evaluation and safety assurance. Seth's biological naturalism sets principled boundaries for the Spatial Web agent framework. Zollman's network epistemology illuminates the design challenges of the Universal Domain Graph. Levin's collective intelligence connects to the Spatial Web's ambitions as a shared public infrastructure for AI coordination.</p>
+        <p>Together, these conversations affirm GeoRoundtable's conviction that natural philosophy is not separate from engineering — it is engineering's deepest foundation.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Engineering Themes ── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Engineering Relevance</p>
+      <h2 class="sh__title">What Natural Philosophy Offers Engineering</h2>
+      <p class="sh__desc">Four themes from the symposium that connect directly to GeoRoundtable's philosophy-informed engineering practice.</p>
+    </div>
+    <div class="pillar-grid">
+      <div class="pillar">
+        <div class="pillar__icon">🤖</div>
+        <h3 class="pillar__title">Evaluating AI: World Models vs. Heuristics</h3>
+        <p class="pillar__body">Mitchell's ARC Benchmark challenge reframes AI evaluation from performance metrics to architectural questions. Whether a system has a genuine world model or a bag of heuristics determines its reliability, safety, and appropriate scope of deployment — and demands philosophy-informed evaluation methods alongside technical ones.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">🧬</div>
+        <h3 class="pillar__title">Agency as Evolutionary Continuum</h3>
+        <p class="pillar__body">Tomasello's evolutionary typology of agency provides a rigorous, non-binary framework for thinking about AI agents. Where on the continuum of goal-directed, intentional, rational, and socially normative agency do current AI systems sit? This question is prerequisite to any principled approach to AI governance and capability assessment.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">🔗</div>
+        <h3 class="pillar__title">Network Structure and Collective Knowledge</h3>
+        <p class="pillar__body">Zollman's Independence Thesis — that social epistemology has its own norms, independent of individual epistemology — has profound implications for multi-agent AI architecture. The structure of agent connections shapes what the ecosystem knows. Epistemic governance is not just a policy question; it is a systems design question.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">🌐</div>
+        <h3 class="pillar__title">Collective Intelligence as Public Good</h3>
+        <p class="pillar__body">Levin's connection of collective intelligence to Ostrom's polycentric governance offers a powerful framework for the Spatial Web: not a centrally controlled world model, but a commons governed by distributed, overlapping institutions — designed to sustain collective intelligence as a public good rather than a proprietary resource.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Related ── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Further Reading</h2>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="evolution-of-agency-m-tomasello.html" class="btn btn--primary">Evolution of Agency — Tomasello →</a>
+      <a href="st-johns-college-thinking-machines-seminar-july-2025.html" class="btn btn--outline-navy">St. John's Thinking Machines Seminar →</a>
+      <a href="philosophy-must-inform-socio-technical-systems-engineering.html" class="btn btn--outline-navy">fPET 2026 Abstract →</a>
+      <a href="spatial-web-concepts-of-space-from-ai.html" class="btn btn--outline-navy">Spatial Web Concepts of Space →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="container">
+    <h2 class="cta-section__title">Discuss Natural Philosophy &amp; Engineering</h2>
+    <p class="cta-section__sub">Interested in how natural philosophy connects to AI architecture, governance, and socio-technical systems design? Get in touch.</p>
+    <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
