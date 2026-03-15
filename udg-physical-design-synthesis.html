@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UDG Physical Design Synthesis — Human &amp; AI Architecture — GeoRoundtable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+
+    .accent-bar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%);
+    }
+
+    /* ── Navigation ─────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+    }
+    .nav__brand {
+      display: flex; align-items: center; gap: 11px;
+      color: var(--white); font-weight: 700; font-size: 1.1rem;
+      letter-spacing: -0.01em; text-decoration: none;
+    }
+    .nav__logo {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.22);
+      object-fit: cover; flex-shrink: 0;
+    }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a {
+      color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500;
+      padding: 0.4rem 0.85rem; border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%);
+      color: var(--white); padding: 6rem 0 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%);
+    }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28);
+      border-radius: 20px; padding: 0.3rem 1rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--mint);
+      letter-spacing: 0.05em; margin-bottom: 1.5rem;
+    }
+    .hero__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1.5rem; max-width: 860px;
+    }
+    .hero__meta {
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 1.5rem;
+    }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* ── Section headings ───────────────────────────────── */
+    .sh { margin-bottom: 2.5rem; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+    .sh__title { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 700px; line-height: 1.7; }
+
+    /* ── Prose ──────────────────────────────────────────── */
+    .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; max-width: 780px; }
+    .prose p + p { margin-top: 1.1rem; }
+
+    /* ── Announcement / blockquote ──────────────────────── */
+    .announcement {
+      background: var(--light); border-left: 4px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 2rem 2.2rem; box-shadow: var(--shadow); margin-bottom: 2rem;
+    }
+    .announcement p { font-size: 1rem; color: #2a3a50; line-height: 1.8; }
+    .announcement p + p { margin-top: 1rem; }
+
+    /* ── Two-col ─────────────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+    /* ── Process steps ───────────────────────────────────── */
+    .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .step {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.6rem; box-shadow: var(--shadow);
+      position: relative; padding-top: 2.2rem;
+    }
+    .step__num {
+      position: absolute; top: -1px; left: 1.4rem;
+      background: var(--teal); color: #fff;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em;
+      padding: 0.2rem 0.7rem; border-radius: 0 0 8px 8px;
+      text-transform: uppercase;
+    }
+    .step__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .step__body { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Diagram wrapper ─────────────────────────────────── */
+    .diagram-wrap {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      box-shadow: var(--shadow); overflow-x: auto;
+    }
+    .diagram-caption {
+      text-align: center; margin-top: 1rem;
+      font-size: 0.88rem; font-weight: 600; color: var(--muted);
+    }
+    .diagram-caption strong { color: var(--navy); }
+
+    /* ── Comparison table ────────────────────────────────── */
+    .comp-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .comp-table th, .comp-table td { padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+    .comp-table thead th { background: var(--navy); color: #fff; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .comp-table thead th:first-child { width: 22%; }
+    .comp-table tbody tr:nth-child(even) { background: var(--light); }
+    .comp-table .match-strong { color: var(--teal); font-weight: 700; font-size: 0.82rem; }
+    .comp-table .match-partial { color: var(--blue); font-weight: 700; font-size: 0.82rem; }
+    .comp-table .match-gap { color: #c0392b; font-weight: 700; font-size: 0.82rem; }
+
+    /* ── Context item ────────────────────────────────────── */
+    .context-item { display: flex; gap: 1.2rem; margin-bottom: 1.4rem; }
+    .context-item:last-child { margin-bottom: 0; }
+    .context-item__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 0.55rem; }
+    .context-item__label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.2rem; }
+    .context-item__text { font-size: 0.92rem; color: #3a3a3a; line-height: 1.65; }
+
+    /* ── Highlight (dark band) ───────────────────────────── */
+    .highlight {
+      background: var(--navy); color: var(--white);
+      padding: 5rem 0; position: relative; overflow: hidden;
+    }
+    .highlight::after {
+      content: ''; position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+      width: 460px; height: 460px; border-radius: 50%;
+      background: url('logo.svg') center/cover;
+      opacity: 0.055; pointer-events: none;
+    }
+    .highlight__inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 1rem; }
+    .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); margin-bottom: 1.5rem; display: block; }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 1rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.82rem; font-weight: 600; color: var(--mint); }
+
+    /* ── Observation cards ───────────────────────────────── */
+    .obs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .obs-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem;
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--teal);
+    }
+    .obs-card:nth-child(2) { border-top-color: var(--blue); }
+    .obs-card:nth-child(3) { border-top-color: var(--sky); }
+    .obs-card:nth-child(4) { border-top-color: var(--navy); }
+    .obs-card:nth-child(5) { border-top-color: var(--mint); }
+    .obs-card__icon { font-size: 1.6rem; margin-bottom: 0.9rem; }
+    .obs-card__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.35rem; }
+    .obs-card:nth-child(2) .obs-card__label { color: var(--blue); }
+    .obs-card:nth-child(3) .obs-card__label { color: var(--sky); }
+    .obs-card__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .obs-card__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── CTA / footer ────────────────────────────────────── */
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; right: -70px; top: 50%; transform: translateY(-50%); width: 430px; height: 430px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.05; pointer-events: none; }
+    .cta-section__inner { position: relative; z-index: 1; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    @media (max-width: 900px) {
+      .highlight__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>›</span>
+      UDG Design Synthesis
+    </div>
+    <div class="hero__badge">🏗️ Systems Engineering · AI-Assisted Design · March 2026</div>
+    <h1 class="hero__title">UDG Physical Design Synthesis: Human &amp; AI Architecture Compared</h1>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Standard</span>
+        <span class="hero__meta-value">IEEE 2874-2025</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Method</span>
+        <span class="hero__meta-value">Function-to-Form Synthesis</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Human Design</span>
+        <span class="hero__meta-value">George Percivall — 6 nodes</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">AI Design</span>
+        <span class="hero__meta-value">Claude Cowork — 8 nodes</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Date</span>
+        <span class="hero__meta-value">March 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Task Summary ──────────────────────────────────────── -->
+<section class="section" id="summary">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Task Summary</p>
+      <h2 class="sh__title">Two Architects, One Problem</h2>
+      <p class="sh__desc">A structured experiment in human–AI collaborative systems engineering: both a human architect and Claude Cowork independently applied classical function-to-form synthesis to the same UDG functional requirements, producing distinct but complementary physical designs.</p>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="announcement">
+          <p>The Universal Domain Graph (UDG) is the distributed hypergraph infrastructure at the core of the Spatial Web — storing all relationships between all Spatial Web Identifiers (SWIDs). Designing its physical deployment architecture requires decomposing a rich set of functional requirements into concrete software component nodes and the interfaces between them.</p>
+          <p>This project set the same challenge to two architects: apply systems engineering synthesis to derive a physical node architecture for the UDG from a common functional requirements specification. George Percivall, as a human expert architect and author of the requirements, produced a 6-node design. Claude Cowork independently performed the same synthesis and produced an 8-node design. The two designs were then compared.</p>
+          <p>The comparison reveals both convergence — on identity, registry, and the need for distributed graph storage — and divergence — in structural philosophy, treatment of client-side nodes, and the granularity of service decomposition.</p>
+        </div>
+      </div>
+      <div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Source Requirements</p>
+            <p class="context-item__text">The functional requirements are drawn from the UDG System Design Specification, a document authored by George Percivall as part of the Spatial Web Framework (SWF) standards suite. The specification covers six functional domains: Knowledge Graph, Hyperspace, Registry, Social Network, Distributed Computing, and External Interface.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Design Method</p>
+            <p class="context-item__text">Both designs used function-to-form synthesis: identifying functions, decomposing them, allocating them to physical forms (nodes), and defining inter-node interfaces. Both were constrained to the same requirements document.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Tool Used</p>
+            <p class="context-item__text">The AI design was produced using Claude Cowork — an agentic desktop assistant built on the Claude AI model — which read the requirements document, conducted the synthesis autonomously, and produced a fully specified architecture design document.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Output</p>
+            <p class="context-item__text">Both designs produced: a set of named software component nodes, functional allocations (function-to-node mapping), interface definitions, and node-level design requirements. The AI additionally produced a 68-requirement Word document with a complete functional allocation matrix.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── UDG and IEEE 2874 ──────────────────────────────────── -->
+<section class="section section--alt" id="context">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Technical Context</p>
+      <h2 class="sh__title">The UDG in the IEEE 2874 Spatial Web</h2>
+      <p class="sh__desc">Understanding the design challenge requires understanding where the UDG sits in the broader Spatial Web architecture defined by IEEE 2874-2025.</p>
+    </div>
+    <div class="two-col">
+      <div class="prose">
+        <p>IEEE 2874-2025 — the Spatial Web Protocol, Architecture and Governance Standard — defines a comprehensive framework for a spatially-grounded internet in which AI agents, robots, IoT devices, and humans share a common model of the world. The standard defines the Hyperspace Modelling Language (HSML), the Hyperspace Transaction Protocol (HSTP), and Spatial Web Identifiers (SWIDs).</p>
+        <p>At the centre of this architecture sits the <strong>Universal Domain Graph (UDG)</strong> — defined as "a distributed hypergraph which contains all relationships between all known SWIDs in the Spatial Web." The UDG is simultaneously a knowledge graph of Spatial Web entities, a spatial atlas (hyperspace), a registry of registries for domain membership, a social network for agent communication, and a distributed computing system.</p>
+        <p>The UDG Functional Requirements Specification was authored by George Percivall as a preliminary design input for the SWF standards suite. It identifies these five conceptual views of the UDG:</p>
+        <ul style="margin: 1rem 0 1rem 1.5rem; color: #2a3a50; font-size: 0.97rem; line-height: 1.85;">
+          <li><strong>Knowledge Graph (KG)</strong> — RDF/HSML hypergraph of all ENTITY relationships</li>
+          <li><strong>Hyperspace</strong> — graph space, DGGS/H3 cellular space, and vector space representations</li>
+          <li><strong>Registry of Registries</strong> — hierarchical domain membership and SWID registry</li>
+          <li><strong>Social Network</strong> — agent communication supporting collective intelligence</li>
+          <li><strong>Distributed Computing</strong> — the set of Spatial Web Nodes implementing the above</li>
+        </ul>
+        <p>The design synthesis task was to translate these five conceptual views into a physical deployment architecture of software component nodes and their interfaces.</p>
+      </div>
+      <div>
+        <!-- UDG context diagram -->
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;margin:0 auto;">
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="#0d6b78"/>
+              </marker>
+            </defs>
+            <!-- IEEE 2874 outer box -->
+            <rect x="10" y="10" width="460" height="360" rx="12" fill="#f0f5fb" stroke="#d8e4ef" stroke-width="1.5"/>
+            <text x="235" y="34" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#081840" letter-spacing="1">IEEE 2874-2025  SPATIAL WEB</text>
+
+            <!-- HSML/HSTP labels -->
+            <rect x="30" y="50" width="100" height="32" rx="6" fill="#0d6b78" opacity="0.12" stroke="#0d6b78" stroke-width="1"/>
+            <text x="80" y="72" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0d6b78">HSML</text>
+            <rect x="145" y="50" width="100" height="32" rx="6" fill="#0d6b78" opacity="0.12" stroke="#0d6b78" stroke-width="1"/>
+            <text x="195" y="72" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0d6b78">HSTP</text>
+            <rect x="260" y="50" width="100" height="32" rx="6" fill="#0d6b78" opacity="0.12" stroke="#0d6b78" stroke-width="1"/>
+            <text x="310" y="72" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0d6b78">SWIDs</text>
+
+            <!-- UDG central box -->
+            <rect x="85" y="110" width="310" height="180" rx="10" fill="#081840" stroke="#3b9edd" stroke-width="2"/>
+            <text x="240" y="132" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#5ecfdb" letter-spacing="0.5">UNIVERSAL DOMAIN GRAPH</text>
+
+            <!-- 5 UDG views -->
+            <rect x="100" y="145" width="85" height="40" rx="6" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+            <text x="142" y="163" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Knowledge</text>
+            <text x="142" y="176" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Graph</text>
+
+            <rect x="198" y="145" width="85" height="40" rx="6" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+            <text x="240" y="163" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Hyperspace</text>
+            <text x="240" y="176" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Atlas</text>
+
+            <rect x="296" y="145" width="85" height="40" rx="6" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+            <text x="338" y="163" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Registry of</text>
+            <text x="338" y="176" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Registries</text>
+
+            <rect x="100" y="198" width="85" height="40" rx="6" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+            <text x="142" y="216" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Social</text>
+            <text x="142" y="229" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Network</text>
+
+            <rect x="198" y="198" width="183" height="40" rx="6" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+            <text x="289" y="216" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Distributed Computing</text>
+            <text x="289" y="229" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">System of SW Nodes</text>
+
+            <!-- Arrows to clients -->
+            <line x1="240" y1="290" x2="100" y2="330" stroke="#5ecfdb" stroke-width="1.2" marker-end="url(#arr)" stroke-dasharray="4,3"/>
+            <line x1="240" y1="290" x2="240" y2="330" stroke="#5ecfdb" stroke-width="1.2" marker-end="url(#arr)" stroke-dasharray="4,3"/>
+            <line x1="240" y1="290" x2="380" y2="330" stroke="#5ecfdb" stroke-width="1.2" marker-end="url(#arr)" stroke-dasharray="4,3"/>
+
+            <text x="80" y="352" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5a6880">AI Agents</text>
+            <text x="240" y="352" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5a6880">IoT / Robots</text>
+            <text x="395" y="352" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5a6880">Human Users</text>
+          </svg>
+          <p class="diagram-caption"><strong>UDG within the IEEE 2874-2025 Spatial Web Architecture</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Synthesis Method ──────────────────────────────────── -->
+<section class="section" id="method">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Systems Engineering Method</p>
+      <h2 class="sh__title">Function-to-Form Synthesis</h2>
+      <p class="sh__desc">Both designs followed the classical systems engineering function-to-form mapping process, consistent with ISO/IEC/IEEE 15288 and the ISO/IEC/IEEE 42010 architecture description framework.</p>
+    </div>
+    <div class="prose" style="margin-bottom: 2rem;">
+      <p>Function-to-form synthesis — also called functional allocation or requirements allocation — is the process of mapping what a system must <em>do</em> (functions) to what physical components will <em>be responsible for doing it</em> (forms). In software systems architecture, forms are software component nodes and their interfaces. The process is the core synthesis step in systems engineering and produces the logical and physical architecture of a system.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step__num">Step 1</span>
+        <h3 class="step__title">Functional Analysis</h3>
+        <p class="step__body">All functions the system must perform are identified and organized into functional groups. For the UDG this produced 31 functions in 6 groups: KG, HS, RG, SN, DC, and EX.</p>
+      </div>
+      <div class="step">
+        <span class="step__num">Step 2</span>
+        <h3 class="step__title">Functional Decomposition</h3>
+        <p class="step__body">Each top-level function is decomposed into sub-functions as needed to expose sufficient detail for physical form assignment. Decomposition is limited to the level needed to differentiate distinct forms.</p>
+      </div>
+      <div class="step">
+        <span class="step__num">Step 3</span>
+        <h3 class="step__title">Functional Allocation</h3>
+        <p class="step__body">Each function is allocated to one or more physical component nodes using allocation principles: high cohesion (functions sharing state are co-located) and low coupling (loosely coupled functions are separated).</p>
+      </div>
+      <div class="step">
+        <span class="step__num">Step 4</span>
+        <h3 class="step__title">Interface Definition</h3>
+        <p class="step__body">Data and control flows between component nodes are identified and named as interfaces. Requirements are derived for each interface from operational constraints in the specification.</p>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem;" class="announcement">
+      <p><strong>Allocation Principles Applied:</strong> Both architects applied variants of the same underlying design heuristics — though with different emphasis. High cohesion: functions operating on the same primary data object should be co-located. Low coupling: functions with high data-exchange rates should be co-located; loosely-coupled functions should be separated. Separation of concerns: functions with distinct security domains or scalability profiles should be separated. Latency tiering: functions serving different latency tiers (agent-speed &lt;1 ms vs. human-thinking 250 ms) may require distinct node types.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Figure 1: Human Design ────────────────────────────── -->
+<section class="section section--alt" id="human-design">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Figure 1 — Human Design</p>
+      <h2 class="sh__title">Percivall Architecture: 6 SW Node Types</h2>
+      <p class="sh__desc">George Percivall's design uses an inheritance-based model: the SW Content Node is a base class containing all core daemons. Five specialized node types extend it by adding domain-specific modules.</p>
+    </div>
+    <div class="two-col">
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 500 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;margin:0 auto;">
+          <defs>
+            <marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#0d6b78"/>
+            </marker>
+            <marker id="arr3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#1d6fa4"/>
+            </marker>
+          </defs>
+
+          <!-- SW Content Node — base -->
+          <rect x="150" y="10" width="200" height="72" rx="10" fill="#081840" stroke="#5ecfdb" stroke-width="2"/>
+          <text x="250" y="36" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5ecfdb">SW Content Node</text>
+          <text x="250" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,0.65)">hstp.d · hsml.d · Domain Mgr</text>
+          <text x="250" y="66" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,0.65)">Graph Mgr · Agent Mgr · Cred Mgr</text>
+
+          <!-- Extends label -->
+          <text x="250" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5a6880" font-style="italic">all node types extend SW Content Node</text>
+
+          <!-- Inheritance arrows (down from base) -->
+          <line x1="185" y1="82" x2="60" y2="148" stroke="#d8e4ef" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="215" y1="82" x2="155" y2="148" stroke="#d8e4ef" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="250" y1="82" x2="250" y2="148" stroke="#d8e4ef" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="285" y1="82" x2="345" y2="148" stroke="#d8e4ef" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="315" y1="82" x2="440" y2="148" stroke="#d8e4ef" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+          <!-- UDG Node -->
+          <rect x="10" y="148" width="98" height="76" rx="8" fill="#0d6b78" stroke="#0d6b78" stroke-width="1.5"/>
+          <text x="59" y="168" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">UDG Node</text>
+          <text x="59" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">Graph DB</text>
+          <text x="59" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">Hyperworlds</text>
+          <text x="59" y="209" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">Collective intel</text>
+
+          <!-- Registry Node -->
+          <rect x="118" y="148" width="98" height="76" rx="8" fill="#1d6fa4" stroke="#1d6fa4" stroke-width="1.5"/>
+          <text x="167" y="168" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">Registry Node</text>
+          <text x="167" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">Domain register</text>
+          <text x="167" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">SWID generator</text>
+          <text x="167" y="209" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">VC issuance</text>
+
+          <!-- DID Issuer -->
+          <rect x="226" y="148" width="98" height="76" rx="8" fill="#3b9edd" stroke="#3b9edd" stroke-width="1.5"/>
+          <text x="275" y="168" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">DID Issuer</text>
+          <text x="275" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">SWID creation</text>
+          <text x="275" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">did:swid method</text>
+          <text x="275" y="209" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">Alias resolution</text>
+
+          <!-- Agent Node -->
+          <rect x="334" y="148" width="98" height="76" rx="8" fill="#5ecfdb" stroke="#5ecfdb" stroke-width="1.5"/>
+          <text x="383" y="168" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#081840">Agent Node</text>
+          <text x="383" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" opacity="0.75">SITUATION mgmt</text>
+          <text x="383" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" opacity="0.75">Social epistemology</text>
+          <text x="383" y="209" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" opacity="0.75">Agent model/goals</text>
+
+          <!-- Thing Node -->
+          <rect x="392" y="148" width="98" height="76" rx="8" fill="#5a6880" stroke="#5a6880" stroke-width="1.5"/>
+          <text x="441" y="168" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">Thing Node</text>
+          <text x="441" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">Sensor/actuator</text>
+          <text x="441" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">Observations</text>
+          <text x="441" y="209" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.75)">Digital twins</text>
+
+          <!-- HSTP connections between nodes -->
+          <text x="250" y="248" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5a6880" font-style="italic">All nodes communicate via HSTP</text>
+
+          <!-- Horizontal connection line -->
+          <line x1="59" y1="224" x2="59" y2="265" stroke="#d8e4ef" stroke-width="1"/>
+          <line x1="167" y1="224" x2="167" y2="265" stroke="#d8e4ef" stroke-width="1"/>
+          <line x1="275" y1="224" x2="275" y2="265" stroke="#d8e4ef" stroke-width="1"/>
+          <line x1="383" y1="224" x2="383" y2="265" stroke="#d8e4ef" stroke-width="1"/>
+          <line x1="441" y1="224" x2="441" y2="265" stroke="#d8e4ef" stroke-width="1"/>
+          <line x1="59" y1="265" x2="441" y2="265" stroke="#d8e4ef" stroke-width="1.5"/>
+
+          <!-- Table below -->
+          <rect x="10" y="285" width="480" height="140" rx="8" fill="#f0f5fb" stroke="#d8e4ef" stroke-width="1"/>
+          <text x="250" y="304" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#081840">UDG Conceptual Content per Node Type</text>
+
+          <!-- Table headers -->
+          <text x="60" y="320" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#0d6b78">Node</text>
+          <text x="155" y="320" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#0d6b78">KG</text>
+          <text x="250" y="320" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#0d6b78">Hyperspace</text>
+          <text x="355" y="320" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#0d6b78">Registry</text>
+          <text x="450" y="320" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#0d6b78">Social</text>
+          <line x1="20" y1="324" x2="482" y2="324" stroke="#d8e4ef" stroke-width="1"/>
+
+          <!-- Table rows -->
+          <text x="60" y="337" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" font-weight="600">SW Content</text>
+          <text x="155" y="337" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Local entities</text>
+          <text x="250" y="337" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Local embedding</text>
+          <text x="355" y="337" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Mbr Credential</text>
+          <text x="450" y="337" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">—</text>
+
+          <text x="60" y="353" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" font-weight="600">UDG Node</text>
+          <text x="155" y="353" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Extended KG</text>
+          <text x="250" y="353" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Hyperworlds</text>
+          <text x="355" y="353" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Registry rels</text>
+          <text x="450" y="353" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Coll. intel.</text>
+
+          <text x="60" y="369" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" font-weight="600">Registry Node</text>
+          <text x="155" y="369" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Issues Mbr Cred</text>
+          <text x="250" y="369" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">—</text>
+          <text x="355" y="369" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Domain register</text>
+          <text x="450" y="369" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">—</text>
+
+          <text x="60" y="385" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" font-weight="600">Agent Node</text>
+          <text x="155" y="385" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">SITUATIONS</text>
+          <text x="250" y="385" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Hyperworlds</text>
+          <text x="355" y="385" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Mbr Credential</text>
+          <text x="450" y="385" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Social epist.</text>
+
+          <text x="60" y="401" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" font-weight="600">Thing Node</text>
+          <text x="155" y="401" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Sensing/actuation</text>
+          <text x="250" y="401" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Cyber-physical</text>
+          <text x="355" y="401" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Mbr Credential</text>
+          <text x="450" y="401" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Observations</text>
+
+          <text x="60" y="417" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" font-weight="600">DID Issuer</text>
+          <text x="155" y="417" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">SWID creation</text>
+          <text x="250" y="417" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">—</text>
+          <text x="355" y="417" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">SWID resolution</text>
+          <text x="450" y="417" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">—</text>
+        </svg>
+        <p class="diagram-caption"><strong>Figure 1 — Percivall Human Design</strong>: Inheritance-based 6-node architecture. SW Content Node is the base class from which all specialized nodes extend.</p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;">Key Design Decisions</p>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Inheritance hierarchy</p>
+            <p class="context-item__text">Every node type extends the SW Content Node base class, which contains the core HSTP and HSML daemons, a domain graph, credential graph, and schema graph. Specialized nodes add modules rather than replacing functionality.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Client-side edge nodes</p>
+            <p class="context-item__text">Agent Node and Thing Node are edge nodes — not infrastructure servers. They run on behalf of specific agents and IoT devices. This places agents and physical devices as first-class architectural citizens.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Integrated UDG Node</p>
+            <p class="context-item__text">The UDG Node integrates graph database functions, hyperspace/Hyperworld services, and collective intelligence — distributing via sharding and replication as internal mechanisms rather than exposing them as separate node types.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Affiliation networks</p>
+            <p class="context-item__text">Registry Nodes form affiliation networks — groups of nodes sharing common taxonomies and credentials. This creates a decentralized mesh architecture rather than a centralized hub topology.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Physical world presence</p>
+            <p class="context-item__text">The Thing Node explicitly represents IoT sensors, actuators, and digital twins — acknowledging that the UDG must bridge the cyber-physical boundary. This concern is absent from the AI design.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Figure 2: Claude Design ───────────────────────────── -->
+<section class="section" id="claude-design">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Figure 2 — Claude Cowork Design</p>
+      <h2 class="sh__title">AI Architecture: 8 Independent Service Nodes</h2>
+      <p class="sh__desc">Claude's design uses a service-decomposition model: eight independently deployable nodes, each with a distinct functional responsibility, connected by nine named interfaces.</p>
+    </div>
+    <div class="two-col">
+      <div>
+        <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;">Key Design Decisions</p>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Service decomposition</p>
+            <p class="context-item__text">No inheritance hierarchy — each node is independently deployable. Functions are separated by cohesion and coupling analysis, producing dedicated nodes for storage, query, identity, registry, hyperspace, social networking, synchronization, and gateway.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Dedicated hyperspace node</p>
+            <p class="context-item__text">Spatial embedding, H3/DGGS indexing, and hyperspace navigation are separated into a dedicated UDG-HN node. In the human design, these are modules within the UDG Node. Claude identified this as warranting separation due to distinct computational characteristics.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Explicit synchronization node</p>
+            <p class="context-item__text">A dedicated UDG-SYNC node handles state propagation, HSTP routing, node discovery, and clock synchronization — concerns that are embedded as internal modules in the human design's UDG Node.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Infrastructure-centric</p>
+            <p class="context-item__text">All 8 nodes are infrastructure servers. There are no edge or client-side node types. Agent and Thing functions are partially served by the UDG-SNN (Social-Network Node) and UDG-GTW, but without dedicated client-side node types.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Named interfaces</p>
+            <p class="context-item__text">Nine named interfaces (I-HSTP, I-HSML, I-SPARQL, I-DID, I-VC, I-REST, I-H3, I-SYNC, I-AGENT) are explicitly specified with requirements. The human design relies on implicit HSTP messaging between all nodes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 500 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;margin:0 auto;">
+          <defs>
+            <marker id="arr4" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#0d6b78"/>
+            </marker>
+            <marker id="arr5" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#3b9edd"/>
+            </marker>
+          </defs>
+
+          <!-- Gateway (external-facing, top) -->
+          <rect x="165" y="10" width="170" height="52" rx="8" fill="#081840" stroke="#5ecfdb" stroke-width="2"/>
+          <text x="250" y="32" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#5ecfdb">UDG-GTW</text>
+          <text x="250" y="48" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Gateway Node  ·  I-REST</text>
+
+          <!-- External clients -->
+          <text x="48" y="38" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="#5a6880">Clients</text>
+          <text x="48" y="51" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">(HTTP/WS)</text>
+          <line x1="95" y1="42" x2="165" y2="38" stroke="#5ecfdb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr4)"/>
+
+          <!-- Sync Node (center top) -->
+          <rect x="165" y="88" width="170" height="52" rx="8" fill="#0d6b78" stroke="#0d6b78" stroke-width="1.5"/>
+          <text x="250" y="110" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">UDG-SYNC</text>
+          <text x="250" y="126" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Synchronization  ·  I-SYNC / I-HSTP</text>
+
+          <!-- GTW ↔ SYNC -->
+          <line x1="250" y1="62" x2="250" y2="88" stroke="#d8e4ef" stroke-width="1.5" marker-end="url(#arr4)"/>
+          <text x="263" y="78" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">I-HSTP</text>
+
+          <!-- Row 2: GN, QN -->
+          <rect x="30" y="175" width="145" height="60" rx="8" fill="#1d6fa4" stroke="#1d6fa4" stroke-width="1.5"/>
+          <text x="102" y="198" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">UDG-GN</text>
+          <text x="102" y="213" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Graph Node</text>
+          <text x="102" y="227" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.65)">RDF/HSML store · I-HSML</text>
+
+          <rect x="325" y="175" width="145" height="60" rx="8" fill="#1d6fa4" stroke="#1d6fa4" stroke-width="1.5"/>
+          <text x="397" y="198" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">UDG-QN</text>
+          <text x="397" y="213" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Query Node</text>
+          <text x="397" y="227" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.65)">SPARQL fed. · I-SPARQL</text>
+
+          <!-- SYNC → GN, QN -->
+          <line x1="210" y1="140" x2="140" y2="175" stroke="#d8e4ef" stroke-width="1.5" marker-end="url(#arr4)"/>
+          <line x1="290" y1="140" x2="360" y2="175" stroke="#d8e4ef" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+          <!-- QN ↔ GN -->
+          <line x1="175" y1="205" x2="325" y2="205" stroke="#d8e4ef" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr4)"/>
+          <text x="250" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">I-SPARQL</text>
+
+          <!-- Row 3: IDN, HN, RN, SNN -->
+          <rect x="10" y="276" width="108" height="60" rx="8" fill="#3b9edd" stroke="#3b9edd" stroke-width="1.5"/>
+          <text x="64" y="298" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">UDG-IDN</text>
+          <text x="64" y="313" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.8)">Identity Node</text>
+          <text x="64" y="327" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.65)">SWID · I-DID</text>
+
+          <rect x="128" y="276" width="108" height="60" rx="8" fill="#3b9edd" stroke="#3b9edd" stroke-width="1.5"/>
+          <text x="182" y="298" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">UDG-HN</text>
+          <text x="182" y="313" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.8)">Hyperspace Node</text>
+          <text x="182" y="327" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.65)">H3/DGGS · I-H3</text>
+
+          <rect x="246" y="276" width="108" height="60" rx="8" fill="#3b9edd" stroke="#3b9edd" stroke-width="1.5"/>
+          <text x="300" y="298" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#fff">UDG-RN</text>
+          <text x="300" y="313" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.8)">Registry Node</text>
+          <text x="300" y="327" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,0.65)">Domain reg · I-VC</text>
+
+          <rect x="364" y="276" width="126" height="60" rx="8" fill="#5ecfdb" stroke="#5ecfdb" stroke-width="1.5"/>
+          <text x="427" y="298" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#081840">UDG-SNN</text>
+          <text x="427" y="313" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" opacity="0.75">Social-Net Node</text>
+          <text x="427" y="327" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#081840" opacity="0.65">Agents · I-AGENT</text>
+
+          <!-- GN → IDN, HN, RN, SNN -->
+          <line x1="70" y1="235" x2="55" y2="276" stroke="#d8e4ef" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#arr4)"/>
+          <line x1="95" y1="235" x2="160" y2="276" stroke="#d8e4ef" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#arr4)"/>
+          <line x1="115" y1="235" x2="270" y2="276" stroke="#d8e4ef" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#arr4)"/>
+          <line x1="130" y1="235" x2="400" y2="276" stroke="#d8e4ef" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#arr4)"/>
+
+          <!-- Interface legend -->
+          <rect x="10" y="358" width="480" height="115" rx="8" fill="#f0f5fb" stroke="#d8e4ef" stroke-width="1"/>
+          <text x="250" y="376" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#081840">Interface Summary (9 interfaces)</text>
+
+          <text x="25" y="394" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#0d6b78">I-HSTP</text>
+          <text x="75" y="394" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Primary inter-node HSTP protocol (all nodes)</text>
+          <text x="25" y="408" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#0d6b78">I-HSML</text>
+          <text x="75" y="408" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">RDF/HSML entity payload format</text>
+          <text x="25" y="422" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#0d6b78">I-SPARQL</text>
+          <text x="75" y="422" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Federated SPARQL query dispatch (QN↔GN, HN)</text>
+
+          <text x="265" y="394" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#0d6b78">I-DID</text>
+          <text x="295" y="394" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">W3C DID resolution (IDN)</text>
+          <text x="265" y="408" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#0d6b78">I-VC</text>
+          <text x="295" y="408" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Verifiable Credential issuance (RN↔IDN)</text>
+          <text x="265" y="422" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#0d6b78">I-H3</text>
+          <text x="295" y="422" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">H3/DGGS spatial index (HN↔GN)</text>
+
+          <text x="25" y="440" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#0d6b78">I-REST</text>
+          <text x="68" y="440" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">External HTTP/WS API (GTW↔clients)</text>
+          <text x="265" y="440" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#0d6b78">I-SYNC</text>
+          <text x="305" y="440" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">State change events (SYNC↔GN, RN, HN)</text>
+
+          <text x="25" y="457" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#0d6b78">I-AGENT</text>
+          <text x="72" y="457" font-family="Inter,sans-serif" font-size="8" fill="#5a6880">Agent-to-agent HSTP messaging (SNN↔GTW)</text>
+        </svg>
+        <p class="diagram-caption"><strong>Figure 2 — Claude Cowork AI Design</strong>: Service-decomposition 8-node architecture with 9 named interfaces. All nodes are infrastructure servers; no inheritance hierarchy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Comparison ────────────────────────────────────────── -->
+<section class="section section--alt" id="comparison">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Design Comparison</p>
+      <h2 class="sh__title">Node-by-Node Comparison</h2>
+      <p class="sh__desc">Where the two designs converge, diverge, and where each has gaps the other fills.</p>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Percivall Node</th>
+            <th>Claude Node(s)</th>
+            <th>Match</th>
+            <th>Key Differences</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>SW Content Node</strong><br><small>Base class: hstp.d, hsml.d, Domain Mgr, Graph Mgr, Agent Mgr, Cred Mgr</small></td>
+            <td><strong>UDG-GTW</strong> (partial)<br><small>External API, protocol adaptation</small></td>
+            <td><span class="match-partial">Partial</span></td>
+            <td>Percivall's SW Content Node is a <em>base class</em> that all other nodes extend. Claude has no base class concept — its GTW node only captures the external interface role. The daemon and graph management roles are distributed across UDG-GN, UDG-SYNC, and UDG-SNN.</td>
+          </tr>
+          <tr>
+            <td><strong>UDG Node</strong><br><small>Distributed graph DB, Hyperworlds, collective intelligence, transformation pipeline</small></td>
+            <td><strong>UDG-GN + UDG-QN + UDG-SYNC + UDG-HN</strong><br><small>Four separate nodes</small></td>
+            <td><span class="match-partial">Split</span></td>
+            <td>Claude decomposes what Percivall treats as one node into four separate concerns: graph storage (GN), query processing (QN), state synchronization (SYNC), and hyperspace operations (HN). Same functions covered, very different granularity.</td>
+          </tr>
+          <tr>
+            <td><strong>Registry Node</strong><br><small>Domain register, SWID generator, VC issuance, affiliation networks</small></td>
+            <td><strong>UDG-RN</strong><br><small>Domain registration, VC issuance/verification, registry hierarchy</small></td>
+            <td><span class="match-strong">Strong</span></td>
+            <td>Closest match between the two designs. Both cover domain registration, credential issuance, and registry hierarchy. Percivall additionally includes affiliation network credentialing — a concept absent from Claude's design.</td>
+          </tr>
+          <tr>
+            <td><strong>DID Issuer</strong><br><small>SWID creation, did:swid method, alias resolution</small></td>
+            <td><strong>UDG-IDN</strong><br><small>SWID creation, DID resolution, VDR, aliases</small></td>
+            <td><span class="match-strong">Strong</span></td>
+            <td>Second-closest match. Both designs agree this function warrants a dedicated node type. Claude additionally specifies the Verifiable Data Registry (VDR) and SWID Document structure. Percivall's version is specified more lightly.</td>
+          </tr>
+          <tr>
+            <td><strong>Agent Node</strong><br><small>AGENT model/goals, SITUATIONS, social epistemology, social groups</small></td>
+            <td><strong>UDG-SNN</strong> (partial)<br><small>Agent messaging, belief propagation, social norms, collective intelligence</small></td>
+            <td><span class="match-partial">Partial</span></td>
+            <td>Fundamental difference in kind. Percivall's Agent Node is a <em>client-side edge node</em> running on behalf of a specific agent, persisting its model and goals. Claude's UDG-SNN is an <em>infrastructure server</em> handling messaging for all agents in aggregate. These are architecturally distinct.</td>
+          </tr>
+          <tr>
+            <td><strong>Thing Node</strong><br><small>IoT sensors/actuators, observations, digital twins, cyber-physical</small></td>
+            <td><em>(not present)</em></td>
+            <td><span class="match-gap">Gap</span></td>
+            <td>Claude's architecture has no equivalent of the Thing Node. IoT devices and physical sensors would implicitly connect through UDG-GTW, but there is no dedicated node type representing physical devices as first-class Spatial Web citizens with their own HSTP presence.</td>
+          </tr>
+          <tr>
+            <td><em>(not present)</em></td>
+            <td><strong>UDG-HN</strong><br><small>Spatial embedding, H3/DGGS indexing, hyperspace navigation</small></td>
+            <td><span class="match-gap">Gap</span></td>
+            <td>Percivall includes hyperspace as a module within the UDG Node. Claude separates it into a dedicated node, reasoning that spatial computation (vector embedding, H3 indexing at internet scale) has distinct performance and scaling characteristics.</td>
+          </tr>
+          <tr>
+            <td><em>(not present)</em></td>
+            <td><strong>UDG-SYNC</strong><br><small>State propagation, HSTP routing, node discovery, clock sync</small></td>
+            <td><span class="match-gap">Gap</span></td>
+            <td>Percivall treats state propagation and node discovery as internal mechanisms within the UDG Node (replication, the Collector module). Claude creates a dedicated coordination node, following a microservices separation-of-concerns principle.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── Dark quote band ───────────────────────────────────── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "The two designs agree on what functions must be performed; they disagree on how to package them. That disagreement is architecturally productive."
+        </blockquote>
+        <span class="highlight__attr">— Design synthesis comparison, March 2026</span>
+        <div class="tags">
+          <span class="tag">Systems Engineering</span>
+          <span class="tag">Function-to-Form</span>
+          <span class="tag">UDG</span>
+          <span class="tag">IEEE 2874</span>
+          <span class="tag">AI-Assisted Design</span>
+          <span class="tag">Spatial Web</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>Both designs cover the same functional requirements derived from the UDG specification. Neither design has a function that is entirely absent from the other — the difference is entirely in decomposition granularity, structural philosophy, and which concerns are treated as first-class node types versus internal modules.</p>
+        <p>The human design's 6-node count reflects integration: many concerns are grouped together under inheritance. The AI design's 8-node count reflects decomposition: concerns are separated for independent scaling and deployment.</p>
+        <p>A reconciled architecture would likely adopt Percivall's node taxonomy (including the critical Agent Node and Thing Node as edge-side types) while retaining Claude's finer-grained decomposition of the UDG Node interior (GN, QN, SYNC) as internal modules or deployment variants.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Observations ──────────────────────────────────────── -->
+<section class="section" id="observations">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Design Process Observations</p>
+      <h2 class="sh__title">Human vs. AI Design: What This Experiment Reveals</h2>
+      <p class="sh__desc">The comparison yields observations not just about the two designs, but about the nature of human and AI-assisted systems engineering design processes.</p>
+    </div>
+    <div class="obs-grid">
+
+      <div class="obs-card">
+        <div class="obs-card__icon">🏗️</div>
+        <p class="obs-card__label">Structural Philosophy</p>
+        <h3 class="obs-card__title">Inheritance vs. Composition</h3>
+        <p class="obs-card__body">The human architect chose an object-oriented inheritance model, likely reflecting years of experience with extensible software system design and an intuition that the SW Content Node daemon infrastructure is genuinely shared. The AI defaulted to service decomposition — a pattern prominent in cloud-native and microservices literature. Neither is wrong; they reflect different architectural traditions.</p>
+      </div>
+
+      <div class="obs-card">
+        <div class="obs-card__icon">🌍</div>
+        <p class="obs-card__label">Physical World Awareness</p>
+        <h3 class="obs-card__title">The Missing Thing Node</h3>
+        <p class="obs-card__body">The human architect — with deep experience in IoT, geospatial infrastructure, and cyber-physical systems — immediately recognized that physical devices (sensors, actuators, digital twins) require a dedicated node type. The AI, reasoning purely from text in the specification, did not give this the same prominence. Domain expertise surfaces requirements that text analysis alone may underweight.</p>
+      </div>
+
+      <div class="obs-card">
+        <div class="obs-card__icon">⚙️</div>
+        <p class="obs-card__label">Granularity Bias</p>
+        <h3 class="obs-card__title">AI Tends to Decompose</h3>
+        <p class="obs-card__body">The AI produced more nodes (8 vs. 6) by separating concerns that the human kept integrated. This may reflect the AI's training on decomposition-heavy software architecture literature, or a tendency to be exhaustive rather than pragmatic. Human architects typically balance functional purity against deployment complexity — a trade-off that requires operational experience to calibrate.</p>
+      </div>
+
+      <div class="obs-card">
+        <div class="obs-card__icon">📋</div>
+        <p class="obs-card__label">Documentation Quality</p>
+        <h3 class="obs-card__title">AI Produces More Formal Output</h3>
+        <p class="obs-card__body">The AI produced a fully specified 68-requirement Word document with a complete functional allocation matrix in a single session. The human design document, while richer in conceptual depth, contained many "TBD" requirements sections. AI excels at transforming conceptual design into structured, requirements-traceable documentation — a time-consuming task for human architects.</p>
+      </div>
+
+      <div class="obs-card">
+        <div class="obs-card__icon">🔄</div>
+        <p class="obs-card__label">Convergence</p>
+        <h3 class="obs-card__title">Strong Agreement on Core</h3>
+        <p class="obs-card__body">Both designs independently converged on dedicated nodes for identity (DID/SWID) and registry — and agreed that these warrant separation from general graph storage. This convergence on the same node types from independent synthesis processes provides informal validation that these are genuinely distinct architectural concerns that warrant their own node types.</p>
+      </div>
+
+      <div class="obs-card">
+        <div class="obs-card__icon">🤝</div>
+        <p class="obs-card__label">Collaboration Model</p>
+        <h3 class="obs-card__title">Complementary, Not Competing</h3>
+        <p class="obs-card__body">The most productive outcome is not choosing one design over the other, but using both together. The human design provides architectural wisdom about client-side nodes and deployment philosophy; the AI design provides exhaustive functional coverage, explicit interface specifications, and formal requirements traceability. Together they constitute a more complete architecture than either alone.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-section__inner">
+      <h2 class="cta-section__title">Explore the Spatial Web Architecture</h2>
+      <p class="cta-section__sub">Interested in the UDG, IEEE 2874-2025, or AI-assisted systems engineering design? Get in touch to discuss.</p>
+      <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
