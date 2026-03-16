@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agency of Agents — The Role of Epistemology — GeoRoundtable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 4.5rem 0; }
+    .section--alt { background: var(--light); }
+    .accent-bar { height: 3px; background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%); }
+
+    /* ── Nav ── */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .nav__brand { display: flex; align-items: center; gap: 11px; color: var(--white); font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+    .nav__logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); object-fit: cover; }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: background 0.15s; }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    /* ── Hero ── */
+    .hero { background: linear-gradient(140deg, #081840 0%, #0d2660 55%, #0d6b78 100%); color: var(--white); padding: 6rem 0 5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(94,207,219,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse 30% 50% at 10% 80%, rgba(29,111,164,0.10) 0%, transparent 60%); }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.25); }
+    .hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28); border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600; color: var(--mint); letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+    .hero__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; font-weight: 700; margin-bottom: 1rem; max-width: 860px; }
+    .hero__sub { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 680px; line-height: 1.7; margin-bottom: 1.75rem; }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 2rem; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* ── Section anchor offset ── */
+    .section-anchor { display: block; height: 80px; margin-top: -80px; visibility: hidden; }
+
+    /* ── Section headings ── */
+    .sh { margin-bottom: 2.5rem; }
+    .sh--center { text-align: center; }
+    .sh--center .sh__desc { margin: 0.7rem auto 0; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.45rem; }
+    .sh__num { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; background: var(--navy); color: var(--white); border-radius: 50%; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .sh__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 700; color: var(--navy); }
+    .sh__desc { margin-top: 0.65rem; color: var(--muted); max-width: 660px; line-height: 1.72; font-size: 0.97rem; }
+
+    /* ── Prose ── */
+    .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; }
+    .prose p + p { margin-top: 1.05rem; }
+    .prose strong { color: var(--navy); font-weight: 600; }
+    .prose em { color: var(--teal); font-style: italic; }
+
+    /* ── Layout grids ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .two-col--wide { display: grid; grid-template-columns: 3fr 2fr; gap: 3.5rem; align-items: start; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    /* ── Figure placeholder ── */
+    .figure-wrap { margin: 1.8rem 0; }
+    .figure-wrap img {
+      width: 100%; border-radius: var(--radius);
+      box-shadow: 0 4px 20px rgba(8,24,64,0.12);
+      border: 1px solid var(--border);
+    }
+    .figure-placeholder {
+      background: var(--light); border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 2.5rem 2rem; text-align: center; color: var(--muted);
+    }
+    .figure-placeholder__icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .figure-placeholder__label { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; color: var(--navy); text-transform: uppercase; }
+    .figure-caption { margin-top: 0.6rem; font-size: 0.82rem; color: var(--muted); font-style: italic; line-height: 1.5; }
+    .figure-caption strong { color: var(--navy); font-style: normal; }
+
+    /* ── Knowledge type cards ── */
+    .know-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.4rem; margin-top: 1.5rem; }
+    .know-card {
+      background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--teal);
+      border-radius: var(--radius); padding: 1.6rem 1.5rem; box-shadow: var(--shadow);
+    }
+    .know-card:nth-child(2) { border-top-color: var(--blue); }
+    .know-card:nth-child(3) { border-top-color: var(--sky); }
+    .know-card:nth-child(4) { border-top-color: var(--navy); }
+    .know-card__icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+    .know-card__title { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+    .know-card__subtitle { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--teal); margin-bottom: 0.5rem; }
+    .know-card:nth-child(2) .know-card__subtitle { color: var(--blue); }
+    .know-card:nth-child(3) .know-card__subtitle { color: var(--sky); }
+    .know-card:nth-child(4) .know-card__subtitle { color: var(--navy); }
+    .know-card__body { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Justification row ── */
+    .just-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.5rem; }
+    .just-item {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.3rem 1.2rem; text-align: center; box-shadow: var(--shadow);
+    }
+    .just-item__icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .just-item__title { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+    .just-item__body { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── Agent definition block ── */
+    .agent-def {
+      background: var(--navy); color: var(--white); border-radius: var(--radius);
+      padding: 2rem 2.2rem; margin: 2rem 0;
+    }
+    .agent-def__label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mint); margin-bottom: 0.6rem; }
+    .agent-def__term { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .agent-def__text { font-size: 0.97rem; color: rgba(255,255,255,0.82); line-height: 1.7; }
+    .agent-def__text strong { color: var(--mint); font-weight: 700; }
+    .agent-def__source { margin-top: 0.8rem; font-size: 0.78rem; color: rgba(255,255,255,0.45); font-style: italic; }
+
+    /* ── Sensing / capability items ── */
+    .cap-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .cap-item {
+      display: grid; grid-template-columns: 48px 1fr;
+      gap: 0 1.2rem; align-items: start;
+    }
+    .cap-item__icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--sky));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .cap-item:nth-child(2) .cap-item__icon { background: linear-gradient(135deg, var(--blue), var(--teal)); }
+    .cap-item:nth-child(3) .cap-item__icon { background: linear-gradient(135deg, var(--navy), var(--blue)); }
+    .cap-item:nth-child(4) .cap-item__icon { background: linear-gradient(135deg, var(--navy), var(--teal)); }
+    .cap-item__title { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+    .cap-item__body { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Exchange types ── */
+    .exchange-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    .exchange-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.8rem 1.6rem; box-shadow: var(--shadow);
+    }
+    .exchange-card--sym { border-left: 4px solid var(--teal); }
+    .exchange-card--nonsym { border-left: 4px solid var(--sky); }
+    .exchange-card__label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 0.5rem; }
+    .exchange-card--nonsym .exchange-card__label { color: var(--sky); }
+    .exchange-card__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.7rem; }
+    .exchange-card__body { font-size: 0.9rem; color: #2a3a50; line-height: 1.7; }
+    .exchange-card__body p + p { margin-top: 0.7rem; }
+
+    /* ── Governance items ── */
+    .gov-list { display: flex; flex-direction: column; gap: 1.3rem; }
+    .gov-item {
+      background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0; padding: 1.4rem 1.6rem; box-shadow: var(--shadow);
+    }
+    .gov-item:nth-child(2) { border-left-color: var(--blue); }
+    .gov-item:nth-child(3) { border-left-color: var(--sky); }
+    .gov-item:nth-child(4) { border-left-color: var(--navy); }
+    .gov-item__title { font-size: 0.97rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+    .gov-item__body { font-size: 0.88rem; color: #2a3a50; line-height: 1.68; }
+    .gov-item__source { margin-top: 0.6rem; font-size: 0.78rem; color: var(--muted); font-style: italic; }
+    .gov-item__source a { color: var(--blue); }
+
+    /* ── Pillar cards ── */
+    .pillar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+    .pillar { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); transition: transform 0.2s; }
+    .pillar:hover { transform: translateY(-3px); }
+    .pillar:nth-child(2) { border-left-color: var(--blue); }
+    .pillar:nth-child(3) { border-left-color: var(--sky); }
+    .pillar:nth-child(4) { border-left-color: var(--navy); }
+    .pillar__icon { font-size: 1.6rem; margin-bottom: 0.7rem; }
+    .pillar__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.45rem; }
+    .pillar__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Inset / callout ── */
+    .inset {
+      background: var(--light); border-left: 4px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.5rem 1.8rem; box-shadow: var(--shadow); margin: 1.5rem 0;
+    }
+    .inset--warn { border-left-color: #b84c1a; background: #fff5f0; }
+    .inset--blue { border-left-color: var(--blue); }
+    .inset__label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 0.4rem; }
+    .inset--warn .inset__label { color: #b84c1a; }
+    .inset--blue .inset__label { color: var(--blue); }
+    .inset__body { font-size: 0.92rem; color: #2a3a50; line-height: 1.75; }
+    .inset__body strong { color: var(--navy); font-weight: 600; }
+
+    /* ── Highlight ── */
+    .highlight { background: var(--navy); color: var(--white); padding: 4.5rem 0; }
+    .highlight__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 0.9rem; }
+    .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.94rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 0.9rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1.5rem; }
+    .tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.35rem 0.85rem; font-size: 0.8rem; font-weight: 600; color: var(--mint); }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.18s; text-decoration: none !important; white-space: nowrap; }
+    .btn--primary { background: var(--teal); color: var(--white); }
+    .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
+    .btn--outline { background: transparent; border: 1.5px solid var(--border); color: var(--navy); }
+    .btn--outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    /* ── Footer ── */
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .two-col, .two-col--wide, .highlight__inner, .exchange-grid { grid-template-columns: 1fr; }
+      .three-col, .just-row { grid-template-columns: 1fr 1fr; }
+      .pillar-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+      .three-col, .just-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>›</span>
+      Epistemology
+    </div>
+    <div class="hero__badge">🧠 Analysis · Epistemology · Agentic AI</div>
+    <h1 class="hero__title">Agency of Agents — The Role of Epistemology</h1>
+    <p class="hero__sub">Epistemology in an ecosystem of agents: the nature, origin, and limits of knowledge in the Spatial Web — from a single agent's perceptual world model to collective intelligence governed across the Universal Domain Graph.</p>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Scope</span>
+        <span class="hero__meta-value">Single Agent → Agent Network → UDG</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Foundation</span>
+        <span class="hero__meta-value">Spatial Web Ontology · IEEE 2874-2025</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Framework</span>
+        <span class="hero__meta-value">JTB · Tacit Knowledge · Network Epistemology</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Analysis by</span>
+        <span class="hero__meta-value">George Percivall, GeoRoundtable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 1 — OVERVIEW
+══════════════════════════════════════════════════ -->
+<span class="section-anchor" id="overview"></span>
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Section 1</p>
+      <div class="sh__num">1</div>
+      <h2 class="sh__title">Overview</h2>
+      <p class="sh__desc">The Spatial Web is an ecosystem of interoperable, autonomous AI agents. Understanding how knowledge works in this ecosystem — its nature, origin, limits, and risks — is prerequisite to designing and governing it well.</p>
+    </div>
+
+    <div class="two-col--wide">
+      <div>
+        <div class="prose">
+          <p>The <strong>Spatial Web</strong>, defined by IEEE 2874-2025, is a network infrastructure for interoperable, autonomous AI agents — a medium for collective intelligence in which agents sense, represent, reason about, and act on a shared world. At the heart of this infrastructure is the <strong>Universal Domain Graph (UDG)</strong>: a distributed hypergraph that contains all relationships between all known Spatial Web entities.</p>
+          <p>But what does it mean for an agent — or an ecosystem of agents — to <em>know</em> something? This question is not peripheral to the engineering of the Spatial Web. It is central. The reliability of agent behavior, the validity of agent coordination, the trustworthiness of collective intelligence, and the appropriateness of governance mechanisms all depend on a rigorous account of knowledge in the ecosystem.</p>
+          <p>The objective of this analysis is to characterize the <strong>nature of knowledge in the Spatial Web</strong> — grounded in the Spatial Web ontology and informed by classical epistemology, philosophy of mind, and contemporary network epistemology. The analysis proceeds in four parts: Overview, Single Agent, Agent Interaction, and Multi-Scale Knowledge and Cognitive Computing.</p>
+        </div>
+
+        <div class="inset inset--warn" style="margin-top: 2rem;">
+          <p class="inset__label">⚠️ Risk &amp; Bias: Anthropomorphization</p>
+          <p class="inset__body">We tend to anthropomorphize AI systems: we impute human qualities to them and end up <strong>overestimating the extent to which these systems can actually be fully trusted.</strong> When we describe agents as "knowing," "believing," or "understanding," we import assumptions from human epistemology that may not apply. This analysis aims to be precise about what kind of knowledge AI agents in the Spatial Web actually possess — and where the limits of that knowledge lie.</p>
+        </div>
+      </div>
+
+      <div>
+        <!-- Spatial Web Ontology Figure -->
+        <div class="figure-wrap">
+          <div class="figure-placeholder">
+            <div class="figure-placeholder__icon">🗂️</div>
+            <p class="figure-placeholder__label">Figure 4 — Conceptual Modeling Overview</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--muted);">Save as <code>fig4-conceptual-modeling-overview.png</code></p>
+          </div>
+          <p class="figure-caption"><strong>Spatial Web Ontology.</strong> The conceptual modeling overview showing the core entity types (ENTITY, AGENT, DOMAIN, ACTIVITY, CREDENTIAL, CONTRACT, CHANNEL, TIME, HYPERSPACE) and their relationships in the Spatial Web ontology as defined in IEEE 2874-2025 and the Hyperspace Modeling Language (HSML).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Epistemology framework -->
+    <div style="margin-top: 3.5rem;">
+      <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Epistemology: Nature, Origin, and Limits of Knowledge</h3>
+      <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem; max-width: 680px;">Epistemology is the branch of philosophy concerned with the nature, sources, scope, and limits of knowledge. Three dimensions are essential for understanding knowledge in agent ecosystems.</p>
+
+      <div class="know-grid">
+        <div class="know-card">
+          <div class="know-card__icon">📚</div>
+          <p class="know-card__subtitle">Propositional Knowledge</p>
+          <h4 class="know-card__title">Know-That (JTB)</h4>
+          <p class="know-card__body">Knowledge as <em>Justified True Belief</em> (Plato's <em>Theaetetus</em>): an agent knows that P if P is true, the agent believes P, and the agent is justified in believing P. In the Spatial Web, propositional knowledge is expressed as HSML triples — subject-predicate-object statements with provenance and confidence. The UDG knowledge graph is the repository of propositional knowledge across the ecosystem.</p>
+        </div>
+        <div class="know-card">
+          <div class="know-card__icon">🔧</div>
+          <p class="know-card__subtitle">Tacit Knowledge</p>
+          <h4 class="know-card__title">Know-How</h4>
+          <p class="know-card__body">Procedural and embodied knowledge — knowing how to do something — that is not fully articulable as propositions (Ryle, Polanyi). In AI agents, tacit knowledge is embedded in learned model weights, sensor-motor routines, and behavioral policies. It cannot be directly inspected or shared as HSML statements, which presents challenges for transparency, audit, and governance in the Spatial Web.</p>
+        </div>
+        <div class="know-card">
+          <div class="know-card__icon">🔍</div>
+          <p class="know-card__subtitle">Acquaintance Knowledge</p>
+          <h4 class="know-card__title">Know-Of (Entities)</h4>
+          <p class="know-card__body">Knowledge of particular entities by direct encounter — Russell's "knowledge by acquaintance." In the Spatial Web, acquaintance is mediated by SWIDs: an agent knows of an entity by having resolved its SWID and obtained its HSML representation. The UDG registry of SWIDs is the infrastructure for acquaintance knowledge across the ecosystem — providing a decentralized identity for every known entity.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Justification -->
+    <div style="margin-top: 3rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Justification: How Agents Ground Their Beliefs</h3>
+      <p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 1rem;">Justification is what distinguishes knowledge from mere belief. Four sources of justification are available to Spatial Web agents.</p>
+      <div class="just-row">
+        <div class="just-item">
+          <div class="just-item__icon">👁️</div>
+          <p class="just-item__title">Perception</p>
+          <p class="just-item__body">Direct observation via sensors. Justified by measurement quality, sensor calibration, and provenance. Weakened by noise, occlusion, and adversarial conditions.</p>
+        </div>
+        <div class="just-item">
+          <div class="just-item__icon">🗺️</div>
+          <p class="just-item__title">Internal Model</p>
+          <p class="just-item__body">Beliefs derived from the agent's world model — simulation and projection of states not directly observed. Justified by model fidelity and update frequency.</p>
+        </div>
+        <div class="just-item">
+          <div class="just-item__icon">🧩</div>
+          <p class="just-item__title">Inference</p>
+          <p class="just-item__body">Logical or probabilistic derivation from other beliefs. Justified by the validity of inference rules and the reliability of the premises. Vulnerable to error propagation.</p>
+        </div>
+        <div class="just-item">
+          <div class="just-item__icon">💬</div>
+          <p class="just-item__title">Testimony</p>
+          <p class="just-item__body">Beliefs received from other agents via HSTP/HSML messages. Justified by the credentialed authority of the source and the integrity of the communication channel.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structure of knowledge -->
+    <div style="margin-top: 3rem;">
+      <div class="two-col">
+        <div class="inset inset--blue">
+          <p class="inset__label">Structure: Coherentism</p>
+          <p class="inset__body">The <strong>coherentist</strong> view holds that beliefs are justified by their coherence with the overall web of beliefs — mutual support, consistency, and explanatory fit. In a multi-agent ecosystem, coherence is a property of the network: agents' beliefs cohere when they are mutually consistent and explanatorily connected. Coherence-checking across the UDG is an epistemic governance function.</p>
+        </div>
+        <div class="inset">
+          <p class="inset__label">Structure: Foundationalism</p>
+          <p class="inset__body">The <strong>foundationalist</strong> view holds that some beliefs are basic — directly justified by perception or self-evidence — and all other beliefs are ultimately justified by inference from these foundational beliefs. In the Spatial Web, foundational beliefs are grounded in sensor data and credentialed observations. The provenance chain in HSML implements a form of foundationalist justification.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 2 — SINGLE AGENT
+══════════════════════════════════════════════════ -->
+<span class="section-anchor" id="single-agent"></span>
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Section 2</p>
+      <div class="sh__num">2</div>
+      <h2 class="sh__title">Single Agent</h2>
+      <p class="sh__desc">The epistemological foundations of a single Spatial Web agent — how it perceives, learns, represents, and acts in a world it can never fully know.</p>
+    </div>
+
+    <div class="agent-def">
+      <p class="agent-def__label">IEEE 2874-2025 — Definition</p>
+      <p class="agent-def__term">AGENT</p>
+      <p class="agent-def__text">An ENTITY that <strong>senses</strong>, <strong>responds</strong>, and <strong>maintains a model of its environment</strong>, while performing ACTIVITIES to achieve its goals.</p>
+      <p class="agent-def__source">SOURCE: IEEE Std 2874-2025, Clause 3 — Spatial Web Ontology</p>
+    </div>
+
+    <div class="two-col--wide">
+      <div>
+        <div class="prose">
+          <p>The Spatial Web agent definition encodes a minimal epistemological architecture in three verbs: <strong>senses</strong> (acquires information from the environment), <strong>responds</strong> (acts on information), and <strong>maintains a model</strong> (represents the world internally and updates that representation over time). This is the foundational epistemic loop: perception → representation → action → perception.</p>
+          <p>What the agent <em>knows</em> is, at every moment, bounded by what its sensors can detect, what its model can represent, and what its inference engine can derive. These are the three fundamental limits on single-agent knowledge in the Spatial Web — and they apply regardless of how sophisticated the agent's underlying AI architecture is.</p>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <div class="cap-list">
+            <div class="cap-item">
+              <div class="cap-item__icon">👁️</div>
+              <div>
+                <p class="cap-item__title">Sensing, Observations, Measurements, Perception</p>
+                <p class="cap-item__body">Agents acquire knowledge through sensing — the transduction of physical phenomena into digital representations. The epistemic quality of sensing is governed by measurement uncertainty, sensor fidelity, calibration, and provenance tracking. In the Spatial Web, sensor-derived observations are expressed as HSML statements with metadata capturing the conditions of observation. Ray Kurzweil's concept of <em>experience beamers</em> — technologies that transmit rich sensory experience — represents an extreme extrapolation of the sensing function: sharing not just data but full perceptual context between agents and humans.</p>
+              </div>
+            </div>
+            <div class="cap-item">
+              <div class="cap-item__icon">🎓</div>
+              <div>
+                <p class="cap-item__title">Learning and Curiosity</p>
+                <p class="cap-item__body">Epistemic growth in agents occurs through learning — updating beliefs in response to new evidence. <strong>Machine learning</strong> updates model weights from training data, embedding knowledge in parameters that are not directly inspectable. <strong>Transfer learning</strong> extends knowledge from one domain to another, raising questions about the reliability of the transferred beliefs. <strong>Agent communications</strong> enable social learning — acquiring beliefs from other agents — which is the mechanism of testimony-based justification. A curious agent actively seeks information to reduce uncertainty, expanding its epistemic reach beyond passive reception.</p>
+              </div>
+            </div>
+            <div class="cap-item">
+              <div class="cap-item__icon">🗺️</div>
+              <div>
+                <p class="cap-item__title">Models and Representation</p>
+                <p class="cap-item__body">The agent's internal model is its working representation of the world — the epistemic artifact on which all reasoning and planning depends. In the Spatial Web, the world model is structured by <strong>Hyperspace Geography</strong>: entities located in hyperspace, connected by relationships, described in HSML. The model is always partial (it cannot represent everything), always potentially out of date (the world changes), and always perspectival (it reflects the agent's position in hyperspace and its history of observations). These are the fundamental limits of single-agent knowledge.</p>
+              </div>
+            </div>
+            <div class="cap-item">
+              <div class="cap-item__icon">🎯</div>
+              <div>
+                <p class="cap-item__title">Planning and Acting</p>
+                <p class="cap-item__body">Planning is the epistemic function of projecting the consequences of action — using the world model to simulate future states and select actions that lead toward goals. The quality of planning is bounded by the quality of the world model: planning on false beliefs leads to failed plans. Acting updates the world (and potentially the beliefs of other agents), closing the epistemic loop. The gap between the agent's model of the world and the world itself — what philosophers call the "mind-world gap" — is the central epistemological problem for single agents in the Spatial Web.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="figure-wrap">
+          <div class="figure-placeholder">
+            <div class="figure-placeholder__icon">🤖</div>
+            <p class="figure-placeholder__label">Figure 7 — Agent-Based Paradigm</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--muted);">Save as <code>fig7-agent-based-paradigm.png</code></p>
+          </div>
+          <p class="figure-caption"><strong>SW Agent Context Diagram.</strong> The Spatial Web agent-based paradigm showing the agent's epistemic loop: sensing inputs from the environment (observations, events, messages), maintaining an internal world model, planning and executing activities, and updating the environment through actions — all within the context of a DOMAIN and governed by CREDENTIALS and CONTRACTS.</p>
+        </div>
+
+        <div class="inset" style="margin-top: 1.5rem;">
+          <p class="inset__label">The Epistemic Loop</p>
+          <p class="inset__body" style="font-size: 0.88rem;">
+            <strong>Sense</strong> — acquire observations from environment<br/>
+            <strong>Update</strong> — revise world model with new evidence<br/>
+            <strong>Infer</strong> — derive beliefs from model + evidence<br/>
+            <strong>Plan</strong> — project future states; select actions<br/>
+            <strong>Act</strong> — execute activity; change the world<br/>
+            <strong>Communicate</strong> — share beliefs with other agents<br/>
+            <strong>Learn</strong> — update model from outcomes
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Highlight between sections ── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "Knowledge of the circumstances of which we must make use never exists in concentrated or integrated form, but solely as dispersed bits of incomplete and frequently contradictory knowledge which all the separate individuals possess."
+        </blockquote>
+        <p class="highlight__attr">— Friedrich Hayek · "The Use of Knowledge in Society" · 1945</p>
+        <div class="tags">
+          <span class="tag">Distributed Knowledge</span>
+          <span class="tag">Social Epistemology</span>
+          <span class="tag">Collective Intelligence</span>
+          <span class="tag">UDG</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>Hayek's observation — written about markets and prices — is equally true of agent ecosystems. No single agent in the Spatial Web possesses complete knowledge. Every agent holds a partial, perspectival, and potentially inconsistent fragment of the total knowledge distributed across the UDG.</p>
+        <p>The epistemological problem of the Spatial Web is therefore not just <em>how does a single agent know?</em> but <em>how does a community of agents with distributed and fragmentary knowledge coordinate to produce collective intelligence?</em> This is the problem of agent interaction and multi-scale cognitive computing — the subject of Sections 3 and 4.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 3 — AGENT INTERACTION
+══════════════════════════════════════════════════ -->
+<span class="section-anchor" id="agent-interaction"></span>
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Section 3</p>
+      <div class="sh__num">3</div>
+      <h2 class="sh__title">Agent Interaction</h2>
+      <p class="sh__desc">How agents share, exchange, and negotiate knowledge — the social epistemology of the Spatial Web agent network.</p>
+    </div>
+
+    <div class="two-col--wide">
+      <div>
+        <div class="prose">
+          <p>The knowledge of a single agent is inherently limited. The epistemic power of an agent ecosystem arises from <strong>interaction</strong>: agents exchanging observations, beliefs, plans, and norms to produce a collective knowledge that exceeds what any individual agent could hold. This is the domain of <strong>social epistemology</strong> — how the structure and norms of agent communities shape the quality of collective knowledge.</p>
+          <p><strong>Agent Communications Theory</strong> provides the formal basis for epistemic exchange. Drawing on speech act theory (Austin, Searle), agent communication languages (KQML, FIPA-ACL) define the illocutionary force of agent messages: informing, querying, requesting, committing, refusing. Each speech act type has different epistemic consequences for the receiving agent — updating beliefs, generating queries, triggering commitments, or revising plans.</p>
+          <p>In the Spatial Web, agent communications are structured by <strong>HSTP</strong> (the communication protocol) and <strong>HSML</strong> (the semantic content language). HSTP governs the transaction layer — how messages are exchanged, authenticated, and committed. HSML governs the semantic layer — what those messages mean and how they update the shared knowledge graph of the UDG.</p>
+          <p>The network structure of agent interactions is itself epistemologically significant (Zollman's Independence Thesis): the topology of who communicates with whom, at what frequency, and with what authority, determines the collective epistemic quality of the ecosystem. This is not merely a technical parameter but a governance variable.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="figure-wrap">
+          <div class="figure-placeholder">
+            <div class="figure-placeholder__icon">🕸️</div>
+            <p class="figure-placeholder__label">Agent Network Interaction Diagram</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--muted);">Save as <code>fig-agent-network-interaction.png</code></p>
+          </div>
+          <p class="figure-caption"><strong>Agent network interaction.</strong> Diagram showing how agents in the Spatial Web exchange knowledge through HSTP transactions — including direct peer exchanges, domain-mediated broadcasts, and registry lookups — and how network topology shapes the flow of epistemic information through the ecosystem.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exchange types -->
+    <div style="margin-top: 2.5rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Agent Exchanges: Two Epistemic Modes</h3>
+      <div class="exchange-grid">
+        <div class="exchange-card exchange-card--nonsym">
+          <p class="exchange-card__label">Non-Symbolic Exchange</p>
+          <h4 class="exchange-card__title">Sub-Symbolic &amp; Embedded Knowledge Transfer</h4>
+          <div class="exchange-card__body">
+            <p>Non-symbolic exchanges transfer knowledge that is not encoded as explicit propositions — sensor streams, embeddings, behavioral signals, and model weights. This mode corresponds to tacit and procedural knowledge: what the agent knows how to do, or how the world looks to its sensors, rather than what it believes in articulable form.</p>
+            <p>Examples include sharing neural network embeddings (world-to-vector representations), streaming sensor observations, broadcasting behavioral policies, and transferring learned model parameters. Non-symbolic exchanges are high-bandwidth but epistemically opaque: the receiving agent acquires knowledge it cannot fully inspect or justify through its own reasoning.</p>
+            <p>The epistemological risk is that non-symbolic transfers embed biases, errors, and assumptions from the source agent's training context — which the receiving agent cannot detect or correct without additional symbolic validation.</p>
+          </div>
+        </div>
+        <div class="exchange-card exchange-card--sym">
+          <p class="exchange-card__label">Symbolic Exchange</p>
+          <h4 class="exchange-card__title">HSML: Semantic Knowledge as Shared Language</h4>
+          <div class="exchange-card__body">
+            <p>Symbolic exchanges transfer knowledge encoded as HSML statements — explicit, machine-readable propositions using the Spatial Web ontology. HSML builds on the W3C Resource Description Framework (RDF): subject-predicate-object triples that can be validated, reasoned about, and traced to their sources.</p>
+            <p>HSML enables all four forms of justification: perceptual observations are encoded with sensor metadata; inferred beliefs carry their inference chains; testimonial statements carry the credential of the communicating agent; model-derived projections are tagged as model outputs with model provenance.</p>
+            <p>The epistemological power of HSML is transparency and interoperability: any conforming agent can interpret the semantic content of an HSML statement, validate its provenance, and integrate it into its own knowledge graph — grounding belief in a shared, inspectable, and governable representation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 4 — MULTI-SCALE KNOWLEDGE
+══════════════════════════════════════════════════ -->
+<span class="section-anchor" id="multi-scale"></span>
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Section 4</p>
+      <div class="sh__num">4</div>
+      <h2 class="sh__title">Multi-Scale Knowledge and Cognitive Computing</h2>
+      <p class="sh__desc">From individual agent beliefs to ecosystem-wide collective intelligence — the Universal Domain Graph as the epistemological infrastructure of the Spatial Web, and the governance frameworks required to maintain it.</p>
+    </div>
+
+    <!-- UDG -->
+    <div class="two-col--wide" style="margin-bottom: 3rem;">
+      <div>
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem;">The Universal Domain Graph as Epistemic Infrastructure</h3>
+        <div class="prose">
+          <p>The <strong>Universal Domain Graph</strong> is a distributed hypergraph containing all relationships between all known SWIDs in the Spatial Web. It is the repository of collective propositional knowledge across the ecosystem: a living, distributed, continuously updated knowledge base to which every agent contributes and from which every agent draws.</p>
+          <p>As an epistemic infrastructure, the UDG performs four functions: it <strong>stores</strong> beliefs (HSML triples with provenance); it <strong>connects</strong> agents (via the SWID identity graph and HSTP communication channels); it <strong>resolves</strong> contradictions (through domain authority governance and coherence-checking protocols); and it <strong>governs</strong> epistemic norms (through credential systems, domain membership rules, and SWRA oversight).</p>
+          <p><strong>Semiosis in the UDG</strong> — the process by which signs acquire meaning through agent interpretation — is performed by agents operating on HSML. Every SWID is a sign; its meaning is constituted by the network of relationships in which it is embedded in the UDG knowledge graph. Meaning in the Spatial Web is therefore inherently relational and contextual: no entity has meaning in isolation, only in relation to the network of entities with which it is connected.</p>
+        </div>
+      </div>
+      <div>
+        <div class="figure-wrap">
+          <div class="figure-placeholder">
+            <div class="figure-placeholder__icon">🌐</div>
+            <p class="figure-placeholder__label">Figure 6 — Notional Structure of the UDG</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--muted);">Save as <code>fig6-udg-notional-structure.png</code></p>
+          </div>
+          <p class="figure-caption"><strong>Universal Domain Graph.</strong> Notional structure showing UDG Nodes, Registry Nodes, and their distributed communication topology — the computing infrastructure implementing the epistemic commons of the Spatial Web.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social, legal, governance -->
+    <div>
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Social, Legal, and Governance Dimensions</h3>
+      <p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 1.5rem; max-width: 680px;">The epistemological quality of the UDG is not determined by technology alone. It depends on the social, legal, and governance structures that regulate agent behavior and epistemic norms within the ecosystem.</p>
+
+      <div class="gov-list">
+
+        <div class="gov-item">
+          <p class="gov-item__title">Social Ontology and Justice</p>
+          <p class="gov-item__body">The Spatial Web operates within a social ontology — a framework for understanding the social entities (organizations, institutions, roles, norms) that structure agent behavior. Social ontology asks: what kinds of social entities exist, how are they constituted, and what obligations do they create? Justice, as a principle of social ontology, requires that the epistemic infrastructure of the Spatial Web be designed to distribute knowledge equitably — providing equal access to reliable information across all participating agents and communities, and preventing epistemic injustice (Miranda Fricker) whereby some agents are systematically denied credibility or access.</p>
+        </div>
+
+        <div class="gov-item">
+          <p class="gov-item__title">Law as Code</p>
+          <p class="gov-item__body">The formalization of legal and normative constraints as executable code — "law as code" or "code as law" — is a central ambition of the Spatial Web governance model. HSML's support for CONTRACTS and CREDENTIALS provides the technical substrate for encoding legal obligations as machine-executable norms. The W3C ODRL (Open Digital Rights Language) allows for the formalization of normative statements for specific domains and purposes — expressing access rights, use permissions, obligations, and prohibitions as structured data that agents can interpret and comply with automatically. This transforms legal epistemology: compliance is not merely a matter of human knowledge of the law but of agent capability to execute lawful behavior in real time.</p>
+          <p class="gov-item__source">References: W3C ODRL Policy Information Model; Smart contracts and distributed ledger technology (HSTP)</p>
+        </div>
+
+        <div class="gov-item">
+          <p class="gov-item__title">Governance of Autonomous Agents on the Web</p>
+          <p class="gov-item__body">Research on governance frameworks for autonomous web agents (2022) establishes three key principles directly relevant to Spatial Web epistemology: <em>(1)</em> <strong>Organisations are first-class abstractions</strong> that group agents and their governance (i.e., norms) — in the Spatial Web, Domains serve this function. <em>(2)</em> The governance layer <strong>addresses the governance of autonomous entities</strong> participating in the system — establishing who has authority over what, and under what conditions. <em>(3)</em> The governance layer <strong>manages abstractions for the logical grouping of agents</strong> with a particular purpose and the provision of legal, regulatory, and social norms that may span multiple organisations — the multi-domain, polycentric governance structure of the Spatial Web Registry hierarchy. These principles translate the philosophical foundations of normative epistemology into concrete governance architecture.</p>
+        </div>
+
+        <div class="gov-item">
+          <p class="gov-item__title">Prosocial Norm Emergence in Multi-Agent Systems</p>
+          <p class="gov-item__body">Research on prosocial norm emergence (ACM) demonstrates that cooperative epistemic norms — truth-telling, source attribution, uncertainty disclosure — can emerge spontaneously in multi-agent systems under the right incentive structures. Crucially, the conditions for prosocial norm emergence depend on network structure (Zollman's Independence Thesis applies): communities with appropriate diversity and connectivity are more likely to develop reliable, self-sustaining epistemic norms than highly centralized or highly fragmented networks. Achieving global cooperation can be encouraged by localizing externalities to peers in a social network, leveraging peer-pressure to regulate epistemic behavior.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Multi-scale cognitive computing -->
+    <div style="margin-top: 3rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Multi-Scale Cognitive Computing</h3>
+      <p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 1.5rem; max-width: 700px;">Cognitive computing across the scales of the Spatial Web — from individual agent inference to collective ecosystem intelligence — represents a new paradigm for knowledge management, one that mirrors the hierarchical emergence observed in complex natural systems.</p>
+
+      <div class="pillar-grid">
+        <div class="pillar">
+          <div class="pillar__icon">🧠</div>
+          <h4 class="pillar__title">Agent-Level Cognition</h4>
+          <p class="pillar__body">Individual agent inference, world-model maintenance, and planning. Epistemologically: perception-driven belief formation, model-based simulation, and rational belief revision. The foundational cognitive unit of the ecosystem — bounded in knowledge, perspectival in representation, and limited in reasoning capacity. Computational approaches to hierarchical emergence show how agent-level cognitive processes generate higher-order epistemic structures when agents are appropriately connected.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar__icon">🔗</div>
+          <h4 class="pillar__title">Network-Level Epistemics</h4>
+          <p class="pillar__body">The epistemic properties that emerge from agent interaction — shared beliefs, divided epistemic labor, social norms of evidence evaluation. Network epistemology (Zollman) studies how network topology, communication patterns, and epistemic norms shape what the community can collectively know. The UDG's graph structure is the epistemological substrate at this scale: its topology determines the flow of knowledge, the speed of belief convergence, and the resilience of collective knowledge to error and manipulation.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar__icon">🌐</div>
+          <h4 class="pillar__title">Ecosystem-Level Collective Intelligence</h4>
+          <p class="pillar__body">The aggregate knowledge of the Spatial Web ecosystem — the UDG as a whole — constitutes a form of collective intelligence that exceeds any individual agent's epistemic capacity. This intelligence is a public good (Levin, Ostrom): its quality depends on the governance of the commons. Free-riding on collective knowledge without contributing, or degrading the commons through misinformation, are the epistemic analogues of the tragedy of the commons. Polycentric governance of the UDG addresses these risks.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar__icon">⬆️</div>
+          <h4 class="pillar__title">Hierarchical Emergence</h4>
+          <p class="pillar__body">Computational approaches to hierarchical emergence (Santa Fe Institute) model how higher-order cognitive structures arise from lower-level agent interactions — a process directly analogous to the emergence of collective intelligence in biological and social systems. In the Spatial Web, hierarchical emergence operates across Domain hierarchies, Registry hierarchies, and UDG node networks: patterns of knowledge that exist only at the ecosystem level, not reducible to any individual agent's beliefs, emerging from the structured interaction of agents across scales.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Related ── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Further Reading</h2>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="evolution-of-agency-m-tomasello.html" class="btn btn--primary">Agency of Agents — Epistemological Approach →</a>
+      <a href="jhu-natural-philosophy-symposium-2025.html" class="btn btn--outline">JHU Natural Philosophy Symposium →</a>
+      <a href="spatial-web-concepts-of-space-from-ai.html" class="btn btn--outline">Spatial Web Concepts of Space →</a>
+      <a href="ieee-spatial-web-standard-approved.html" class="btn btn--outline">IEEE 2874-2025 Standard →</a>
+      <a href="philosophy-must-inform-socio-technical-systems-engineering.html" class="btn btn--outline">Philosophy of Engineering →</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="cta-section">
+  <div class="container">
+    <h2 class="cta-section__title">Discuss Epistemology &amp; the Spatial Web</h2>
+    <p class="cta-section__sub">Interested in the epistemological foundations of agentic AI systems, the Universal Domain Graph, or collective intelligence governance? Get in touch.</p>
+    <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
