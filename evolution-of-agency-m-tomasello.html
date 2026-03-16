@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evolution of Agency — Michael Tomasello — GeoRoundtable</title>
+  <title>Agency of Agents — An Epistemological Approach — GeoRoundtable</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,12 +30,9 @@
     .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
     .section    { padding: 5rem 0; }
     .section--alt { background: var(--light); }
+    .accent-bar { height: 3px; background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%); }
 
-    .accent-bar {
-      height: 3px;
-      background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%);
-    }
-
+    /* ── Nav ── */
     .nav { position: sticky; top: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
     .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
     .nav__brand { display: flex; align-items: center; gap: 11px; color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; text-decoration: none; }
@@ -44,6 +41,7 @@
     .nav__links a { color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: background 0.15s, color 0.15s; }
     .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
 
+    /* ── Hero ── */
     .hero { background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%); color: var(--white); padding: 6rem 0 5rem; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%), radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%); }
     .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
@@ -52,30 +50,56 @@
     .hero__breadcrumb a:hover { color: var(--mint); }
     .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
     .hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28); border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600; color: var(--mint); letter-spacing: 0.05em; margin-bottom: 1.5rem; }
-    .hero__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; max-width: 820px; }
-    .hero__sub { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 640px; line-height: 1.7; margin-bottom: 1.5rem; }
+    .hero__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; max-width: 860px; }
+    .hero__sub { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 680px; line-height: 1.7; margin-bottom: 1.5rem; }
     .hero__meta { display: flex; flex-wrap: wrap; gap: 2rem; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; }
     .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
     .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
     .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
 
+    /* ── Section headings ── */
     .sh { margin-bottom: 3rem; }
+    .sh--center { text-align: center; }
+    .sh--center .sh__desc { margin: 0.7rem auto 0; }
     .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
     .sh__title { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
     .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 640px; line-height: 1.7; }
 
+    /* ── Prose ── */
     .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; }
     .prose p + p { margin-top: 1.1rem; }
+    .prose strong { color: var(--navy); }
 
-    /* ── Agency type cards ──────────────────────────────── */
+    /* ── Two-col ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+    .two-col--wide { display: grid; grid-template-columns: 3fr 2fr; gap: 3.5rem; align-items: start; }
+
+    /* ── Figure / photo ── */
+    .figure-block {
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 6px 28px rgba(8,24,64,0.14);
+      border: 1px solid var(--border);
+    }
+    .figure-block img {
+      width: 100%; display: block;
+      object-fit: cover;
+    }
+    .figure-caption {
+      background: var(--light); padding: 0.9rem 1.2rem;
+      font-size: 0.82rem; color: var(--muted); line-height: 1.6;
+      border-top: 1px solid var(--border);
+    }
+    .figure-caption strong { color: var(--navy); }
+
+    /* ── Agency timeline ── */
     .agency-timeline { display: flex; flex-direction: column; gap: 0; }
     .agency-step {
       display: grid; grid-template-columns: 80px 1fr;
-      gap: 0 2rem; padding: 2rem 0;
+      gap: 0 2rem; padding: 2.2rem 0;
       border-bottom: 1px solid var(--border);
     }
     .agency-step:last-child { border-bottom: none; }
-    .agency-step__number-col { display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .agency-step__number-col { display: flex; flex-direction: column; align-items: center; }
     .agency-step__num {
       width: 52px; height: 52px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
@@ -90,14 +114,35 @@
     .agency-step:last-child .agency-step__connector { display: none; }
     .agency-step__content { padding-top: 0.2rem; }
     .agency-step__era { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
-    .agency-step__title { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+    .agency-step__title { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }
     .agency-step__subtitle { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-bottom: 0.7rem; }
-    .agency-step__body { font-size: 0.92rem; color: #3a3a3a; line-height: 1.7; }
-    .agency-step__implications { margin-top: 0.9rem; }
+    .agency-step__body { font-size: 0.92rem; color: #3a3a3a; line-height: 1.72; }
+    .agency-step__epist { margin-top: 0.85rem; }
+    .agency-step__epist-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
+    .agency-step__epist-text { font-size: 0.88rem; color: #1a4a3a; line-height: 1.65; background: #edf7f5; border-radius: 6px; padding: 0.7rem 1rem; border-left: 3px solid var(--teal); }
+    .agency-step__impl { margin-top: 0.65rem; }
     .agency-step__impl-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.3rem; }
     .agency-step__impl-text { font-size: 0.88rem; color: var(--blue); line-height: 1.6; background: #f0f7ff; border-radius: 6px; padding: 0.7rem 1rem; border-left: 3px solid var(--sky); }
 
-    /* ── Pillar cards ───────────────────────────────────── */
+    /* ── Epistemology dimension cards ── */
+    .epist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .epist-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-top: 3px solid var(--teal); border-radius: var(--radius);
+      padding: 1.8rem 1.6rem; box-shadow: var(--shadow);
+    }
+    .epist-card:nth-child(2) { border-top-color: var(--blue); }
+    .epist-card:nth-child(3) { border-top-color: var(--sky); }
+    .epist-card:nth-child(4) { border-top-color: var(--navy); }
+    .epist-card__icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+    .epist-card__q { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); margin-bottom: 0.4rem; }
+    .epist-card:nth-child(2) .epist-card__q { color: var(--blue); }
+    .epist-card:nth-child(3) .epist-card__q { color: var(--sky); }
+    .epist-card:nth-child(4) .epist-card__q { color: var(--navy); }
+    .epist-card__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
+    .epist-card__body { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Pillar cards ── */
     .pillar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
     .pillar { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); transition: transform 0.2s; }
     .pillar:hover { transform: translateY(-3px); }
@@ -108,11 +153,10 @@
     .pillar__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
     .pillar__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
 
-    /* ── Highlight quote ────────────────────────────────── */
-    .highlight { background: var(--navy); color: var(--white); padding: 5rem 0; position: relative; overflow: hidden; }
-    .highlight::after { content: ''; position: absolute; right: -80px; top: 50%; transform: translateY(-50%); width: 460px; height: 460px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.055; pointer-events: none; }
-    .highlight__inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 1rem; }
+    /* ── Highlight quote ── */
+    .highlight { background: var(--navy); color: var(--white); padding: 5rem 0; }
+    .highlight__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 1rem; }
     .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
     .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
     .highlight__body p + p { margin-top: 1rem; }
@@ -120,37 +164,39 @@
     .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
     .tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.82rem; font-weight: 600; color: var(--mint); }
 
-    /* ── Book info ──────────────────────────────────────── */
-    .book-panel { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap; }
-    .book-spine { width: 90px; min-width: 90px; height: 130px; border-radius: 6px; background: linear-gradient(160deg, #081840 0%, #0d2660 100%); display: flex; align-items: center; justify-content: center; color: var(--mint); font-size: 2rem; box-shadow: 4px 4px 16px rgba(0,0,0,0.2); }
-    .book-info { flex: 1; min-width: 200px; }
+    /* ── Book panel ── */
+    .book-panel { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; }
+    .book-spine { width: 80px; min-width: 80px; height: 120px; border-radius: 6px; background: linear-gradient(160deg, #081840 0%, #0d2660 100%); display: flex; align-items: center; justify-content: center; color: var(--mint); font-size: 2rem; box-shadow: 4px 4px 16px rgba(0,0,0,0.2); }
+    .book-info { flex: 1; min-width: 180px; }
     .book-info__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
-    .book-info__title { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
-    .book-info__subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.7rem; font-style: italic; }
-    .book-info__meta { font-size: 0.88rem; color: #3a3a3a; line-height: 1.65; }
+    .book-info__title { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+    .book-info__subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.6rem; font-style: italic; }
+    .book-info__meta { font-size: 0.85rem; color: #3a3a3a; line-height: 1.65; }
 
-    /* ── Resource / CTA ─────────────────────────────────── */
+    /* ── Buttons ── */
     .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.18s; text-decoration: none !important; border: none; cursor: pointer; white-space: nowrap; }
     .btn--primary { background: var(--teal); color: var(--white); }
     .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
     .btn--outline-navy { background: transparent; border: 1.5px solid var(--border); color: var(--navy); }
     .btn--outline-navy:hover { border-color: var(--teal); color: var(--teal); }
 
-    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; position: relative; overflow: hidden; }
-    .cta-section::before { content: ''; position: absolute; right: -70px; top: 50%; transform: translateY(-50%); width: 430px; height: 430px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.05; pointer-events: none; }
-    .cta-section__inner { position: relative; z-index: 1; }
+    /* ── CTA ── */
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; }
     .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
     .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
     .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
     .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
 
+    /* ── Footer ── */
     .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
     .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
     .footer a { color: rgba(255,255,255,0.35); }
     .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
 
+    /* ── Responsive ── */
     @media (max-width: 900px) {
       .highlight__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .two-col, .two-col--wide { grid-template-columns: 1fr; }
       .pillar-grid { grid-template-columns: 1fr; }
       .agency-step { grid-template-columns: 60px 1fr; }
     }
@@ -181,7 +227,7 @@
   </div>
 </nav>
 
-<!-- ── Hero ─────────────────────────────────────────────── -->
+<!-- ── Hero ── -->
 <section class="hero">
   <div class="hero__inner">
     <div class="hero__breadcrumb">
@@ -191,13 +237,17 @@
       <span>›</span>
       Agentic Systems
     </div>
-    <div class="hero__badge">🧬 Analysis · Agentic Systems</div>
-    <h1 class="hero__title">Evolution of Agency — Michael Tomasello</h1>
-    <p class="hero__sub">Tomasello's four types of natural agency in evolutionary order — foundational framing for GeoRoundtable's approach to designing and governing complex agentic AI systems.</p>
+    <div class="hero__badge">🧬 Analysis · Epistemology · Agentic Systems</div>
+    <h1 class="hero__title">Agency of Agents — An Epistemological Approach</h1>
+    <p class="hero__sub">What do agents know, how do they form beliefs, and how does knowledge propagate through a network of agents? Tomasello's evolutionary typology of agency, reframed through the lens of epistemology — foundational for the design and governance of agentic AI systems and the Spatial Web.</p>
     <div class="hero__meta">
       <div class="hero__meta-item">
-        <span class="hero__meta-label">Source</span>
+        <span class="hero__meta-label">Foundation</span>
         <span class="hero__meta-value">Michael Tomasello, MIT Press</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Framework</span>
+        <span class="hero__meta-value">Epistemology of Agents</span>
       </div>
       <div class="hero__meta-item">
         <span class="hero__meta-label">Application</span>
@@ -211,46 +261,63 @@
   </div>
 </section>
 
-<!-- ── Overview ─────────────────────────────────────────── -->
+<!-- ── Overview ── -->
 <section class="section">
   <div class="container">
-    <div class="sh">
-      <p class="sh__label">Overview</p>
-      <h2 class="sh__title">Why Agency Matters for Agentic AI</h2>
-      <p class="sh__desc">Before designing systems of autonomous agents, it is worth understanding what agency actually is — and how it evolved across hundreds of millions of years of biological history.</p>
-    </div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
-      <div class="prose">
-        <p>Michael Tomasello's <em>The Evolution of Agency: Behavioral Organization from Lizards to Humans</em> (MIT Press) offers a rigorous evolutionary typology of psychological agency — tracing how increasingly complex forms of goal-directed behavior emerged across vertebrate lineages on the path to human cognition.</p>
-        <p>Tomasello identifies four distinct types of agency, each representing a qualitative leap in behavioral organization: new capacities for planning, decision-making, executive control, and — ultimately — the normative regulation of behavior within social groups.</p>
-        <p>For GeoRoundtable, this typology provides essential grounding for work on agentic AI systems. When designing multi-agent architectures, it matters enormously whether the agents in question are merely goal-directed, or intentional, or rational — and whether the system as a whole requires socially normative coordination. These are not just philosophical distinctions; they have direct architectural and governance implications.</p>
-        <p>The framework also illuminates what is genuinely novel — and genuinely risky — about contemporary AI systems that aspire to socially normative agency: the capacity to pursue shared goals, regulate behavior according to group norms, and hold others accountable. This is the territory where engineering, ethics, and philosophy must converge.</p>
-      </div>
+    <div class="two-col--wide">
       <div>
-        <div class="book-panel">
-          <div class="book-spine">🧬</div>
-          <div class="book-info">
-            <p class="book-info__label">Book</p>
-            <p class="book-info__title">The Evolution of Agency</p>
-            <p class="book-info__subtitle">Behavioral Organization from Lizards to Humans</p>
-            <p class="book-info__meta"><strong>Author:</strong> Michael Tomasello<br /><strong>Publisher:</strong> MIT Press<br /><strong>ISBN:</strong> 9780262047005<br /><br />Tomasello advances a typology of the main forms of psychological agency that emerged on the evolutionary pathway to human beings — and explores what each new form reveals about the nature of mind, intention, and social life.</p>
+        <div class="sh">
+          <p class="sh__label">Overview</p>
+          <h2 class="sh__title">Epistemology as the Foundation of Agency</h2>
+        </div>
+        <div class="prose">
+          <p>Agency is not merely about action — it is fundamentally about <strong>knowledge</strong>. What an agent can do is bounded by what it can know: what it can perceive, represent, believe, reason about, and share with others. Epistemology — the study of the nature, sources, and limits of knowledge — is therefore the natural foundation for a rigorous theory of agency.</p>
+          <p>Michael Tomasello's <em>The Evolution of Agency: Behavioral Organization from Lizards to Humans</em> (MIT Press) traces four qualitatively distinct forms of agency across vertebrate evolution. Each form represents not merely a new behavioral capacity but a new <strong>epistemic architecture</strong>: a new relationship between an agent and its knowledge of the world, of other agents, and of itself.</p>
+          <p>From goal-directed organisms that respond directly to perceived affordances, through intentional agents that build internal world models, to rational agents that reflect on their own beliefs, and finally to humans whose knowledge is irreducibly social and normatively structured — each step is an epistemic leap as much as a behavioral one.</p>
+          <p>For the design of agentic AI systems and the Spatial Web, this matters enormously. An <strong>ecosystem of agents</strong> requires not just coordination of actions but coordination of knowledge: shared world models, distributed belief formation, social epistemology, and epistemic governance. The Universal Domain Graph is, among other things, an epistemological infrastructure — a medium for collective intelligence.</p>
+          <p>This analysis draws on Tomasello's framework, the network epistemology of Kevin Zollman (JHU Natural Philosophy Symposium, 2025), and GeoRoundtable's ongoing work on the Spatial Web UDG to develop an epistemological approach to agentic AI design and governance.</p>
+        </div>
+        <div style="margin-top: 2rem;">
+          <div class="book-panel">
+            <div class="book-spine">🧬</div>
+            <div class="book-info">
+              <p class="book-info__label">Foundation Text</p>
+              <p class="book-info__title">The Evolution of Agency</p>
+              <p class="book-info__subtitle">Behavioral Organization from Lizards to Humans</p>
+              <p class="book-info__meta"><strong>Author:</strong> Michael Tomasello &nbsp;·&nbsp; <strong>Publisher:</strong> MIT Press &nbsp;·&nbsp; <strong>ISBN:</strong> 9780262047005<br /><br />Tomasello's typology of psychological agency in evolutionary order — the foundational framework for this epistemological analysis.</p>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="figure-block">
+          <img src="galway-bay-annapolis.jpg" alt="George Percivall in Annapolis, Maryland — home of St. John's College" />
+          <div class="figure-caption">
+            <strong>Annapolis, Maryland.</strong> Home of St. John's College, where George Percivall is pursuing graduate study in the Master of Arts in Liberal Arts (MALA) program — sustained engagement with the great books of natural philosophy that directly informs GeoRoundtable's philosophy-informed engineering practice. The Galway Bay Irish Pub on Maryland Ave, a Annapolis institution, is a short walk from the St. John's campus.
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; background: var(--light); border-radius: var(--radius); padding: 1.6rem; border: 1px solid var(--border);">
+          <p style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 0.6rem;">Why Annapolis Matters</p>
+          <p style="font-size: 0.9rem; color: #2a3a50; line-height: 1.75;">St. John's College is one of the few institutions in the world dedicated to the rigorous study of the great books of Western philosophy, science, and mathematics. The MALA program offers adult learners a sustained engagement with primary texts in natural philosophy — Aristotle's <em>De Anima</em>, Descartes' <em>Meditations</em>, Kant's <em>Critique</em> — that forms the philosophical foundations of epistemology and the theory of mind. This is precisely the grounding required for the philosophical analysis of agency and knowledge in agentic AI systems.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── The Four Types ────────────────────────────────────── -->
+<!-- ── Four Epistemic Levels ── -->
 <section class="section section--alt">
   <div class="container">
-    <div class="sh">
-      <p class="sh__label">Tomasello's Framework</p>
-      <h2 class="sh__title">The Four Types of Agency</h2>
-      <p class="sh__desc">In evolutionary order of emergence — each representing a qualitative increase in behavioral complexity, planning capacity, and social integration.</p>
+    <div class="sh sh--center">
+      <p class="sh__label">Tomasello's Framework — Epistemological Reading</p>
+      <h2 class="sh__title">Four Types of Agency, Four Epistemic Architectures</h2>
+      <p class="sh__desc">Each stage in the evolution of agency is equally a stage in the evolution of knowledge — a new relationship between agent, world, other agents, and self.</p>
     </div>
     <div class="agency-timeline">
 
+      <!-- 1 -->
       <div class="agency-step">
         <div class="agency-step__number-col">
           <div class="agency-step__num agency-step__num--1">1</div>
@@ -259,15 +326,20 @@
         <div class="agency-step__content">
           <p class="agency-step__era">Ancient Vertebrates (e.g., Lizards)</p>
           <h3 class="agency-step__title">Goal-Directed Agency</h3>
-          <p class="agency-step__subtitle">Flexible goal-pursuit through simple means-end organization</p>
-          <p class="agency-step__body">The most fundamental form of agency: the capacity to flexibly direct actions toward goals. An organism with goal-directed agency can vary its behavior to achieve a desired end state, selecting from a repertoire of actions based on what the environment affords. This is the baseline of purposive behavior — present in lizards and ancient vertebrates — and does not require planning, mental simulation, or social awareness.</p>
-          <div class="agency-step__implications">
+          <p class="agency-step__subtitle">Perception-coupled, affordance-driven behavior — knowledge as direct contact with the world</p>
+          <p class="agency-step__body">The most fundamental form of agency: flexible goal-pursuit through direct perception-action coupling. The goal-directed agent does not represent the world internally — it responds to affordances as perceived. "Knowledge" at this level is not propositional; it is embedded in the organism's sensorimotor repertoire. There is no internal model that can be inspected, updated, or shared.</p>
+          <div class="agency-step__epist">
+            <p class="agency-step__epist-label">Epistemic Architecture</p>
+            <p class="agency-step__epist-text"><strong>What it knows:</strong> Perceived affordances — what the environment offers for action. <strong>How it knows:</strong> Direct sensorimotor coupling with the world; no internal representation. <strong>Limits:</strong> Knowledge is local, momentary, and private — it cannot be shared, stored, or reasoned about.</p>
+          </div>
+          <div class="agency-step__impl">
             <p class="agency-step__impl-label">Implication for Agentic AI</p>
-            <p class="agency-step__impl-text">Rule-based and reactive AI systems operate at this level — executing fixed goal-pursuit routines without modeling the intentions of other agents or simulating future states. Appropriate for narrow, well-defined automation tasks.</p>
+            <p class="agency-step__impl-text">Reactive and rule-based AI systems. No internal world model, no belief states, no inference. Knowledge exists only in the stimulus-response mapping, not in any representational structure that can be inspected or governed.</p>
           </div>
         </div>
       </div>
 
+      <!-- 2 -->
       <div class="agency-step">
         <div class="agency-step__number-col">
           <div class="agency-step__num agency-step__num--2">2</div>
@@ -276,15 +348,20 @@
         <div class="agency-step__content">
           <p class="agency-step__era">Ancient Mammals (e.g., Squirrels)</p>
           <h3 class="agency-step__title">Intentional Agency</h3>
-          <p class="agency-step__subtitle">Planning, mental simulation, and causal understanding</p>
-          <p class="agency-step__body">Intentional agents can plan sequences of actions in advance, mentally simulating outcomes before committing to a course of behavior. This requires a causal model of the world — understanding that actions produce effects through physical and temporal chains. Intentional agency emerges in ancient mammals and involves a qualitatively new layer of executive control over behavior, enabling flexible responses to novel situations.</p>
-          <div class="agency-step__implications">
+          <p class="agency-step__subtitle">Internal world models, causal reasoning, and belief-driven planning</p>
+          <p class="agency-step__body">Intentional agents construct internal representations of the world — world models that persist beyond immediate perception and can be manipulated in mental simulation. Planning is possible because the agent can mentally project the consequences of actions before committing to them. This is the emergence of <em>belief</em>: an internal state that represents how the world is (or was, or could be).</p>
+          <div class="agency-step__epist">
+            <p class="agency-step__epist-label">Epistemic Architecture</p>
+            <p class="agency-step__epist-text"><strong>What it knows:</strong> A causal model of the world — states, actions, and their consequences. <strong>How it knows:</strong> Perception feeds internal representations; simulation projects future states. <strong>Key concept:</strong> The emergence of <em>belief</em> as an internal state distinct from the world it represents — and therefore capable of being false.</p>
+          </div>
+          <div class="agency-step__impl">
             <p class="agency-step__impl-label">Implication for Agentic AI</p>
-            <p class="agency-step__impl-text">Planning-capable AI systems — including modern LLM-based agents with chain-of-thought reasoning and tool use — operate at this level. The key capability is sequential action planning in service of a goal, with the ability to adapt plans mid-execution.</p>
+            <p class="agency-step__impl-text">LLM-based agents with tool use and chain-of-thought planning. The key epistemological question: does the system maintain a genuine world model, or only a "bag of heuristics"? (Melanie Mitchell, JHU Symposium 2025 — see ARC Benchmark.) This is not a performance question but an architectural one.</p>
           </div>
         </div>
       </div>
 
+      <!-- 3 -->
       <div class="agency-step">
         <div class="agency-step__number-col">
           <div class="agency-step__num agency-step__num--3">3</div>
@@ -293,15 +370,20 @@
         <div class="agency-step__content">
           <p class="agency-step__era">Ancient Great Apes (e.g., Chimpanzees)</p>
           <h3 class="agency-step__title">Rational Agency</h3>
-          <p class="agency-step__subtitle">Logical inference, reflective control, and decision under uncertainty</p>
-          <p class="agency-step__body">Rational agents reason about alternatives, weigh evidence, and apply logical inference to reach conclusions — including in novel situations with incomplete information. This involves reflective control over one's own reasoning processes, the ability to inhibit impulsive responses in favor of deliberated ones, and a capacity to evaluate competing options against abstract criteria. Present in great apes, rational agency introduces a new relationship between the agent and its own mental states.</p>
-          <div class="agency-step__implications">
+          <p class="agency-step__subtitle">Meta-cognition, inference under uncertainty, and reflective belief revision</p>
+          <p class="agency-step__body">Rational agents do not merely hold beliefs — they reason about them. The rational agent can evaluate competing hypotheses, apply logical inference, and revise beliefs in light of evidence. Crucially, rational agency introduces <em>meta-cognition</em>: the capacity to represent one's own mental states as mental states — to know that one believes something, to recognize uncertainty, and to inhibit action pending better information.</p>
+          <div class="agency-step__epist">
+            <p class="agency-step__epist-label">Epistemic Architecture</p>
+            <p class="agency-step__epist-text"><strong>What it knows:</strong> Not just the world, but its own beliefs about the world. <strong>How it knows:</strong> Inference, hypothesis evaluation, belief revision against evidence. <strong>Key concept:</strong> <em>Epistemic humility</em> — the capacity to represent one's own uncertainty and act on it appropriately.</p>
+          </div>
+          <div class="agency-step__impl">
             <p class="agency-step__impl-label">Implication for Agentic AI</p>
-            <p class="agency-step__impl-text">AI systems with multi-step reasoning, self-correction, and decision-making under uncertainty approach this level. Key design questions concern how agents represent and evaluate competing options — and how their reasoning can be made transparent and auditable.</p>
+            <p class="agency-step__impl-text">AI systems with uncertainty quantification, self-correction, and auditable reasoning. The design challenge: making the agent's epistemic state — what it believes, how confident it is, what evidence it has — transparent and inspectable. This is foundational for safety assurance and explainability.</p>
           </div>
         </div>
       </div>
 
+      <!-- 4 -->
       <div class="agency-step">
         <div class="agency-step__number-col">
           <div class="agency-step__num agency-step__num--4">4</div>
@@ -310,11 +392,15 @@
         <div class="agency-step__content">
           <p class="agency-step__era">Ancient Humans</p>
           <h3 class="agency-step__title">Socially Normative Agency</h3>
-          <p class="agency-step__subtitle">Shared goals, mutual accountability, and normative self-regulation</p>
-          <p class="agency-step__body">The most complex form of agency, unique to humans: the capacity to pursue shared goals collaboratively, regulate behavior according to group norms, and hold both oneself and others accountable to those norms. Socially normative agents experience the world as an objective and normative environment — one governed by standards that apply to all members of the group. This requires not just reasoning about other minds, but internalizing shared values and participating in collective intentionality.</p>
-          <div class="agency-step__implications">
+          <p class="agency-step__subtitle">Shared knowledge, collective intentionality, and epistemically governed communities</p>
+          <p class="agency-step__body">At the apex of Tomasello's typology, uniquely human: the capacity for shared knowledge — beliefs held not privately but collectively, governed by social norms, and maintained through mutual accountability. Knowledge at this level is no longer individual but distributed across a community. The agent participates in a <em>social epistemology</em> in which the structure of relationships between agents shapes what the community can know.</p>
+          <div class="agency-step__epist">
+            <p class="agency-step__epist-label">Epistemic Architecture</p>
+            <p class="agency-step__epist-text"><strong>What it knows:</strong> Shared knowledge — propositions held in common by a community, with mutual awareness of that sharing. <strong>How it knows:</strong> Through social interaction, testimony, and normative epistemic practices. <strong>Key concept:</strong> <em>Network epistemology</em> (Zollman) — the structure of social connections determines what the community can learn and how reliably it can do so.</p>
+          </div>
+          <div class="agency-step__impl">
             <p class="agency-step__impl-label">Implication for Agentic AI</p>
-            <p class="agency-step__impl-text">Multi-agent AI systems coordinating toward shared goals — especially in socio-technical systems involving humans — aspire to this level. This is where engineering, governance, and philosophy must converge: the design of normative constraints, accountability mechanisms, and value alignment in multi-agent ecosystems.</p>
+            <p class="agency-step__impl-text">Multi-agent ecosystems coordinating toward shared goals — the Spatial Web Universal Domain Graph. The key design challenge is not individual agent intelligence but <em>collective epistemic quality</em>: how does the network of agent connections shape the knowledge that emerges? Epistemic governance — structuring agent relationships to produce reliable collective knowledge — becomes the central problem.</p>
           </div>
         </div>
       </div>
@@ -323,88 +409,131 @@
   </div>
 </section>
 
-<!-- ── Quote ─────────────────────────────────────────────── -->
+<!-- ── Highlight ── -->
 <div class="highlight">
   <div class="container">
     <div class="highlight__inner">
       <div>
         <blockquote class="highlight__quote">
-          "Each new form of psychological organization represented increased complexity in planning, decision-making, and executive control — ultimately leading to humans' experience of an objective and normative world."
+          "The structure of our social networks influences our ability to learn about the world. The norms of social epistemology are independent of the norms of individual epistemology."
         </blockquote>
-        <p class="highlight__attr">— Michael Tomasello, The Evolution of Agency</p>
+        <p class="highlight__attr">— Kevin Zollman · Network Epistemology · JHU Natural Philosophy Symposium 2025</p>
         <div class="tags">
-          <span class="tag">Agency</span>
-          <span class="tag">Agentic AI</span>
-          <span class="tag">Multi-Agent Systems</span>
-          <span class="tag">Governance</span>
-          <span class="tag">Normative Reasoning</span>
+          <span class="tag">Epistemology</span>
+          <span class="tag">Network Epistemology</span>
           <span class="tag">Collective Intelligence</span>
+          <span class="tag">Agency</span>
+          <span class="tag">World Models</span>
+          <span class="tag">Epistemic Governance</span>
+          <span class="tag">Spatial Web</span>
         </div>
       </div>
       <div class="highlight__body">
-        <p>Tomasello's framework is foundational for GeoRoundtable's approach to agentic systems because it reframes the question of AI agency from a purely technical problem into an evolutionary and philosophical one: what kind of agency are we designing for, and what capabilities and constraints does that entail?</p>
-        <p>For socio-technical systems where AI agents collaborate with humans and each other toward shared goals, the architecture must account for all four levels of agency. Goal-directedness is the minimum; social normativity is the horizon. The distance between them is where most of the hard engineering problems — and the most serious governance challenges — reside.</p>
-        <p>This analysis directly informs GeoRoundtable's work on the IEEE 2874-2025 Spatial Web Standard, which establishes the infrastructure for ecosystems of intelligent agents coordinating toward shared goals at global scale.</p>
+        <p>Kevin Zollman's <strong>Independence Thesis</strong> — that social epistemology has its own norms, irreducible to those of individual epistemology — is the key insight connecting Tomasello's framework to the design of the Universal Domain Graph. An ecosystem of individually rational agents does not automatically produce collectively reliable knowledge. The structure of their connections, the norms governing their interactions, and the governance of their epistemic community are independent design variables.</p>
+        <p>This is why the UDG is not just a data infrastructure but an epistemological one. Its architecture — the structure of relationships between domains, the governance of domain membership, the protocols for information exchange — determines the collective epistemic quality of the Spatial Web.</p>
+        <p>The epistemological approach to agentic AI asks: what kind of knowledge does this system need? How is that knowledge formed, shared, and governed? These questions must be answered before the architectural ones can be properly posed.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── Design Implications ───────────────────────────────── -->
+<!-- ── Epistemic Dimensions ── -->
 <section class="section section--alt">
+  <div class="container">
+    <div class="sh sh--center">
+      <p class="sh__label">Core Questions</p>
+      <h2 class="sh__title">Four Epistemic Dimensions of Agentic AI</h2>
+      <p class="sh__desc">The epistemological approach to agentic AI design asks four foundational questions — each with direct architectural and governance implications.</p>
+    </div>
+    <div class="epist-grid">
+
+      <div class="epist-card">
+        <div class="epist-card__icon">🗺️</div>
+        <p class="epist-card__q">Dimension 1</p>
+        <h3 class="epist-card__title">What Does the Agent Know?</h3>
+        <p class="epist-card__body">Does the agent have a genuine world model, or only a pattern-matching heuristic? Melanie Mitchell's ARC Benchmark challenge highlights that performance on standard tasks does not answer this question. Architectural analysis of the agent's representational structures — its beliefs, their content, their relationship to ground truth — is required. This is prerequisite to any serious safety assessment.</p>
+      </div>
+
+      <div class="epist-card">
+        <div class="epist-card__icon">🔬</div>
+        <p class="epist-card__q">Dimension 2</p>
+        <h3 class="epist-card__title">How Does the Agent Form Beliefs?</h3>
+        <p class="epist-card__body">Belief formation ranges from direct perceptual coupling (goal-directed), through world-model-based simulation (intentional), to inference and hypothesis evaluation (rational). Each mechanism has different reliability characteristics, failure modes, and auditability requirements. The epistemic architecture of the agent determines what kinds of justification are possible — and what kinds of errors are possible.</p>
+      </div>
+
+      <div class="epist-card">
+        <div class="epist-card__icon">🔗</div>
+        <p class="epist-card__q">Dimension 3</p>
+        <h3 class="epist-card__title">How Is Knowledge Shared Between Agents?</h3>
+        <p class="epist-card__body">Zollman's network epistemology shows that the structure of social connections determines collective epistemic quality. Dense networks converge quickly but may lock in errors; sparse networks are slower but more reliable. The UDG's Universal Domain Graph is the network over which epistemic information flows between Spatial Web agents — its topology is an epistemological design decision, not merely a technical one.</p>
+      </div>
+
+      <div class="epist-card">
+        <div class="epist-card__icon">⚖️</div>
+        <p class="epist-card__q">Dimension 4</p>
+        <h3 class="epist-card__title">How Is Collective Knowledge Governed?</h3>
+        <p class="epist-card__body">Epistemic governance — Zollman's "epistemic governance is at the forefront of epistemic communities" — addresses how norms, institutions, and incentive structures shape the production and maintenance of reliable collective knowledge. In the Spatial Web, this is the function of Domain Authorities, polycentric governance (Levin/Ostrom), and the SWRA: managing the commons of collective knowledge for the public good.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── GeoRoundtable Application ── -->
+<section class="section">
   <div class="container">
     <div class="sh">
       <p class="sh__label">GeoRoundtable Application</p>
-      <h2 class="sh__title">From Typology to Architecture</h2>
-      <p class="sh__desc">How Tomasello's framework shapes GeoRoundtable's approach to agentic AI design and governance.</p>
+      <h2 class="sh__title">From Epistemology to Architecture</h2>
+      <p class="sh__desc">How the epistemological approach to agency shapes GeoRoundtable's work on the Spatial Web UDG and agentic AI governance.</p>
     </div>
     <div class="pillar-grid">
       <div class="pillar">
-        <div class="pillar__icon">🎯</div>
-        <h3 class="pillar__title">Capability Profiling</h3>
-        <p class="pillar__body">The four types provide a structured vocabulary for profiling the agency level of AI systems under design — distinguishing goal-directed automation from intentional planners from rational decision-makers from normative collaborators. This prevents both over-engineering (designing for socially normative agency when goal-direction suffices) and under-engineering (deploying goal-directed systems in contexts requiring rational judgment).</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar__icon">⚖️</div>
-        <h3 class="pillar__title">Governance Calibration</h3>
-        <p class="pillar__body">Each level of agency entails distinct governance requirements. Goal-directed agents need constraint specification. Intentional agents need plan auditability. Rational agents need transparent reasoning and value alignment. Socially normative agents need accountability mechanisms, norm representation, and multi-stakeholder oversight. Governance design should be calibrated to the actual agency level of the system.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar__icon">🔬</div>
-        <h3 class="pillar__title">Safety Thresholds</h3>
-        <p class="pillar__body">The transition from rational to socially normative agency marks a critical threshold for AI safety: the emergence of systems that can internalize and enforce norms, participate in shared goal-pursuit, and hold other agents accountable. Understanding this threshold is essential for identifying where human oversight becomes most important — and most difficult to maintain.</p>
+        <div class="pillar__icon">🗂️</div>
+        <h3 class="pillar__title">Epistemic Profiling of Agents</h3>
+        <p class="pillar__body">Before deploying an AI agent in a Spatial Web context, its epistemic architecture must be characterized: does it maintain a genuine world model or heuristic patterns? What are its belief-formation mechanisms? What is its meta-cognitive capacity? This profiling determines the appropriate governance constraints, the required level of human oversight, and the safety assurance requirements for the deployment context.</p>
       </div>
       <div class="pillar">
         <div class="pillar__icon">🌐</div>
-        <h3 class="pillar__title">Spatial Web Alignment</h3>
-        <p class="pillar__body">The IEEE 2874-2025 Spatial Web Standard envisions "an ecosystem of intelligent agents coordinating activities toward shared goals." Tomasello's framework makes precise what this requires: the Spatial Web infrastructure must support all four levels of agency, with particular attention to the normative layer — shared world models, trust protocols, and governance mechanisms — that enables socially normative coordination at scale.</p>
+        <h3 class="pillar__title">UDG as Epistemic Infrastructure</h3>
+        <p class="pillar__body">The Universal Domain Graph is not merely a data store — it is the epistemic infrastructure of the Spatial Web: the medium through which agent beliefs are formed, shared, updated, and governed. Designing the UDG requires explicit attention to the epistemological properties of the network: what knowledge flows through it, how reliably, under what governance conditions, and with what consequences for collective intelligence.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">📐</div>
+        <h3 class="pillar__title">Epistemic Governance Design</h3>
+        <p class="pillar__body">Domain Authorities in the Spatial Web are not just data stewards — they are epistemic authorities: entities responsible for the quality, reliability, and integrity of the knowledge in their domain. Designing effective Domain Authorities requires the tools of social epistemology: understanding how authority, trust, credentialing, and accountability shape the collective knowledge of the community.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__icon">🔭</div>
+        <h3 class="pillar__title">Collective Intelligence as Public Good</h3>
+        <p class="pillar__body">Simon Levin's connection of collective intelligence to Ostrom's polycentric governance (JHU Symposium 2025) provides the framework for the UDG as an epistemic commons: shared knowledge governed by distributed, overlapping institutions, designed to produce reliable collective intelligence as a public good. Epistemic governance of the UDG must address the tragedy of the epistemic commons — where rational agent behavior degrades collective knowledge quality.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Resources ─────────────────────────────────────────── -->
-<section class="section">
+<!-- ── Related ── -->
+<section class="section section--alt">
   <div class="container">
     <div class="sh">
-      <p class="sh__label">Related</p>
+      <p class="sh__label">Related Work</p>
       <h2 class="sh__title">Further Reading</h2>
     </div>
     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-      <a href="https://mitpress.mit.edu/9780262047005/the-evolution-of-agency/" target="_blank" class="btn btn--primary">↗ MIT Press: The Evolution of Agency</a>
+      <a href="jhu-natural-philosophy-symposium-2025.html" class="btn btn--primary">JHU Natural Philosophy Symposium →</a>
+      <a href="philosophy-must-inform-socio-technical-systems-engineering.html" class="btn btn--outline-navy">Philosophy of Engineering (fPET 2026) →</a>
+      <a href="st-johns-college-thinking-machines-seminar-july-2025.html" class="btn btn--outline-navy">St. John's Thinking Machines Seminar →</a>
+      <a href="spatial-web-concepts-of-space-from-ai.html" class="btn btn--outline-navy">Spatial Web Concepts of Space →</a>
       <a href="ieee-spatial-web-standard-approved.html" class="btn btn--outline-navy">IEEE 2874-2025 Standard →</a>
-      <a href="spatial-web-to-the-open-geospatial-consortium.html" class="btn btn--outline-navy">OGC Presentation →</a>
     </div>
   </div>
 </section>
 
 <section class="cta-section">
   <div class="container">
-    <div class="cta-section__inner">
-      <h2 class="cta-section__title">Discuss Agentic Systems Design</h2>
-      <p class="cta-section__sub">Interested in applying evolutionary agency theory to your AI architecture or governance framework? Get in touch.</p>
-      <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
-    </div>
+    <h2 class="cta-section__title">Discuss Epistemology &amp; Agentic AI Design</h2>
+    <p class="cta-section__sub">Interested in applying an epistemological approach to your agentic AI architecture, governance framework, or Spatial Web deployment? Get in touch.</p>
+    <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
   </div>
 </section>
 
