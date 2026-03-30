@@ -315,8 +315,8 @@
     <div class="two-col">
       <div>
         <div class="announcement">
-          <p>The Universal Domain Graph (UDG) is the distributed hypergraph infrastructure at the core of the Spatial Web — storing all relationships between all Spatial Web Identifiers (SWIDs). Designing its physical deployment architecture requires decomposing a rich set of functional requirements into concrete software component nodes and the interfaces between them.</p>
-          <p>This project set the same challenge to two architects: apply systems engineering synthesis to derive a physical node architecture for the UDG from a common functional requirements specification. George Percivall, as a human expert architect and author of the requirements, produced a 6-node design. Claude Cowork independently performed the same synthesis and produced an 8-node design. The two designs were then compared.</p>
+          <p>The Universal Domain Graph (UDG) is the distributed hypergraph infrastructure at the core of the Spatial Web — storing all relationships between all Spatial Web entities. Designing its physical deployment architecture requires decomposing a rich set of functional requirements into concrete software component nodes and the interfaces between them.</p>
+          <p>This project set the same challenge to two architects: "apply systems engineering synthesis to derive a physical node architecture for the UDG from a common functional requirements specification". George Percivall, as a human expert architect, produced a 6-node design. Claude Cowork independently performed the same synthesis and produced an 8-node design. The two designs were then compared - by Claude.</p>
           <p>The comparison reveals both convergence — on identity, registry, and the need for distributed graph storage — and divergence — in structural philosophy, treatment of client-side nodes, and the granularity of service decomposition.</p>
         </div>
       </div>
@@ -325,7 +325,7 @@
           <div class="context-item__dot"></div>
           <div>
             <p class="context-item__label">Source Requirements</p>
-            <p class="context-item__text">The functional requirements are drawn from the UDG System Design Specification, a document authored by George Percivall as part of the Spatial Web Framework (SWF) standards suite. The specification covers six functional domains: Knowledge Graph, Hyperspace, Registry, Social Network, Distributed Computing, and External Interface.</p>
+            <p class="context-item__text">The functional requirements are drawn from the UDG System Design Specification, a document which is part of the Spatial Web Foundation (SWF) standards suite. The specification covers four functional categories: UDG as a Knowledge Graph, Entites in Hyperspace, Spatial Web Domain Registry, and UDG as a Network of Social Agents.</p>
           </div>
         </div>
         <div class="context-item">
@@ -339,7 +339,7 @@
           <div class="context-item__dot"></div>
           <div>
             <p class="context-item__label">Tool Used</p>
-            <p class="context-item__text">The AI design was produced using Claude Cowork — an agentic desktop assistant built on the Claude AI model — which read the requirements document, conducted the synthesis autonomously, and produced a fully specified architecture design document.</p>
+            <p class="context-item__text">The AI design was produced using Claude Cowork — an agentic desktop assistant using Sonnet 4.6. Cowork read the requirements document, conducted the synthesis autonomously, and produced an architecture design document specifying nodes and interfaces.</p>
           </div>
         </div>
         <div class="context-item">
@@ -360,21 +360,20 @@
     <div class="sh">
       <p class="sh__label">Technical Context</p>
       <h2 class="sh__title">The UDG in the IEEE 2874 Spatial Web</h2>
-      <p class="sh__desc">Understanding the design challenge requires understanding where the UDG sits in the broader Spatial Web architecture defined by IEEE 2874-2025.</p>
+      <p class="sh__desc">Understanding the design challenge requires understanding where the UDG sits in the broader Spatial Web architecture defined by <a href="https://standards.ieee.org/ieee/2874/11717/" target="_blank">IEEE 2874-2025</a></p>
     </div>
     <div class="two-col">
       <div class="prose">
         <p>IEEE 2874-2025 — the Spatial Web Protocol, Architecture and Governance Standard — defines a comprehensive framework for a spatially-grounded internet in which AI agents, robots, IoT devices, and humans share a common model of the world. The standard defines the Hyperspace Modelling Language (HSML), the Hyperspace Transaction Protocol (HSTP), and Spatial Web Identifiers (SWIDs).</p>
         <p>At the centre of this architecture sits the <strong>Universal Domain Graph (UDG)</strong> — defined as "a distributed hypergraph which contains all relationships between all known SWIDs in the Spatial Web." The UDG is simultaneously a knowledge graph of Spatial Web entities, a spatial atlas (hyperspace), a registry of registries for domain membership, a social network for agent communication, and a distributed computing system.</p>
-        <p>The UDG Functional Requirements Specification was authored by George Percivall as a preliminary design input for the SWF standards suite. It identifies these five conceptual views of the UDG:</p>
+        <p>The UDG Functional Requirements Specification is a preliminary design document in the SWF standards suite. It identifies these four conceptual views of the UDG:</p>
         <ul style="margin: 1rem 0 1rem 1.5rem; color: #2a3a50; font-size: 0.97rem; line-height: 1.85;">
           <li><strong>Knowledge Graph (KG)</strong> — RDF/HSML hypergraph of all ENTITY relationships</li>
           <li><strong>Hyperspace</strong> — graph space, DGGS/H3 cellular space, and vector space representations</li>
           <li><strong>Registry of Registries</strong> — hierarchical domain membership and SWID registry</li>
           <li><strong>Social Network</strong> — agent communication supporting collective intelligence</li>
-          <li><strong>Distributed Computing</strong> — the set of Spatial Web Nodes implementing the above</li>
         </ul>
-        <p>The design synthesis task was to translate these five conceptual views into a physical deployment architecture of software component nodes and their interfaces.</p>
+        <p>The design synthesis task was to translate these four conceptual views into a physical deployment architecture of software component nodes and their interfaces.</p>
       </div>
       <div>
         <!-- UDG context diagram -->
@@ -387,21 +386,13 @@
             </defs>
             <!-- IEEE 2874 outer box -->
             <rect x="10" y="10" width="460" height="360" rx="12" fill="#f0f5fb" stroke="#d8e4ef" stroke-width="1.5"/>
-            <text x="235" y="34" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#081840" letter-spacing="1">IEEE 2874-2025  SPATIAL WEB</text>
-
-            <!-- HSML/HSTP labels -->
-            <rect x="30" y="50" width="100" height="32" rx="6" fill="#0d6b78" opacity="0.12" stroke="#0d6b78" stroke-width="1"/>
-            <text x="80" y="72" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0d6b78">HSML</text>
-            <rect x="145" y="50" width="100" height="32" rx="6" fill="#0d6b78" opacity="0.12" stroke="#0d6b78" stroke-width="1"/>
-            <text x="195" y="72" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0d6b78">HSTP</text>
-            <rect x="260" y="50" width="100" height="32" rx="6" fill="#0d6b78" opacity="0.12" stroke="#0d6b78" stroke-width="1"/>
-            <text x="310" y="72" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0d6b78">SWIDs</text>
+            <text x="235" y="34" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#081840" letter-spacing="1">SPATIAL WEB</text>
 
             <!-- UDG central box -->
             <rect x="85" y="110" width="310" height="180" rx="10" fill="#081840" stroke="#3b9edd" stroke-width="2"/>
             <text x="240" y="132" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#5ecfdb" letter-spacing="0.5">UNIVERSAL DOMAIN GRAPH</text>
 
-            <!-- 5 UDG views -->
+            <!-- 4 UDG views -->
             <rect x="100" y="145" width="85" height="40" rx="6" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
             <text x="142" y="163" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Knowledge</text>
             <text x="142" y="176" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Graph</text>
@@ -417,10 +408,6 @@
             <rect x="100" y="198" width="85" height="40" rx="6" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
             <text x="142" y="216" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Social</text>
             <text x="142" y="229" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Network</text>
-
-            <rect x="198" y="198" width="183" height="40" rx="6" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-            <text x="289" y="216" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">Distributed Computing</text>
-            <text x="289" y="229" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#fff">System of SW Nodes</text>
 
             <!-- Arrows to clients -->
             <line x1="240" y1="290" x2="100" y2="330" stroke="#5ecfdb" stroke-width="1.2" marker-end="url(#arr)" stroke-dasharray="4,3"/>
@@ -447,7 +434,7 @@
       <p class="sh__desc">Both designs followed the classical systems engineering function-to-form mapping process, consistent with ISO/IEC/IEEE 15288 and the ISO/IEC/IEEE 42010 architecture description framework.</p>
     </div>
     <div class="prose" style="margin-bottom: 2rem;">
-      <p>Function-to-form synthesis — also called functional allocation or requirements allocation — is the process of mapping what a system must <em>do</em> (functions) to what physical components will <em>be responsible for doing it</em> (forms). In software systems architecture, forms are software component nodes and their interfaces. The process is the core synthesis step in systems engineering and produces the logical and physical architecture of a system.</p>
+      <p>Function-to-form synthesis is the iterative process of mapping what a system must <em>do</em> (functions) to what physical components will <em>be responsible for doing it</em> (forms). In software systems architecture, forms are software component nodes and their interfaces. The process is the core synthesis step in systems engineering and produces the logical and physical architecture of a system.</p>
     </div>
     <div class="steps">
       <div class="step">
@@ -483,7 +470,7 @@
     <div class="sh">
       <p class="sh__label">Figure 1 — Human Design</p>
       <h2 class="sh__title">Percivall Architecture: 6 SW Node Types</h2>
-      <p class="sh__desc">George Percivall's design uses an inheritance-based model: the SW Content Node is a base class containing all core daemons. Five specialized node types extend it by adding domain-specific modules.</p>
+      <p class="sh__desc">George Percivall's design uses an inheritance-based model: the Spatial Web (SW) Content Node is a base class containing all core daemons. Five specialized node types extend it by adding domain-specific modules.</p>
     </div>
     <div class="two-col">
       <div class="diagram-wrap">
@@ -498,7 +485,7 @@
           </defs>
 
           <!-- SW Content Node — base -->
-          <rect x="150" y="10" width="200" height="72" rx="10" fill="#081840" stroke="#5ecfdb" stroke-width="2"/>
+          <rect x="150" y="10" width="240" height="72" rx="10" fill="#081840" stroke="#5ecfdb" stroke-width="2"/>
           <text x="250" y="36" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5ecfdb">SW Content Node</text>
           <text x="250" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,0.65)">hstp.d · hsml.d · Domain Mgr</text>
           <text x="250" y="66" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,0.65)">Graph Mgr · Agent Mgr · Cred Mgr</text>
@@ -888,7 +875,7 @@
         <blockquote class="highlight__quote">
           "The two designs agree on what functions must be performed; they disagree on how to package them. That disagreement is architecturally productive."
         </blockquote>
-        <span class="highlight__attr">— Design synthesis comparison, March 2026</span>
+        <span class="highlight__attr">— Design synthesis comparison by Claude</span>
         <div class="tags">
           <span class="tag">Systems Engineering</span>
           <span class="tag">Function-to-Form</span>
@@ -899,7 +886,7 @@
         </div>
       </div>
       <div class="highlight__body">
-        <p>Both designs cover the same functional requirements derived from the UDG specification. Neither design has a function that is entirely absent from the other — the difference is entirely in decomposition granularity, structural philosophy, and which concerns are treated as first-class node types versus internal modules.</p>
+        <p>Both designs cover the same functional requirements derived from the UDG functional specification. Neither design has a function that is entirely absent from the other — the difference is entirely in decomposition granularity, structural philosophy, and which concerns are treated as first-class node types versus internal modules.</p>
         <p>The human design's 6-node count reflects integration: many concerns are grouped together under inheritance. The AI design's 8-node count reflects decomposition: concerns are separated for independent scaling and deployment.</p>
         <p>A reconciled architecture would likely adopt Percivall's node taxonomy (including the critical Agent Node and Thing Node as edge-side types) while retaining Claude's finer-grained decomposition of the UDG Node interior (GN, QN, SYNC) as internal modules or deployment variants.</p>
       </div>
@@ -911,7 +898,7 @@
 <section class="section" id="observations">
   <div class="container">
     <div class="sh">
-      <p class="sh__label">Design Process Observations</p>
+      <p class="sh__label">Design Process Observations by Claude</p>
       <h2 class="sh__title">Human vs. AI Design: What This Experiment Reveals</h2>
       <p class="sh__desc">The comparison yields observations not just about the two designs, but about the nature of human and AI-assisted systems engineering design processes.</p>
     </div>
