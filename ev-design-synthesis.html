@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon-512x512.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EV Design Synthesis: Function-to-Form Architecture — GeoRoundtable</title>
+  <meta property="og:title" content="EV Design Synthesis: Function-to-Form Architecture — GeoRoundtable" />
+  <meta property="og:description" content="Systems engineering function-to-form synthesis of an electric vehicle, comparing an AI-generated subsystem architecture against the original program specification tree." />
+  <meta property="og:image" content="https://georoundtable.xyz/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:url" content="https://georoundtable.xyz/ev-design-synthesis.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://georoundtable.xyz/og-image.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+
+    .accent-bar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%);
+    }
+
+    /* ── Navigation ─────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+    }
+    .nav__brand {
+      display: flex; align-items: center; gap: 11px;
+      color: var(--white); font-weight: 700; font-size: 1.1rem;
+      letter-spacing: -0.01em; text-decoration: none;
+    }
+    .nav__logo {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.22);
+      object-fit: cover; flex-shrink: 0;
+    }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a {
+      color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500;
+      padding: 0.4rem 0.85rem; border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%);
+      color: var(--white); padding: 6rem 0 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%);
+    }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28);
+      border-radius: 20px; padding: 0.3rem 1rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--mint);
+      letter-spacing: 0.05em; margin-bottom: 1.5rem;
+    }
+    .hero__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1.5rem; max-width: 860px;
+    }
+    .hero__meta {
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 1.5rem;
+    }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* ── Section headings ───────────────────────────────── */
+    .sh { margin-bottom: 2.5rem; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+    .sh__title { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 700px; line-height: 1.7; }
+
+    /* ── Prose ──────────────────────────────────────────── */
+    .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; max-width: 780px; }
+    .prose p + p { margin-top: 1.1rem; }
+
+    /* ── Announcement / blockquote ──────────────────────── */
+    .announcement {
+      background: var(--light); border-left: 4px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 2rem 2.2rem; box-shadow: var(--shadow); margin-bottom: 2rem;
+    }
+    .announcement p { font-size: 1rem; color: #2a3a50; line-height: 1.8; }
+    .announcement p + p { margin-top: 1rem; }
+
+    /* ── Two-col ─────────────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+    /* ── Process steps ───────────────────────────────────── */
+    .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .step {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.6rem; box-shadow: var(--shadow);
+      position: relative; padding-top: 2.2rem;
+    }
+    .step__num {
+      position: absolute; top: -1px; left: 1.4rem;
+      background: var(--teal); color: #fff;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em;
+      padding: 0.2rem 0.7rem; border-radius: 0 0 8px 8px;
+      text-transform: uppercase;
+    }
+    .step__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .step__body { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Diagram wrapper ─────────────────────────────────── */
+    .diagram-wrap {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      box-shadow: var(--shadow); overflow-x: auto;
+    }
+    .diagram-caption {
+      text-align: center; margin-top: 1rem;
+      font-size: 0.88rem; font-weight: 600; color: var(--muted);
+    }
+    .diagram-caption strong { color: var(--navy); }
+
+    /* ── Comparison table ────────────────────────────────── */
+    .comp-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .comp-table th, .comp-table td { padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+    .comp-table thead th { background: var(--navy); color: #fff; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .comp-table thead th:first-child { width: 22%; }
+    .comp-table tbody tr:nth-child(even) { background: var(--light); }
+    .comp-table .match-strong { color: var(--teal); font-weight: 700; font-size: 0.82rem; }
+    .comp-table .match-partial { color: var(--blue); font-weight: 700; font-size: 0.82rem; }
+    .comp-table .match-gap { color: #c0392b; font-weight: 700; font-size: 0.82rem; }
+
+    /* ── Context item ────────────────────────────────────── */
+    .context-item { display: flex; gap: 1.2rem; margin-bottom: 1.4rem; }
+    .context-item:last-child { margin-bottom: 0; }
+    .context-item__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 0.55rem; }
+    .context-item__label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.2rem; }
+    .context-item__text { font-size: 0.92rem; color: #3a3a3a; line-height: 1.65; }
+
+    /* ── Highlight (dark band) ───────────────────────────── */
+    .highlight {
+      background: var(--navy); color: var(--white);
+      padding: 5rem 0; position: relative; overflow: hidden;
+    }
+    .highlight::after {
+      content: ''; position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+      width: 460px; height: 460px; border-radius: 50%;
+      background: url('logo.svg') center/cover;
+      opacity: 0.055; pointer-events: none;
+    }
+    .highlight__inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 1rem; }
+    .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); margin-bottom: 1.5rem; display: block; }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.95rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 1rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+    .tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.82rem; font-weight: 600; color: var(--mint); }
+
+    /* ── Observation cards ───────────────────────────────── */
+    .obs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .obs-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem;
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--teal);
+    }
+    .obs-card:nth-child(2) { border-top-color: var(--blue); }
+    .obs-card:nth-child(3) { border-top-color: var(--sky); }
+    .obs-card:nth-child(4) { border-top-color: var(--navy); }
+    .obs-card:nth-child(5) { border-top-color: var(--mint); }
+    .obs-card__icon { font-size: 1.6rem; margin-bottom: 0.9rem; }
+    .obs-card__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.35rem; }
+    .obs-card:nth-child(2) .obs-card__label { color: var(--blue); }
+    .obs-card:nth-child(3) .obs-card__label { color: var(--sky); }
+    .obs-card__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .obs-card__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Subsystem grid ──────────────────────────────────── */
+    .ss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; margin-top: 1.5rem; }
+    .ss-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+      box-shadow: var(--shadow); border-left: 4px solid var(--teal);
+    }
+    .ss-card__id { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.25rem; }
+    .ss-card__name { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+    .ss-card__desc { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+    .ss-card--vl { border-left-color: #c0392b; }
+    .ss-card--vl .ss-card__id { color: #c0392b; }
+
+    /* ── CTA / footer ────────────────────────────────────── */
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; right: -70px; top: 50%; transform: translateY(-50%); width: 430px; height: 430px; border-radius: 50%; background: url('logo.svg') center/cover; opacity: 0.05; pointer-events: none; }
+    .cta-section__inner { position: relative; z-index: 1; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    @media (max-width: 900px) {
+      .highlight__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>&rsaquo;</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>&rsaquo;</span>
+      EV Design Synthesis
+    </div>
+    <div class="hero__badge">Systems Engineering &middot; AI-Assisted Design &middot; April 2026</div>
+    <h1 class="hero__title">Electric Vehicle Design Synthesis: Function-to-Form Architecture</h1>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Source</span>
+        <span class="hero__meta-value">EV Vehicle Technical Specification</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Method</span>
+        <span class="hero__meta-value">Function-to-Form Synthesis</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">AI Design</span>
+        <span class="hero__meta-value">Claude Cowork &mdash; 12 subsystems</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Reference Design</span>
+        <span class="hero__meta-value">GSP3 Specification Tree &mdash; 11 subsystems</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Date</span>
+        <span class="hero__meta-value">April 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Introduction ─────────────────────────────────────── -->
+<section class="section" id="introduction">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Introduction</p>
+      <h2 class="sh__title">Function-to-Form Synthesis of an Electric Vehicle</h2>
+      <p class="sh__desc">A systems engineering exercise applying classical function-to-form synthesis to decompose an electric vehicle's performance requirements into a physical subsystem architecture, then comparing the result against the original program specification tree.</p>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="announcement">
+          <p>The source document is a Vehicle Technical Specification for a battery electric vehicle intended for commercial sale to the general public. The specification defines performance requirements across six functional areas: transportation, safety, comfort, enjoyment, energy management, and utility. It does not prescribe a physical architecture.</p>
+          <p>The exercise asked Claude Cowork to perform function-to-form synthesis: reading the specification, identifying all performance requirements, and mapping them to physical subsystems that together form a fully integrated vehicle design. The AI-generated architecture was then compared to the original program's specification tree (GSP3) to evaluate convergence and divergence in subsystem decomposition decisions.</p>
+        </div>
+      </div>
+      <div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Source Requirements</p>
+            <p class="context-item__text">The Vehicle Technical Specification (74 pages) defines performance requirements in Clause 3.2.1 across six major areas: Transportation (3.2.1.1), Safety (3.2.1.2), Comfort (3.2.1.3), Enjoyment (3.2.1.4), Energy Management (3.2.1.5), and Utility (3.2.1.6).</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Design Method</p>
+            <p class="context-item__text">Function-to-form synthesis is the iterative process of mapping what a system must do (functions derived from requirements) to what physical components will be responsible for doing it (forms). The process is the core synthesis step in systems engineering, consistent with ISO/IEC/IEEE 15288.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Tool Used</p>
+            <p class="context-item__text">The AI design was produced using Claude Cowork (Opus 4.6). Cowork read the scanned specification PDF, extracted requirements via OCR, conducted the synthesis autonomously, and produced a Word document with subsystem definitions, a requirements allocation matrix, and an architecture diagram.</p>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-item__dot"></div>
+          <div>
+            <p class="context-item__label">Output</p>
+            <p class="context-item__text">The synthesis produced: 12 named subsystems, 2 vehicle-level cross-cutting disciplines, a complete requirements allocation matrix (54 clause areas), interface definitions, and an architecture diagram &mdash; all documented in a formal report (Rev 2).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Synthesis Method ──────────────────────────────────── -->
+<section class="section section--alt" id="method">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Systems Engineering Method</p>
+      <h2 class="sh__title">Function-to-Form Synthesis Process</h2>
+      <p class="sh__desc">The classical four-step process for translating functional requirements into a physical architecture of subsystems and interfaces.</p>
+    </div>
+    <div class="prose" style="margin-bottom: 2rem;">
+      <p>Function-to-form synthesis begins with a complete set of performance requirements and ends with a physical subsystem architecture. The process is iterative: initial allocations are refined as interface conflicts, cross-cutting concerns, and integration constraints are discovered. The key design heuristics are high cohesion (functions sharing state belong together), low coupling (loosely coupled functions should be separated), and alignment with organizational boundaries (subsystems should map to design teams, suppliers, and manufacturing processes).</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step__num">Step 1</span>
+        <h3 class="step__title">Requirements Extraction</h3>
+        <p class="step__body">All performance requirements from Clause 3.2.1 were extracted and catalogued across six functional areas: Transportation, Safety, Comfort, Enjoyment, Energy Management, and Utility &mdash; totaling 54 major clause areas.</p>
+      </div>
+      <div class="step">
+        <span class="step__num">Step 2</span>
+        <h3 class="step__title">Functional Decomposition</h3>
+        <p class="step__body">Each top-level requirement area was decomposed into sub-functions at sufficient detail to expose distinct physical form assignments. For example, "Safety" decomposes into crashworthiness, restraints, visibility, and operational safeguards.</p>
+      </div>
+      <div class="step">
+        <span class="step__num">Step 3</span>
+        <h3 class="step__title">Functional Allocation</h3>
+        <p class="step__body">Each function was allocated to one or more physical subsystems using cohesion, coupling, and organizational alignment principles. A requirements allocation matrix records primary and contributing subsystem assignments for all 54 clause areas.</p>
+      </div>
+      <div class="step">
+        <span class="step__num">Step 4</span>
+        <h3 class="step__title">Interface Definition</h3>
+        <p class="step__body">Data, energy, and control flows between subsystems were identified and documented. Critical interfaces (regen braking blend, torque vectoring, battery thermal management) were highlighted with derived interface requirements.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Vehicle Performance Requirements ──────────────────── -->
+<section class="section" id="requirements">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Requirements Summary</p>
+      <h2 class="sh__title">Vehicle Performance Requirements</h2>
+      <p class="sh__desc">The specification organizes performance requirements into six functional areas, each addressing a distinct aspect of the vehicle's mission.</p>
+    </div>
+    <div class="obs-grid">
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x1F697;</div>
+        <p class="obs-card__label">3.2.1.1 &mdash; Transportation</p>
+        <h3 class="obs-card__title">Driving Performance</h3>
+        <p class="obs-card__body">Acceleration (0&ndash;60 in target time), top speed, gradeability, range per charge, cruise control, braking distances, and ride/handling characteristics including steering effort and stability.</p>
+      </div>
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x1F6E1;&#xFE0F;</div>
+        <p class="obs-card__label">3.2.1.2 &mdash; Safety</p>
+        <h3 class="obs-card__title">Occupant &amp; Pedestrian Protection</h3>
+        <p class="obs-card__body">Crashworthiness (frontal, side, rear impacts), airbag deployment, seat belt performance, visibility (mirrors, lighting, wipers), HV isolation, and operational safeguards (park brake, interlocks).</p>
+      </div>
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x2744;&#xFE0F;</div>
+        <p class="obs-card__label">3.2.1.3 &mdash; Comfort</p>
+        <h3 class="obs-card__title">Climate, Noise &amp; Vibration</h3>
+        <p class="obs-card__body">HVAC heating/cooling capacity, defrost/defog performance, interior noise levels at speed, vibration modes, ride comfort, and seating ergonomics for driver and passenger.</p>
+      </div>
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x1F3B5;</div>
+        <p class="obs-card__label">3.2.1.4 &mdash; Enjoyment</p>
+        <h3 class="obs-card__title">Entertainment &amp; Aesthetics</h3>
+        <p class="obs-card__body">Audio system (radio, speakers, amplifier), interior styling and trim quality, exterior appearance including paint, moldings, and lighting design.</p>
+      </div>
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x26A1;</div>
+        <p class="obs-card__label">3.2.1.5 &mdash; Energy Management</p>
+        <h3 class="obs-card__title">Power &amp; Efficiency</h3>
+        <p class="obs-card__body">Battery capacity and charging (Level 1/2), regenerative braking energy recovery, accessory power budget, thermal management efficiency, and EMC performance (radiated/conducted emissions).</p>
+      </div>
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x1F527;</div>
+        <p class="obs-card__label">3.2.1.6 &mdash; Utility</p>
+        <h3 class="obs-card__title">Serviceability &amp; Practicality</h3>
+        <p class="obs-card__body">Jack and tire change provisions, cargo capacity, towing/trailering, corrosion resistance targets, and service access for maintenance operations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AI-Generated Architecture ─────────────────────────── -->
+<section class="section section--alt" id="ai-design">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">AI-Generated Architecture</p>
+      <h2 class="sh__title">Claude Cowork Design: 12 Subsystems + 2 Vehicle-Level Disciplines</h2>
+      <p class="sh__desc">Claude's synthesis produced 12 physical subsystems and identified two cross-cutting concerns that operate as vehicle-level disciplines rather than owned subsystems.</p>
+    </div>
+    <div class="ss-grid">
+      <div class="ss-card">
+        <p class="ss-card__id">SS-01</p>
+        <p class="ss-card__name">Structural Performance</p>
+        <p class="ss-card__desc">Load-bearing skeleton, crash energy management, body stiffness, HV battery enclosure isolation.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-02</p>
+        <p class="ss-card__name">Occupant Accommodation</p>
+        <p class="ss-card__desc">Seating, IP and console, sidewall trim, headliner, carpet, insulation, steering wheel and column.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-03</p>
+        <p class="ss-card__name">Restraint Performance</p>
+        <p class="ss-card__desc">Airbags (frontal/side), seat belts, pretensioners, head restraints, crash sensing and SIR electronics.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-04</p>
+        <p class="ss-card__name">Exterior Envelope</p>
+        <p class="ss-card__desc">Body panels, doors, bumpers, exterior lighting, mirrors, wash/wipe, coating and moldings.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-05</p>
+        <p class="ss-card__name">Thermal &amp; Climate Control</p>
+        <p class="ss-card__desc">Heat-pump HVAC, battery thermal management, defrost/defog, cabin preconditioning, odor control.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-06</p>
+        <p class="ss-card__name">Braking Performance</p>
+        <p class="ss-card__desc">Blended regenerative + friction brakes, ABS, park brake, pedal feel, brake thermal control module.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-07</p>
+        <p class="ss-card__name">Ride, Handling &amp; Steering</p>
+        <p class="ss-card__desc">Front/rear suspension, electric power steering, tires and wheels, chassis structures, stability control.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-08</p>
+        <p class="ss-card__name">Accessory Power</p>
+        <p class="ss-card__desc">12V bus, DC-DC converter, auxiliary battery, power distribution module, wiring harness, load management.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-09</p>
+        <p class="ss-card__name">Entertainment</p>
+        <p class="ss-card__desc">Radio, antenna, front/rear speakers and enclosures, audio amplifier, audio controls.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-10</p>
+        <p class="ss-card__name">Information &amp; Controls</p>
+        <p class="ss-card__desc">Digital cluster, PRND selector, cruise control, mode switches, warnings, door switches, steering column modules.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-11</p>
+        <p class="ss-card__name">Propulsion Performance</p>
+        <p class="ss-card__desc">Dual motors, inverters, battery pack, power electronics bay, on-board charger, inductive charge module, accelerator pedal sensor.</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">SS-12</p>
+        <p class="ss-card__name">Security &amp; Operational Safeguards</p>
+        <p class="ss-card__desc">Immobilizer, key fob/entry, parking device, power windows, operational interlocks and safety logic.</p>
+      </div>
+      <div class="ss-card ss-card--vl">
+        <p class="ss-card__id">VL-A</p>
+        <p class="ss-card__name">EMC Performance</p>
+        <p class="ss-card__desc">Vehicle-level discipline: radiated/conducted emissions and susceptibility design rules flowing down to all subsystems.</p>
+      </div>
+      <div class="ss-card ss-card--vl">
+        <p class="ss-card__id">VL-B</p>
+        <p class="ss-card__name">Acoustic Performance</p>
+        <p class="ss-card__desc">Vehicle-level discipline: interior/exterior noise targets, NVH target cascade, squeaks and rattles, vibration modes.</p>
+      </div>
+    </div>
+
+    <!-- Architecture Diagram -->
+    <div class="diagram-wrap" style="margin-top:2.5rem;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 920" style="width:100%;max-width:1160px;margin:0 auto;">
+        <defs>
+          <filter id="sh1" x="-4%" y="-4%" width="110%" height="115%">
+            <feDropShadow dx="1.5" dy="2" stdDeviation="2.5" flood-color="#000" flood-opacity="0.12"/>
+          </filter>
+          <linearGradient id="a_gC" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1F3864"/><stop offset="100%" stop-color="#2E5090"/></linearGradient>
+          <linearGradient id="a_gD" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2471A3"/><stop offset="100%" stop-color="#2E86C1"/></linearGradient>
+          <linearGradient id="a_gS" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7D3C98"/><stop offset="100%" stop-color="#9B59B6"/></linearGradient>
+          <linearGradient id="a_gG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1E8449"/><stop offset="100%" stop-color="#27AE60"/></linearGradient>
+          <linearGradient id="a_gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B7950B"/><stop offset="100%" stop-color="#D4AC0D"/></linearGradient>
+          <linearGradient id="a_gR" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#922B21"/><stop offset="100%" stop-color="#C0392B"/></linearGradient>
+        </defs>
+        <rect width="1160" height="920" fill="#f8f9fa" rx="8"/>
+
+        <!-- VL-A: EMC band -->
+        <rect x="50" y="20" width="1060" height="46" rx="6" fill="url(#a_gR)" opacity="0.15" stroke="#C0392B" stroke-width="1" stroke-dasharray="6,3"/>
+        <text x="580" y="38" text-anchor="middle" fill="#922B21" font-size="11" font-weight="bold">VL-A: EMC Performance (Vehicle-Level Discipline &#x2014; design rules flow down to all subsystems)</text>
+        <text x="580" y="52" text-anchor="middle" fill="#922B21" font-size="9">Radiated/Conducted Emissions &amp; Susceptibility</text>
+
+        <!-- VL-B: Acoustics band -->
+        <rect x="50" y="850" width="1060" height="46" rx="6" fill="url(#a_gR)" opacity="0.15" stroke="#C0392B" stroke-width="1" stroke-dasharray="6,3"/>
+        <text x="580" y="868" text-anchor="middle" fill="#922B21" font-size="11" font-weight="bold">VL-B: Acoustic Performance (Vehicle-Level Discipline &#x2014; NVH target cascade to all subsystems)</text>
+        <text x="580" y="882" text-anchor="middle" fill="#922B21" font-size="9">Interior/Exterior Noise &#x2022; Vibration Modes &#x2022; Squeaks &amp; Rattles</text>
+
+        <!-- CRITICAL interfaces -->
+        <line x1="700" y1="460" x2="840" y2="460" stroke="#C0392B" stroke-width="3.5"/>
+        <rect x="724" y="436" width="88" height="17" rx="3" fill="white" fill-opacity="0.9" stroke="#C0392B" stroke-width="0.5"/>
+        <text x="768" y="447" text-anchor="middle" fill="#C0392B" font-size="8.5" font-weight="bold">Regen Blend</text>
+
+        <line x1="460" y1="460" x2="310" y2="460" stroke="#C0392B" stroke-width="3.0"/>
+        <rect x="335" y="436" width="90" height="17" rx="3" fill="white" fill-opacity="0.9" stroke="#C0392B" stroke-width="0.5"/>
+        <text x="380" y="447" text-anchor="middle" fill="#C0392B" font-size="8.5" font-weight="bold">Torque Vector</text>
+
+        <path d="M280,420 Q580,300 870,420" fill="none" stroke="#C0392B" stroke-width="2.5" stroke-dasharray="8,4"/>
+        <rect x="530" y="340" width="100" height="17" rx="3" fill="white" fill-opacity="0.9" stroke="#C0392B" stroke-width="0.5"/>
+        <text x="580" y="351" text-anchor="middle" fill="#C0392B" font-size="8.5" font-weight="bold">ABS/ESC Shared</text>
+
+        <line x1="540" y1="500" x2="415" y2="710" stroke="#C0392B" stroke-width="2.5"/>
+        <rect x="430" y="595" width="90" height="17" rx="3" fill="white" fill-opacity="0.9" stroke="#C0392B" stroke-width="0.5"/>
+        <text x="475" y="606" text-anchor="middle" fill="#C0392B" font-size="8.5" font-weight="bold">Battery Therm.</text>
+
+        <!-- PRIMARY interfaces -->
+        <line x1="580" y1="420" x2="580" y2="300" stroke="#2E75B6" stroke-width="2"/>
+        <rect x="588" y="350" width="85" height="15" rx="3" fill="white" fill-opacity="0.85" stroke="#2E75B6" stroke-width="0.5"/>
+        <text x="630" y="360" text-anchor="middle" fill="#2E75B6" font-size="8">PRND/Cruise</text>
+
+        <line x1="580" y1="500" x2="580" y2="610" stroke="#2E75B6" stroke-width="2"/>
+        <rect x="588" y="548" width="105" height="15" rx="3" fill="white" fill-opacity="0.85" stroke="#2E75B6" stroke-width="0.5"/>
+        <text x="640" y="558" text-anchor="middle" fill="#2E75B6" font-size="8">Battery Enclosure</text>
+
+        <line x1="665" y1="500" x2="800" y2="710" stroke="#2E75B6" stroke-width="2"/>
+        <rect x="715" y="595" width="70" height="15" rx="3" fill="white" fill-opacity="0.85" stroke="#2E75B6" stroke-width="0.5"/>
+        <text x="750" y="605" text-anchor="middle" fill="#2E75B6" font-size="8">DC-DC/HV</text>
+
+        <line x1="730" y1="270" x2="870" y2="210" stroke="#2E75B6" stroke-width="1.5"/>
+        <line x1="210" y1="500" x2="400" y2="610" stroke="#2E75B6" stroke-width="1.5"/>
+        <rect x="260" y="548" width="90" height="15" rx="3" fill="white" fill-opacity="0.85" stroke="#2E75B6" stroke-width="0.5"/>
+        <text x="305" y="558" text-anchor="middle" fill="#2E75B6" font-size="8">Susp. Attach</text>
+
+        <line x1="500" y1="745" x2="745" y2="745" stroke="#2E75B6" stroke-width="1.5"/>
+        <rect x="575" y="730" width="80" height="15" rx="3" fill="white" fill-opacity="0.85" stroke="#2E75B6" stroke-width="0.5"/>
+        <text x="615" y="740" text-anchor="middle" fill="#2E75B6" font-size="8">Load Mgmt</text>
+
+        <line x1="500" y1="260" x2="320" y2="210" stroke="#2E75B6" stroke-width="1.5"/>
+
+        <!-- SUPPORTING interfaces -->
+        <line x1="680" y1="640" x2="810" y2="640" stroke="#aaa" stroke-width="1.5"/>
+        <text x="745" y="633" text-anchor="middle" fill="#888" font-size="8">Panel Attach.</text>
+        <line x1="460" y1="640" x2="200" y2="640" stroke="#aaa" stroke-width="1.5"/>
+        <text x="330" y="633" text-anchor="middle" fill="#888" font-size="8">Interior Pkg.</text>
+        <line x1="960" y1="220" x2="600" y2="610" stroke="#aaa" stroke-width="1" stroke-dasharray="5,3"/>
+        <line x1="415" y1="710" x2="875" y2="640" stroke="#aaa" stroke-width="1.2"/>
+        <text x="650" y="668" text-anchor="middle" fill="#888" font-size="8">W/S Heat, Ducts</text>
+        <line x1="375" y1="185" x2="140" y2="250" stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- ROW 1: DRIVER INTERFACE & SAFETY -->
+        <g filter="url(#sh1)">
+          <rect x="130" y="170" width="210" height="60" rx="9" fill="url(#a_gG)"/>
+          <text x="235" y="193" text-anchor="middle" fill="white" font-size="12" font-weight="bold">SS-12</text>
+          <text x="235" y="207" text-anchor="middle" fill="white" font-size="9.5">Security &amp; Oper.</text>
+          <text x="235" y="219" text-anchor="middle" fill="white" font-size="9.5" opacity="0.85">Safeguards</text>
+        </g>
+        <g filter="url(#sh1)">
+          <rect x="370" y="155" width="170" height="55" rx="9" fill="url(#a_gS)"/>
+          <text x="455" y="177" text-anchor="middle" fill="white" font-size="12" font-weight="bold">SS-09</text>
+          <text x="455" y="193" text-anchor="middle" fill="white" font-size="9.5">Entertainment</text>
+        </g>
+        <g filter="url(#sh1)">
+          <rect x="460" y="240" width="240" height="60" rx="9" fill="url(#a_gD)"/>
+          <text x="580" y="262" text-anchor="middle" fill="white" font-size="12" font-weight="bold">SS-10</text>
+          <text x="580" y="278" text-anchor="middle" fill="white" font-size="9.5">Information &amp; Controls</text>
+          <text x="580" y="290" text-anchor="middle" fill="white" font-size="8.5" opacity="0.8">(Displays, PRND, Cruise, Warnings)</text>
+        </g>
+        <g filter="url(#sh1)">
+          <rect x="830" y="170" width="210" height="60" rx="9" fill="url(#a_gS)"/>
+          <text x="935" y="193" text-anchor="middle" fill="white" font-size="12" font-weight="bold">SS-03</text>
+          <text x="935" y="207" text-anchor="middle" fill="white" font-size="9.5">Restraint Performance</text>
+          <text x="935" y="219" text-anchor="middle" fill="white" font-size="9.5" opacity="0.85">(Airbags, Belts, SIR)</text>
+        </g>
+
+        <!-- ROW 2: DYNAMICS CORE -->
+        <g filter="url(#sh1)">
+          <rect x="80" y="420" width="230" height="72" rx="10" fill="url(#a_gD)"/>
+          <text x="195" y="445" text-anchor="middle" fill="white" font-size="13" font-weight="bold">SS-07</text>
+          <text x="195" y="462" text-anchor="middle" fill="white" font-size="10">Ride, Handling &amp;</text>
+          <text x="195" y="477" text-anchor="middle" fill="white" font-size="10">Steering</text>
+        </g>
+        <g filter="url(#sh1)">
+          <rect x="460" y="415" width="240" height="85" rx="12" fill="url(#a_gC)" stroke="#0D2340" stroke-width="2"/>
+          <text x="580" y="443" text-anchor="middle" fill="white" font-size="14" font-weight="bold">SS-11</text>
+          <text x="580" y="462" text-anchor="middle" fill="white" font-size="11">Propulsion</text>
+          <text x="580" y="478" text-anchor="middle" fill="white" font-size="11">Performance</text>
+          <text x="580" y="493" text-anchor="middle" fill="#8BB8E8" font-size="8.5">(Dual Motor AWD + Li-Ion Battery)</text>
+        </g>
+        <g filter="url(#sh1)">
+          <rect x="840" y="420" width="230" height="72" rx="10" fill="url(#a_gD)"/>
+          <text x="955" y="445" text-anchor="middle" fill="white" font-size="13" font-weight="bold">SS-06</text>
+          <text x="955" y="462" text-anchor="middle" fill="white" font-size="10">Braking Performance</text>
+          <text x="955" y="477" text-anchor="middle" fill="white" font-size="10" opacity="0.85">(Regen + Friction + ABS)</text>
+        </g>
+
+        <!-- ROW 3: BODY & STRUCTURE -->
+        <g filter="url(#sh1)">
+          <rect x="70" y="610" width="220" height="60" rx="9" fill="url(#a_gG)"/>
+          <text x="180" y="633" text-anchor="middle" fill="white" font-size="12" font-weight="bold">SS-02</text>
+          <text x="180" y="647" text-anchor="middle" fill="white" font-size="9.5">Occupant Accommodation</text>
+          <text x="180" y="659" text-anchor="middle" fill="white" font-size="9" opacity="0.85">(IP, Seats, Trim, Insulation)</text>
+        </g>
+        <g filter="url(#sh1)">
+          <rect x="440" y="605" width="260" height="68" rx="10" fill="url(#a_gC)"/>
+          <text x="570" y="630" text-anchor="middle" fill="white" font-size="13" font-weight="bold">SS-01</text>
+          <text x="570" y="647" text-anchor="middle" fill="white" font-size="10">Structural Performance</text>
+          <text x="570" y="662" text-anchor="middle" fill="white" font-size="9.5" opacity="0.85">(Crashworthiness, Body Shell)</text>
+        </g>
+        <g filter="url(#sh1)">
+          <rect x="810" y="610" width="250" height="60" rx="9" fill="url(#a_gG)"/>
+          <text x="935" y="633" text-anchor="middle" fill="white" font-size="12" font-weight="bold">SS-04</text>
+          <text x="935" y="647" text-anchor="middle" fill="white" font-size="9.5">Exterior Envelope</text>
+          <text x="935" y="659" text-anchor="middle" fill="white" font-size="9" opacity="0.85">(Panels, Lighting, Mirrors, Wipe)</text>
+        </g>
+
+        <!-- ROW 4: SUPPORT SYSTEMS -->
+        <g filter="url(#sh1)">
+          <rect x="200" y="715" width="260" height="60" rx="9" fill="url(#a_gA)"/>
+          <text x="330" y="738" text-anchor="middle" fill="white" font-size="12" font-weight="bold">SS-05</text>
+          <text x="330" y="752" text-anchor="middle" fill="white" font-size="9.5">Thermal &amp; Climate Control</text>
+          <text x="330" y="764" text-anchor="middle" fill="white" font-size="9" opacity="0.85">(Heat Pump HVAC + Battery Thermal)</text>
+        </g>
+        <g filter="url(#sh1)">
+          <rect x="740" y="715" width="240" height="60" rx="9" fill="url(#a_gA)"/>
+          <text x="860" y="738" text-anchor="middle" fill="white" font-size="12" font-weight="bold">SS-08</text>
+          <text x="860" y="752" text-anchor="middle" fill="white" font-size="9.5">Accessory Power</text>
+          <text x="860" y="764" text-anchor="middle" fill="white" font-size="9" opacity="0.85">(12V Bus, DC-DC, PDM, Wiring)</text>
+        </g>
+
+        <!-- 12V BUS LINE -->
+        <line x1="120" y1="800" x2="1040" y2="800" stroke="#27AE60" stroke-width="2.5" stroke-dasharray="8,4" opacity="0.5"/>
+        <text x="580" y="815" text-anchor="middle" fill="#1E8449" font-size="9" font-weight="bold">12V POWER BUS (SS-08 distributes to all subsystems)</text>
+
+        <!-- GROUP LABELS -->
+        <text x="38" y="395" fill="#2E75B6" font-size="9.5" font-weight="bold" transform="rotate(-90,38,440)">DYNAMICS</text>
+        <text x="38" y="590" fill="#1E8449" font-size="9.5" font-weight="bold" transform="rotate(-90,38,640)">BODY &amp; OCCUPANT</text>
+        <text x="1125" y="400" fill="#7D3C98" font-size="9.5" font-weight="bold" transform="rotate(-90,1125,210)">SAFETY</text>
+        <text x="1125" y="720" fill="#B7950B" font-size="9.5" font-weight="bold" transform="rotate(-90,1125,740)">SUPPORT</text>
+
+        <text x="580" y="907" text-anchor="middle" fill="#aaa" font-size="9.5">Rev 2 &#x2014; 12 Subsystems + 2 Vehicle-Level Disciplines</text>
+      </svg>
+      <p class="diagram-caption"><strong>Figure 1 &mdash; AI-Generated Subsystem Architecture (Rev 2)</strong>: 12 subsystems arranged by functional tier, with color-coded critical, primary, and supporting interfaces. Red dashed bands represent vehicle-level disciplines.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── GSP3 Specification Tree ────────────────────────────── -->
+<section class="section" id="gsp3-design">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Original Program Architecture</p>
+      <h2 class="sh__title">GSP3 Specification Tree: 11 Subsystems + 2 Vehicle-Level Disciplines</h2>
+      <p class="sh__desc">The original program's specification tree (GSP3, dated 1/31/92) defined 11 subsystems plus EMC and Acoustic Performance as vehicle-level disciplines outside the subsystem hierarchy.</p>
+    </div>
+    <div class="ss-grid">
+      <div class="ss-card">
+        <p class="ss-card__id">1</p>
+        <p class="ss-card__name">Structural Performance</p>
+        <p class="ss-card__desc">Front/center/rear structure, fixed glass, jack and tools. (STRUCT)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">2</p>
+        <p class="ss-card__name">Occupant Accommodation</p>
+        <p class="ss-card__desc">IP and console, seats, sidewall trim, headliner/carpet/insulation, steering wheel and column. (ACCOMM)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">3</p>
+        <p class="ss-card__name">Restraint</p>
+        <p class="ss-card__desc">Active belts, driver and passenger SIR modules, SIR electrical system. (RESTRT)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">4</p>
+        <p class="ss-card__name">Exterior Envelope</p>
+        <p class="ss-card__desc">Front/rear end panels, door structures, bumper systems, moldings/rockers/sails, exterior lighting, coating, mirrors, wash/wipe. (EXTAPP)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">5</p>
+        <p class="ss-card__name">Thermal and Climate Control</p>
+        <p class="ss-card__desc">HPVM, refrigeration, solar air exhaust, air ducts, HTCM, CRFM, coolant distribution, power handling devices, auxiliary heater. (CLIMAT)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">6</p>
+        <p class="ss-card__name">Braking Performance</p>
+        <p class="ss-card__desc">Pedal module, master cylinder, brake modulator assembly, pipes/hoses, front/rear corner assemblies, BTCM, park brake control. (BRKING)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">7</p>
+        <p class="ss-card__name">Ride, Handling and Steering</p>
+        <p class="ss-card__desc">Chassis structures, front/rear suspension, drive axles, motor mounts, steering subsystem, tires and wheels. (RIDEHN)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">8</p>
+        <p class="ss-card__name">Accessory Power</p>
+        <p class="ss-card__desc">Auxiliary power supply, auxiliary battery, power distribution wiring. (ACCPOW)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">9</p>
+        <p class="ss-card__name">Entertainment</p>
+        <p class="ss-card__desc">Antenna, radio, front/rear speakers and enclosures. (ENTRTN)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">10</p>
+        <p class="ss-card__name">Information and Controls</p>
+        <p class="ss-card__desc">Driver information, CCU, steering column modules, door switches, external audible warnings. (INFORM)</p>
+      </div>
+      <div class="ss-card">
+        <p class="ss-card__id">11</p>
+        <p class="ss-card__name">Propulsion Performance</p>
+        <p class="ss-card__desc">Battery pack, power electronics bay, drive unit, inductive charge module, accelerator pedal sensor. (PROPUL)</p>
+      </div>
+      <div class="ss-card ss-card--vl">
+        <p class="ss-card__id">SSTS 13</p>
+        <p class="ss-card__name">EMC Performance</p>
+        <p class="ss-card__desc">Vehicle-level: radiated/conducted emissions and susceptibility. Design rules flow down to all subsystems.</p>
+      </div>
+      <div class="ss-card ss-card--vl">
+        <p class="ss-card__id">SSTS 15</p>
+        <p class="ss-card__name">Acoustic Performance</p>
+        <p class="ss-card__desc">Vehicle-level: interior/exterior noise, NVH targets, vibration modes. Target cascade to all subsystems.</p>
+      </div>
+    </div>
+
+    <!-- GSP3 Specification Tree Diagram -->
+    <div class="diagram-wrap" style="margin-top:2.5rem;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" style="width:100%;max-width:1200px;margin:0 auto;">
+        <defs>
+          <filter id="sh2" x="-4%" y="-4%" width="110%" height="115%">
+            <feDropShadow dx="1.5" dy="2" stdDeviation="2.5" flood-color="#000" flood-opacity="0.12"/>
+          </filter>
+          <linearGradient id="b_gC" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1F3864"/><stop offset="100%" stop-color="#2E5090"/></linearGradient>
+          <linearGradient id="b_gD" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2471A3"/><stop offset="100%" stop-color="#2E86C1"/></linearGradient>
+          <linearGradient id="b_gS" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7D3C98"/><stop offset="100%" stop-color="#9B59B6"/></linearGradient>
+          <linearGradient id="b_gG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1E8449"/><stop offset="100%" stop-color="#27AE60"/></linearGradient>
+          <linearGradient id="b_gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B7950B"/><stop offset="100%" stop-color="#D4AC0D"/></linearGradient>
+          <linearGradient id="b_gR" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#922B21"/><stop offset="100%" stop-color="#C0392B"/></linearGradient>
+        </defs>
+        <rect width="1200" height="620" fill="#f8f9fa" rx="8"/>
+
+        <!-- TOP-LEVEL BOX -->
+        <g filter="url(#sh2)">
+          <rect x="460" y="30" width="280" height="55" rx="12" fill="url(#b_gC)" stroke="#0D2340" stroke-width="2"/>
+          <text x="600" y="52" text-anchor="middle" fill="white" font-size="12" font-weight="bold">VEHICLE</text>
+          <text x="600" y="69" text-anchor="middle" fill="white" font-size="12" font-weight="bold">TECHNICAL SPECIFICATION</text>
+        </g>
+
+        <!-- VEHICLE-LEVEL DISCIPLINES (left branch) -->
+        <line x1="460" y1="57" x2="355" y2="57" stroke="#666" stroke-width="1.5"/>
+        <line x1="355" y1="57" x2="355" y2="188" stroke="#666" stroke-width="1.5"/>
+
+        <line x1="355" y1="108" x2="305" y2="108" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="80" y="83" width="225" height="50" rx="8" fill="url(#b_gR)" stroke="#922B21" stroke-width="1" stroke-dasharray="6,3"/>
+          <text x="192" y="104" text-anchor="middle" fill="white" font-size="11" font-weight="bold">EMC Performance</text>
+          <text x="192" y="120" text-anchor="middle" fill="white" font-size="9" opacity="0.85">(SSTS 13 &#x2014; Vehicle-Level)</text>
+        </g>
+
+        <line x1="355" y1="163" x2="305" y2="163" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="80" y="138" width="225" height="50" rx="8" fill="url(#b_gR)" stroke="#922B21" stroke-width="1" stroke-dasharray="6,3"/>
+          <text x="192" y="159" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Acoustic Performance</text>
+          <text x="192" y="175" text-anchor="middle" fill="white" font-size="9" opacity="0.85">(SSTS 15 &#x2014; Vehicle-Level)</text>
+        </g>
+
+        <line x1="355" y1="188" x2="305" y2="188" stroke="#666" stroke-width="1"/>
+        <text x="300" y="192" text-anchor="end" fill="#888" font-size="9" font-style="italic">Reliability Plan</text>
+
+        <!-- Interface Control docs (right branch) -->
+        <line x1="740" y1="57" x2="840" y2="57" stroke="#666" stroke-width="1.5"/>
+        <line x1="840" y1="35" x2="840" y2="80" stroke="#666" stroke-width="1"/>
+        <text x="855" y="42" fill="#888" font-size="8.5" font-style="italic">General Arrangement Drawing</text>
+        <text x="855" y="55" fill="#888" font-size="8.5" font-style="italic">Vehicle Configuration Document</text>
+        <text x="855" y="68" fill="#888" font-size="8.5" font-style="italic">Mass Control Document</text>
+
+        <!-- TRUNK LINE -->
+        <line x1="600" y1="85" x2="600" y2="230" stroke="#666" stroke-width="2"/>
+        <line x1="52" y1="230" x2="1148" y2="230" stroke="#666" stroke-width="2"/>
+
+        <!-- VL flow-down -->
+        <line x1="192" y1="133" x2="192" y2="215" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.5"/>
+        <line x1="192" y1="215" x2="500" y2="230" stroke="#C0392B" stroke-width="1" stroke-dasharray="5,3" opacity="0.35"/>
+
+        <!-- ROW 1: Subsystems 1-6 -->
+        <line x1="140" y1="230" x2="140" y2="275" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="52" y="275" width="176" height="70" rx="9" fill="url(#b_gC)"/>
+          <text x="140" y="296" text-anchor="middle" fill="white" font-size="11" font-weight="bold">1.</text>
+          <text x="140" y="312" text-anchor="middle" fill="white" font-size="10.5">STRUCTURAL</text>
+          <text x="140" y="327" text-anchor="middle" fill="white" font-size="10.5">PERFORMANCE</text>
+          <text x="140" y="340" text-anchor="middle" fill="#8BB8E8" font-size="8">(STRUCT)</text>
+        </g>
+
+        <line x1="324" y1="230" x2="324" y2="275" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="236" y="275" width="176" height="70" rx="9" fill="url(#b_gG)"/>
+          <text x="324" y="296" text-anchor="middle" fill="white" font-size="11" font-weight="bold">2.</text>
+          <text x="324" y="312" text-anchor="middle" fill="white" font-size="10.5">OCCUPANT</text>
+          <text x="324" y="327" text-anchor="middle" fill="white" font-size="10.5">ACCOMMODATION</text>
+          <text x="324" y="340" text-anchor="middle" fill="#8BB8E8" font-size="8">(ACCOMM)</text>
+        </g>
+
+        <line x1="508" y1="230" x2="508" y2="275" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="420" y="275" width="176" height="70" rx="9" fill="url(#b_gS)"/>
+          <text x="508" y="296" text-anchor="middle" fill="white" font-size="11" font-weight="bold">3.</text>
+          <text x="508" y="315" text-anchor="middle" fill="white" font-size="10.5">RESTRAINT</text>
+          <text x="508" y="340" text-anchor="middle" fill="#C8A2D6" font-size="8">(RESTRT)</text>
+        </g>
+
+        <line x1="692" y1="230" x2="692" y2="275" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="604" y="275" width="176" height="70" rx="9" fill="url(#b_gG)"/>
+          <text x="692" y="296" text-anchor="middle" fill="white" font-size="11" font-weight="bold">4.</text>
+          <text x="692" y="312" text-anchor="middle" fill="white" font-size="10.5">EXTERIOR</text>
+          <text x="692" y="327" text-anchor="middle" fill="white" font-size="10.5">ENVELOPE</text>
+          <text x="692" y="340" text-anchor="middle" fill="#8BB8E8" font-size="8">(EXTAPP)</text>
+        </g>
+
+        <line x1="876" y1="230" x2="876" y2="275" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="788" y="275" width="176" height="70" rx="9" fill="url(#b_gA)"/>
+          <text x="876" y="296" text-anchor="middle" fill="white" font-size="11" font-weight="bold">5.</text>
+          <text x="876" y="312" text-anchor="middle" fill="white" font-size="10.5">THERMAL AND</text>
+          <text x="876" y="327" text-anchor="middle" fill="white" font-size="10.5">CLIMATE CONTROL</text>
+          <text x="876" y="340" text-anchor="middle" fill="white" font-size="8" opacity="0.8">(CLIMAT)</text>
+        </g>
+
+        <line x1="1060" y1="230" x2="1060" y2="275" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="972" y="275" width="176" height="70" rx="9" fill="url(#b_gD)"/>
+          <text x="1060" y="296" text-anchor="middle" fill="white" font-size="11" font-weight="bold">6.</text>
+          <text x="1060" y="312" text-anchor="middle" fill="white" font-size="10.5">BRAKING</text>
+          <text x="1060" y="327" text-anchor="middle" fill="white" font-size="10.5">PERFORMANCE</text>
+          <text x="1060" y="340" text-anchor="middle" fill="#8BB8E8" font-size="8">(BRKING)</text>
+        </g>
+
+        <!-- ROW 2: Subsystems 7-11 (connected to main bus bar) -->
+        <line x1="232" y1="230" x2="232" y2="430" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="144" y="430" width="176" height="70" rx="9" fill="url(#b_gD)"/>
+          <text x="232" y="451" text-anchor="middle" fill="white" font-size="11" font-weight="bold">7.</text>
+          <text x="232" y="467" text-anchor="middle" fill="white" font-size="10.5">RIDE, HANDLING</text>
+          <text x="232" y="482" text-anchor="middle" fill="white" font-size="10.5">AND STEERING</text>
+          <text x="232" y="495" text-anchor="middle" fill="#8BB8E8" font-size="8">(RIDEHN)</text>
+        </g>
+
+        <line x1="416" y1="230" x2="416" y2="430" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="328" y="430" width="176" height="70" rx="9" fill="url(#b_gA)"/>
+          <text x="416" y="451" text-anchor="middle" fill="white" font-size="11" font-weight="bold">8.</text>
+          <text x="416" y="467" text-anchor="middle" fill="white" font-size="10.5">ACCESSORY</text>
+          <text x="416" y="482" text-anchor="middle" fill="white" font-size="10.5">POWER</text>
+          <text x="416" y="495" text-anchor="middle" fill="#8BB8E8" font-size="8">(ACCPOW)</text>
+        </g>
+
+        <line x1="600" y1="230" x2="600" y2="430" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="512" y="430" width="176" height="70" rx="9" fill="url(#b_gS)"/>
+          <text x="600" y="451" text-anchor="middle" fill="white" font-size="11" font-weight="bold">9.</text>
+          <text x="600" y="470" text-anchor="middle" fill="white" font-size="10.5">ENTERTAINMENT</text>
+          <text x="600" y="495" text-anchor="middle" fill="#C8A2D6" font-size="8">(ENTRTN)</text>
+        </g>
+
+        <line x1="784" y1="230" x2="784" y2="430" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="696" y="430" width="176" height="70" rx="9" fill="url(#b_gD)"/>
+          <text x="784" y="451" text-anchor="middle" fill="white" font-size="11" font-weight="bold">10.</text>
+          <text x="784" y="467" text-anchor="middle" fill="white" font-size="10.5">INFORMATION</text>
+          <text x="784" y="482" text-anchor="middle" fill="white" font-size="10.5">AND CONTROLS</text>
+          <text x="784" y="495" text-anchor="middle" fill="#8BB8E8" font-size="8">(INFORM)</text>
+        </g>
+
+        <line x1="968" y1="230" x2="968" y2="430" stroke="#666" stroke-width="1.5"/>
+        <g filter="url(#sh2)">
+          <rect x="880" y="430" width="176" height="70" rx="9" fill="url(#b_gC)"/>
+          <text x="968" y="451" text-anchor="middle" fill="white" font-size="11" font-weight="bold">11.</text>
+          <text x="968" y="467" text-anchor="middle" fill="white" font-size="10.5">PROPULSION</text>
+          <text x="968" y="482" text-anchor="middle" fill="white" font-size="10.5">PERFORMANCE</text>
+          <text x="968" y="495" text-anchor="middle" fill="#8BB8E8" font-size="8">(PROPUL)</text>
+        </g>
+
+        <text x="600" y="600" text-anchor="middle" fill="#aaa" font-size="9.5">EV Specification Tree &#x2014; GSP3 | Subsystem-level view (components omitted)</text>
+      </svg>
+      <p class="diagram-caption"><strong>Figure 2 &mdash; GSP3 Specification Tree</strong>: Original program architecture with 11 subsystems hanging from a single bus bar, plus EMC and Acoustic Performance as vehicle-level disciplines. All subsystems trace to the Vehicle Technical Specification.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Comparison ─────────────────────────────────────────── -->
+<section class="highlight" id="comparison">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <p class="highlight__quote">&ldquo;The test of a first-rate intelligence is the ability to hold two opposed ideas in the mind at the same time, and still retain the ability to function.&rdquo;</p>
+        <span class="highlight__attr">&mdash; F. Scott Fitzgerald (adapted for systems engineering)</span>
+        <div class="highlight__body">
+          <p>The AI-generated architecture (Rev 2, 12 subsystems) was refined after comparison with GSP3. The two designs converge strongly on 10 of 11 GSP3 subsystems &mdash; the AI independently arrived at nearly identical boundaries for structural, occupant accommodation, braking, ride/handling/steering, climate, exterior, entertainment, information/controls, accessory power, and propulsion.</p>
+          <p>The principal divergence is the AI's addition of SS-12 (Security and Operational Safeguards) as a separate subsystem, whereas GSP3 distributes those functions across Information and Controls and other subsystems. This reflects a modern design sensibility where security is an increasingly distinct engineering concern.</p>
+        </div>
+        <div class="tags">
+          <span class="tag">Subsystem Decomposition</span>
+          <span class="tag">Vehicle-Level Disciplines</span>
+          <span class="tag">AI-Assisted SE</span>
+          <span class="tag">Architecture Comparison</span>
+        </div>
+      </div>
+      <div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius);padding:1.8rem;">
+          <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--mint);margin-bottom:1.2rem;">Comparison Summary</p>
+          <div class="context-item" style="margin-bottom:1.2rem;">
+            <div class="context-item__dot" style="background:var(--mint);"></div>
+            <div>
+              <p class="context-item__label" style="color:var(--mint);">Strong Convergence</p>
+              <p class="context-item__text" style="color:rgba(255,255,255,0.72);">10 of 11 GSP3 subsystems have direct one-to-one matches in the AI design, with nearly identical functional scope and component allocation.</p>
+            </div>
+          </div>
+          <div class="context-item" style="margin-bottom:1.2rem;">
+            <div class="context-item__dot" style="background:var(--sky);"></div>
+            <div>
+              <p class="context-item__label" style="color:var(--sky);">Vehicle-Level Agreement</p>
+              <p class="context-item__text" style="color:rgba(255,255,255,0.72);">Both architectures elevate EMC and Acoustic Performance to vehicle-level disciplines outside the subsystem hierarchy &mdash; recognizing these as cross-cutting design concerns.</p>
+            </div>
+          </div>
+          <div class="context-item" style="margin-bottom:1.2rem;">
+            <div class="context-item__dot" style="background:#e67e22;"></div>
+            <div>
+              <p class="context-item__label" style="color:#e67e22;">AI Addition</p>
+              <p class="context-item__text" style="color:rgba(255,255,255,0.72);">SS-12 (Security and Operational Safeguards) is unique to the AI design. GSP3 distributes key fob, immobilizer, and interlock functions across existing subsystems.</p>
+            </div>
+          </div>
+          <div class="context-item">
+            <div class="context-item__dot" style="background:#c0392b;"></div>
+            <div>
+              <p class="context-item__label" style="color:#c0392b;">Iterative Refinement</p>
+              <p class="context-item__text" style="color:rgba(255,255,255,0.72);">The AI's initial Rev 1 (10 subsystems) over-split ride/handling/steering and under-differentiated interior vs. exterior. Rev 2 corrected these after reviewing GSP3.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Detailed Comparison Table ──────────────────────────── -->
+<section class="section" id="comparison-table">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Detailed Comparison</p>
+      <h2 class="sh__title">Subsystem-by-Subsystem Mapping</h2>
+      <p class="sh__desc">How each GSP3 subsystem maps to the AI-generated architecture, with alignment assessment.</p>
+    </div>
+    <div class="diagram-wrap" style="padding:0;overflow-x:auto;">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>GSP3 Subsystem</th>
+            <th>AI Subsystem (Rev 2)</th>
+            <th>Alignment</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Structural Performance</strong></td>
+            <td>SS-01 Structural Performance</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>Identical scope: body shell, crash energy management, stiffness, HV isolation.</td>
+          </tr>
+          <tr>
+            <td><strong>2. Occupant Accommodation</strong></td>
+            <td>SS-02 Occupant Accommodation</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>Same component set: IP, seats, trim, insulation, steering wheel.</td>
+          </tr>
+          <tr>
+            <td><strong>3. Restraint</strong></td>
+            <td>SS-03 Restraint Performance</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>Both isolate airbags, belts, and SIR as a distinct subsystem.</td>
+          </tr>
+          <tr>
+            <td><strong>4. Exterior Envelope</strong></td>
+            <td>SS-04 Exterior Envelope</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>Panels, lighting, mirrors, wash/wipe, coating &mdash; identical boundaries.</td>
+          </tr>
+          <tr>
+            <td><strong>5. Thermal &amp; Climate Control</strong></td>
+            <td>SS-05 Thermal &amp; Climate Control</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>AI adds battery thermal management explicitly; GSP3 includes it via HTCM/CRFM modules.</td>
+          </tr>
+          <tr>
+            <td><strong>6. Braking Performance</strong></td>
+            <td>SS-06 Braking Performance</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>AI emphasizes regen-friction blend; GSP3 lists same hardware components.</td>
+          </tr>
+          <tr>
+            <td><strong>7. Ride, Handling &amp; Steering</strong></td>
+            <td>SS-07 Ride, Handling &amp; Steering</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>Merged in Rev 2 to match GSP3. Rev 1 had incorrectly split this into two subsystems.</td>
+          </tr>
+          <tr>
+            <td><strong>8. Accessory Power</strong></td>
+            <td>SS-08 Accessory Power</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>12V bus, DC-DC, auxiliary battery, power distribution.</td>
+          </tr>
+          <tr>
+            <td><strong>9. Entertainment</strong></td>
+            <td>SS-09 Entertainment</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>Separated in Rev 2. Rev 1 had incorrectly merged entertainment into information/controls.</td>
+          </tr>
+          <tr>
+            <td><strong>10. Information &amp; Controls</strong></td>
+            <td>SS-10 Information &amp; Controls</td>
+            <td><span class="match-partial">PARTIAL MATCH</span></td>
+            <td>AI separates security functions into SS-12; GSP3 keeps door switches and warnings here.</td>
+          </tr>
+          <tr>
+            <td><strong>11. Propulsion Performance</strong></td>
+            <td>SS-11 Propulsion Performance</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>Battery pack, power electronics, drive unit, charger, accelerator pedal sensor.</td>
+          </tr>
+          <tr>
+            <td><strong>&mdash;</strong></td>
+            <td>SS-12 Security &amp; Oper. Safeguards</td>
+            <td><span class="match-gap">AI ADDITION</span></td>
+            <td>No GSP3 equivalent. Immobilizer, key fob, interlocks collected from other subsystems.</td>
+          </tr>
+          <tr>
+            <td><strong>EMC Performance (SSTS 13)</strong></td>
+            <td>VL-A EMC Performance</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>Both treat EMC as a vehicle-level discipline, not an owned subsystem.</td>
+          </tr>
+          <tr>
+            <td><strong>Acoustic Performance (SSTS 15)</strong></td>
+            <td>VL-B Acoustic Performance</td>
+            <td><span class="match-strong">STRONG MATCH</span></td>
+            <td>Both treat acoustics as a vehicle-level NVH target cascade.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── Observations ───────────────────────────────────────── -->
+<section class="section section--alt" id="observations">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Observations</p>
+      <h2 class="sh__title">What This Exercise Reveals</h2>
+    </div>
+    <div class="obs-grid">
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x1F3AF;</div>
+        <p class="obs-card__label">Convergence</p>
+        <h3 class="obs-card__title">AI Independently Recovers Domain Structure</h3>
+        <p class="obs-card__body">Working only from the requirements text, the AI arrived at nearly the same subsystem boundaries as the original program team. This suggests that well-structured requirements strongly constrain the design space, and that function-to-form synthesis is a learnable, reproducible process.</p>
+      </div>
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x1F504;</div>
+        <p class="obs-card__label">Iteration</p>
+        <h3 class="obs-card__title">Comparison Drives Refinement</h3>
+        <p class="obs-card__body">The AI's Rev 1 made characteristic errors: over-splitting ride/handling/steering and merging entertainment into controls. Comparing against GSP3 prompted corrections in Rev 2, demonstrating the value of human-AI architecture review cycles.</p>
+      </div>
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x1F6E0;&#xFE0F;</div>
+        <p class="obs-card__label">Modern Sensibility</p>
+        <h3 class="obs-card__title">Security as a Distinct Concern</h3>
+        <p class="obs-card__body">The AI's addition of SS-12 (Security) reflects a contemporary engineering perspective where security, cybersecurity, and operational safeguards are increasingly treated as first-class architectural concerns rather than distributed across other subsystems.</p>
+      </div>
+      <div class="obs-card">
+        <div class="obs-card__icon">&#x1F4D0;</div>
+        <p class="obs-card__label">Method</p>
+        <h3 class="obs-card__title">Function-to-Form as AI Capability</h3>
+        <p class="obs-card__body">This exercise demonstrates that AI can perform classical systems engineering synthesis from a specification document, producing subsystem architectures, requirements allocation matrices, and interface definitions that are directly comparable to human expert output.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-section__inner">
+      <h2 class="cta-section__title">Explore AI-Assisted Systems Engineering</h2>
+      <p class="cta-section__sub">Interested in function-to-form synthesis, EV architecture, or AI-assisted engineering design? Get in touch to discuss.</p>
+      <a href="mailto:percivall@ieee.org" class="cta-section__cta">&#x2709;&#xFE0F;&nbsp; percivall@ieee.org</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>&copy; 2025 GeoRoundtable &middot; <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
