@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon-512x512.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Otium Core: Natural Philosophy — GeoRoundtable</title>
+  <meta property="og:title" content="Otium Core: Natural Philosophy — GeoRoundtable" />
+  <meta property="og:description" content="An interactive mind map tracing natural philosophy through Change, Emergent Form, and Agency — from Lucretius and Aristotle through Whitehead, Peirce, Darwin, and the epistemology of AI agents." />
+  <meta property="og:image" content="https://georoundtable.xyz/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:url" content="https://georoundtable.xyz/otium-core-natural-philosophy.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://georoundtable.xyz/og-image.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 4.5rem 0; }
+    .section--alt { background: var(--light); }
+    .accent-bar { height: 3px; background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%); }
+
+    /* ── Nav ── */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .nav__brand { display: flex; align-items: center; gap: 11px; color: var(--white); font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+    .nav__logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); object-fit: cover; }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: background 0.15s; }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    /* ── Hero ── */
+    .hero { background: linear-gradient(140deg, #081840 0%, #0d2660 55%, #0d6b78 100%); color: var(--white); padding: 6rem 0 5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(94,207,219,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse 30% 50% at 10% 80%, rgba(29,111,164,0.10) 0%, transparent 60%); }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.25); }
+    .hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28); border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600; color: var(--mint); letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+    .hero__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; font-weight: 700; margin-bottom: 1rem; max-width: 860px; }
+    .hero__sub { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 700px; line-height: 1.7; margin-bottom: 1.75rem; }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 2rem; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* ── Section anchor offset ── */
+    .section-anchor { display: block; height: 80px; margin-top: -80px; visibility: hidden; }
+
+    /* ── Section headings ── */
+    .sh { margin-bottom: 2.5rem; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.45rem; }
+    .sh__num { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; background: var(--navy); color: var(--white); border-radius: 50%; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .sh__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 700; color: var(--navy); }
+    .sh__desc { margin-top: 0.65rem; color: var(--muted); max-width: 660px; line-height: 1.72; font-size: 0.97rem; }
+
+    /* ── Prose ── */
+    .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; }
+    .prose p + p { margin-top: 1.05rem; }
+    .prose strong { color: var(--navy); font-weight: 600; }
+    .prose em { color: var(--teal); font-style: italic; }
+
+    /* ── Layout grids ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .two-col--wide { display: grid; grid-template-columns: 3fr 2fr; gap: 3.5rem; align-items: start; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    /* ── Mind map image ── */
+    .mindmap-wrap {
+      margin: 1.8rem 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(8,24,64,0.12);
+    }
+    .mindmap-wrap img { width: 100%; display: block; }
+    .mindmap-caption {
+      background: var(--light);
+      padding: 0.9rem 1.2rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      border-top: 1px solid var(--border);
+    }
+    .mindmap-caption strong { color: var(--navy); font-style: normal; }
+    .mindmap-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; font-weight: 600; color: var(--blue);
+      margin-top: 0.5rem; font-style: normal;
+    }
+    .mindmap-link:hover { color: var(--navy); }
+
+    /* ── Inset / callout ── */
+    .inset {
+      background: var(--light); border-left: 4px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.5rem 1.8rem; box-shadow: var(--shadow); margin: 1.5rem 0;
+    }
+    .inset--blue { border-left-color: var(--blue); }
+    .inset--sky  { border-left-color: var(--sky); }
+    .inset--navy { border-left-color: var(--navy); background: #f5f7fb; }
+    .inset__label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 0.4rem; }
+    .inset--blue .inset__label { color: var(--blue); }
+    .inset--sky  .inset__label { color: var(--sky); }
+    .inset--navy .inset__label { color: var(--navy); }
+    .inset__body { font-size: 0.92rem; color: #2a3a50; line-height: 1.75; }
+    .inset__body strong { color: var(--navy); font-weight: 600; }
+
+    /* ── Ref cards ── */
+    .ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.2rem; margin-top: 1.5rem; }
+    .ref-card {
+      background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--teal);
+      border-radius: var(--radius); padding: 1.3rem 1.4rem; box-shadow: var(--shadow);
+    }
+    .ref-card:nth-child(2) { border-top-color: var(--blue); }
+    .ref-card:nth-child(3) { border-top-color: var(--sky); }
+    .ref-card:nth-child(4) { border-top-color: var(--navy); }
+    .ref-card:nth-child(5) { border-top-color: var(--teal); }
+    .ref-card:nth-child(6) { border-top-color: var(--blue); }
+    .ref-card__date { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--teal); margin-bottom: 0.3rem; }
+    .ref-card__title { font-size: 0.93rem; font-weight: 700; color: var(--navy); margin-bottom: 0.35rem; line-height: 1.3; }
+    .ref-card__author { font-size: 0.83rem; color: var(--muted); font-style: italic; }
+
+    /* ── Movement cards ── */
+    .movement-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; margin-top: 2rem; }
+    .movement {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 1.8rem;
+      box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .movement:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(8,24,64,0.12); }
+    .movement--1 { border-top: 4px solid var(--teal); }
+    .movement--2 { border-top: 4px solid var(--blue); }
+    .movement--3 { border-top: 4px solid var(--sky); }
+    .movement__num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .movement--1 .movement__num { color: var(--teal); }
+    .movement--2 .movement__num { color: var(--blue); }
+    .movement--3 .movement__num { color: var(--sky); }
+    .movement__icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .movement__title { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
+    .movement__body { font-size: 0.9rem; color: var(--muted); line-height: 1.68; flex: 1; }
+    .movement__quote { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.83rem; color: var(--muted); font-style: italic; line-height: 1.55; }
+    .movement__quote-attr { display: block; margin-top: 0.3rem; font-size: 0.75rem; font-weight: 600; color: var(--navy); font-style: normal; }
+
+    /* ── Agency hierarchy ── */
+    .agency-levels { display: flex; flex-direction: column; gap: 0; margin: 1.5rem 0; }
+    .agency-level {
+      display: flex; align-items: center; gap: 1.2rem;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.4rem;
+      margin-bottom: 0.5rem; box-shadow: var(--shadow);
+      position: relative;
+    }
+    .agency-level::after {
+      content: '↓'; position: absolute; bottom: -1.1rem; left: 50%;
+      transform: translateX(-50%);
+      font-size: 1rem; color: var(--muted); z-index: 1;
+    }
+    .agency-level:last-child::after { display: none; }
+    .agency-level__badge {
+      min-width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: var(--white); flex-shrink: 0;
+    }
+    .al1 .agency-level__badge { background: var(--teal); }
+    .al2 .agency-level__badge { background: var(--blue); }
+    .al3 .agency-level__badge { background: var(--sky); }
+    .al4 .agency-level__badge { background: var(--navy); }
+    .al5 .agency-level__badge { background: var(--muted); }
+    .agency-level__title { font-size: 0.97rem; font-weight: 700; color: var(--navy); }
+    .agency-level__body { font-size: 0.87rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── Pillar cards ── */
+    .pillar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+    .pillar { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); transition: transform 0.2s; }
+    .pillar:hover { transform: translateY(-3px); }
+    .pillar:nth-child(2) { border-left-color: var(--blue); }
+    .pillar:nth-child(3) { border-left-color: var(--sky); }
+    .pillar:nth-child(4) { border-left-color: var(--navy); }
+    .pillar__icon { font-size: 1.6rem; margin-bottom: 0.7rem; }
+    .pillar__title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.45rem; }
+    .pillar__body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Highlight ── */
+    .highlight { background: var(--navy); color: var(--white); padding: 4.5rem 0; }
+    .highlight__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .highlight__quote { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.92); margin-bottom: 0.9rem; }
+    .highlight__attr { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
+    .highlight__body { color: rgba(255,255,255,0.72); font-size: 0.94rem; line-height: 1.8; }
+    .highlight__body p + p { margin-top: 0.9rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1.5rem; }
+    .tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; padding: 0.35rem 0.85rem; font-size: 0.8rem; font-weight: 600; color: var(--mint); }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.18s; text-decoration: none !important; white-space: nowrap; }
+    .btn--primary { background: var(--teal); color: var(--white); }
+    .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
+    .btn--outline { background: transparent; border: 1.5px solid var(--border); color: var(--navy); }
+    .btn--outline:hover { border-color: var(--teal); color: var(--teal); }
+    .btn--mint { background: var(--mint); color: var(--navy); }
+    .btn--mint:hover { background: #78dde7; transform: translateY(-1px); }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    /* ── Footer ── */
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .two-col, .two-col--wide, .highlight__inner { grid-template-columns: 1fr; }
+      .movement-grid { grid-template-columns: 1fr; }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .three-col { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+      .three-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="index.html#work">Featured Work</a>
+      <span>›</span>
+      Natural Philosophy
+    </div>
+    <div class="hero__badge">🌀 Natural Philosophy · Interactive Mind Map</div>
+    <h1 class="hero__title">Otium Core: Natural Philosophy</h1>
+    <p class="hero__sub">An interactive mind map tracing the foundations of natural philosophy through three movements — Change, Emergent Form, and Agency. Drawing on Lucretius, Aristotle, Kant, Whitehead, Peirce, Darwin, and the epistemology of AI agents, this work explores how persistent structure emerges from constant flux, and how agency arises as the most adaptive response to uncertainty.</p>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Format</span>
+        <span class="hero__meta-value">Interactive Mind Map (Otium Core)</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Movements</span>
+        <span class="hero__meta-value">Change · Emergent Form · Agency</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Context</span>
+        <span class="hero__meta-value">St. John's College MALA Programme</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Author</span>
+        <span class="hero__meta-value">George Percivall · © 2025 · CC BY 4.0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     OVERVIEW
+══════════════════════════════════════════════════ -->
+<span class="section-anchor" id="overview"></span>
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Overview</p>
+      <h2 class="sh__title">Natural Philosophy as a Living Practice</h2>
+      <p class="sh__desc">Otium Core is a series of interactive mind maps developed as part of George Percivall's studies in the Master of Arts in Liberal Arts programme at St. John's College, Annapolis. The Natural Philosophy map traces how human understanding of nature — from ancient atomism through modern physics and AI — forms a continuous, branching inquiry.</p>
+    </div>
+
+    <div class="two-col--wide">
+      <div>
+        <div class="prose">
+          <p><em>Otium</em> — leisure in the classical Roman sense, the contemplative time set aside for learning and reflection — names the spirit of this work. Natural philosophy, once a unified inquiry into the nature of things, was the precursor to what we now call science. Lucretius, Aristotle, Galileo, Newton, Kant, and Darwin were all natural philosophers before they were scientists, engineers, or mathematicians.</p>
+          <p>This mind map argues, implicitly, that the philosophical questions have never been resolved — only renamed. The questions of change, form, and agency that preoccupied Lucretius and Aristotle are alive in contemporary physics, complexity science, and the epistemology of AI. The aim of this work is to hold the ancient and the contemporary in the same frame.</p>
+          <p>The map is structured as three interlocking movements. <strong>Change</strong> asks: what is the fundamental character of reality as it unfolds? <strong>Emergent Form</strong> asks: how do persistent structures arise from that constant flux? <strong>Agency</strong> asks: how do the most persistent and adaptive of those structures come to act on — and know — the world around them?</p>
+        </div>
+
+        <div class="inset" style="margin-top: 1.8rem;">
+          <p class="inset__label">Theoria — θεωρία</p>
+          <p class="inset__body">The Greek concept of <strong>theoria</strong> — contemplation as a form of knowing — is the epistemological heart of this project. Theoria is not passive observation; it is active, engaged comprehension: seeing something whole. Natural philosophy at its best is theoretic — it seeks to comprehend not just the facts but the form, the why, the structure beneath the surface.</p>
+        </div>
+
+        <div class="inset inset--blue" style="margin-top: 1rem;">
+          <p class="inset__label">Consilience</p>
+          <p class="inset__body">The map draws on E.O. Wilson's concept of <strong>consilience</strong> — the unity of knowledge across disciplines. Natural philosophy is the original consilient enterprise: the inquiry that refuses to be bounded by any single domain. The movement from physics to biology to cybernetics to AI, traced across these three movements, is consilience in action.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="mindmap-wrap">
+          <img src="https://www.percivall.org/Contents/Natural%20Philosophy%20t-c8c10578-971c-4d77-a8d4-55d550a84a47.png"
+               alt="Otium Core — Natural Philosophy overview mind map" />
+          <div class="mindmap-caption">
+            <strong>Natural Philosophy — Overview.</strong> The root map showing the three movements (Change, Emergent Form, Agency) and the framing concepts: Theoria, consilience, ways of knowing, and the classical sources that ground the inquiry.
+            <br/><a class="mindmap-link" href="https://www.percivall.org/" target="_blank">→ Explore the interactive mind map at percivall.org</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three movements summary -->
+    <div style="margin-top: 3rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Three Movements</h3>
+      <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 0; max-width: 660px;">Each movement builds on the last — change is the ground, form emerges from it, and agency is the most sophisticated form of self-organizing persistence.</p>
+      <div class="movement-grid">
+        <div class="movement movement--1">
+          <p class="movement__num">Movement 1</p>
+          <div class="movement__icon">🌊</div>
+          <h3 class="movement__title">Change</h3>
+          <p class="movement__body">Reality is a constant stream of events. Everything is in flux. The question is not whether things change, but how that change is structured — what regularities, mechanisms, and laws govern the flow of events through space and time.</p>
+          <p class="movement__quote">"It is certain that everything is constantly in flux."<span class="movement__quote-attr">— Lucretius, On the Nature of Things</span></p>
+        </div>
+        <div class="movement movement--2">
+          <div class="movement__icon">🌿</div>
+          <p class="movement__num">Movement 2</p>
+          <h3 class="movement__title">Emergent Form</h3>
+          <p class="movement__body">From constant change, persistent structures emerge at higher levels of organization — structures with features that have no meaning at the underlying level. This is the great mystery of nature: how order arises from flux, how wholes exceed the sum of their parts.</p>
+          <p class="movement__quote">"One thing will never stop arising from another, and life is a permanent possession of now one, but on loan to all."<span class="movement__quote-attr">— Lucretius, On the Nature of Things</span></p>
+        </div>
+        <div class="movement movement--3">
+          <div class="movement__icon">🧭</div>
+          <p class="movement__num">Movement 3</p>
+          <h3 class="movement__title">Agency</h3>
+          <p class="movement__body">The most persistent and adaptive forms have agency: the ability to adapt to the uncertainties of change. Agency is not a sharp boundary but an emergent continuum — from goal-directed processes to intentional action to the social construction of shared reality.</p>
+          <p class="movement__quote">"The mind is unable to exist by itself without body and the person."<span class="movement__quote-attr">— Lucretius, On the Nature of Things</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 1 — CHANGE
+══════════════════════════════════════════════════ -->
+<span class="section-anchor" id="change"></span>
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Movement 1</p>
+      <div class="sh__num">1</div>
+      <h2 class="sh__title">Change</h2>
+      <p class="sh__desc">What we observe is a constant stream of events which beg for explanation, leading perhaps to causality and useful predictions. The analysis of change spans ancient atomism, Newtonian mechanics, the Kantian critique of pure reason, and modern mathematical physics.</p>
+    </div>
+
+    <div class="two-col--wide">
+      <div>
+        <div class="prose">
+          <p>Change is the primary datum of natural philosophy. We do not first observe static objects and then notice that they change; we observe events, processes, and transformations — and then construct the concept of enduring objects to make sense of them. This inversion — events before things — is one of the deepest moves in the history of natural philosophy.</p>
+          <p>The <strong>stream of events</strong> is Lucretius's starting point: reality as an endless flux of atoms in motion, colliding, combining, and dissolving. Nothing is fixed; everything that appears stable is a temporary pattern in the flow. From this starting point, the inquiry branches into the structure of space and time, the nature of process and becoming, the ontology of things, the mechanisms of causality, and the mathematical physics that codifies it all.</p>
+          <p>The great tension in this movement runs between two approaches to change: understanding the world as <strong>object and mechanism</strong> (the approach of classical physics from Galileo to Newton), and understanding the world as <strong>process and becoming</strong> (the approach that Whitehead, Peirce, and Bergson would later develop). Modern physics inherits the tension: quantum mechanics is irreducibly processual; classical mechanics remains object-based. This "formalized" crisis in the foundations of mathematical physics is still unresolved.</p>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 1.1rem;">Key Themes</h3>
+          <div class="inset">
+            <p class="inset__label">Stream of Events</p>
+            <p class="inset__body">The primary observation: reality as an unbroken flow of occurrences. Causality and prediction are constructed from regularities in the stream — not given in advance. The ontological question is whether events or objects are more fundamental.</p>
+          </div>
+          <div class="inset inset--blue">
+            <p class="inset__label">Space and Time</p>
+            <p class="inset__body">The framework within which change occurs — but is it absolute (Newton) or relational (Leibniz, Mach, Einstein)? The move from absolute to relational space-time is one of the great transformations in the history of natural philosophy, with consequences that ripple through to the Spatial Web's hyperspace model.</p>
+          </div>
+          <div class="inset inset--sky">
+            <p class="inset__label">Every-thing; Ontology</p>
+            <p class="inset__body">The ontological question: what kinds of things exist? Atoms (Lucretius), substances (Aristotle), forces (Newton), fields (Maxwell), events (Whitehead), information (modern AI)? The answer shapes what counts as an explanation of change.</p>
+          </div>
+          <div class="inset inset--navy">
+            <p class="inset__label">Understanding the World as Object and Mechanism</p>
+            <p class="inset__body">From Copernicus (1542) through Galileo's <em>Two New Sciences</em> (1638) to Kant's Critique of Pure Reason — the development of mathematical physics as the canonical framework for understanding change. "In the nineteenth century, this conflict led to a new formalized foundation of infinitesimal analysis, and today its effects are seen in the struggle to fix the principles of mathematical physics." The tension between the mathematical and the physical has never been fully resolved.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="mindmap-wrap">
+          <img src="https://www.percivall.org/Contents/NP%20Change-3d626026-72f2-4576-92fc-47dc795832ef.png"
+               alt="NP: Change mind map" />
+          <div class="mindmap-caption">
+            <strong>NP: Change.</strong> Stream of events, space and time, time and process, ontology of things, mechanisms in space and time, physics: things and energy, and the history of mathematical physics from Galileo through modern foundations.
+            <br/><a class="mindmap-link" href="https://www.percivall.org/#1" target="_blank">→ Explore this slide interactively</a>
+          </div>
+        </div>
+
+        <div class="inset" style="margin-top: 1.5rem;">
+          <p class="inset__label">4 Modern Metaphysics</p>
+          <p class="inset__body">The map identifies four modern metaphysical frameworks for understanding change: the <strong>materialist</strong> (things in motion), the <strong>structural</strong> (patterns and relations), the <strong>process</strong> (events and becoming), and the <strong>informational</strong> (data and computation). Each framework generates different engineering implications — and different accounts of what AI agents are doing when they model the world.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Lucretius Highlight ── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "It is certain that everything is constantly in flux."
+        </blockquote>
+        <p class="highlight__attr">— Lucretius · On the Nature of Things · c. 50 BC</p>
+        <div class="tags">
+          <span class="tag">Natural Philosophy</span>
+          <span class="tag">Process Ontology</span>
+          <span class="tag">Change</span>
+          <span class="tag">Atomism</span>
+          <span class="tag">Lucretius</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>Lucretius — writing in the first century BC, synthesizing Epicurus and Democritus — provides the through-line for all three movements of this mind map. His materialist atomism is not merely an ancient curiosity; it anticipates process philosophy, statistical mechanics, and the emergence paradigm in biology and complex systems.</p>
+        <p>The recurring Lucretius citations are deliberate: they mark the persistence of the same deep questions across two millennia of inquiry. What changes is the vocabulary, the mathematics, and the experimental precision — not the fundamental puzzlement about how a world of constant flux gives rise to persistent, coherent, knowing entities.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 2 — EMERGENT FORM
+══════════════════════════════════════════════════ -->
+<span class="section-anchor" id="emergent-form"></span>
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Movement 2</p>
+      <div class="sh__num">2</div>
+      <h2 class="sh__title">Emergent Form</h2>
+      <p class="sh__desc">With time, persistent structures emerge from constant change. These emergent forms persist at higher levels of organization and exhibit features that have no explicit meaning when viewed from the underlying level of activity — the hallmark of genuine emergence.</p>
+    </div>
+
+    <div class="two-col--wide">
+      <div>
+        <div class="prose">
+          <p>Emergence is the central puzzle of natural philosophy: how do <strong>wholes arise that exceed their parts</strong>? A molecule is not merely a collection of atoms; an organism is not merely a collection of cells; a mind is not merely a collection of neurons; a society is not merely a collection of individuals. At each level, new properties appear that could not have been predicted from the lower level alone.</p>
+          <p>The map traces four lineages of response to the emergence question. The <strong>process tradition</strong> (Plato's Timaeus, Bergson, Whitehead, Prigogine) holds that reality is fundamentally becoming rather than being — emergence is not a puzzle but the basic character of time itself. The <strong>Kantian tradition</strong> (Kant's Critique of Judgement, Kauffman) focuses on organic wholes — entities that cannot be understood mechanically because their parts are organized by reference to the whole. The <strong>habits tradition</strong> (Aristotle, Peirce) sees emergent form as habit solidified in time — repeated patterns that become self-sustaining regularities. And the <strong>evolutionary tradition</strong> (Darwin, Mayr, Peirce again) explains the origin of biological forms through variation, selection, and inheritance.</p>
+          <p>What unites these traditions is the insight that time is asymmetric: emergent forms are not reversible. Peirce captures this in his cosmogony — the tendency to take habits means that time has an arrow, and the laws of nature themselves are emergent, evolved regularities rather than eternal, fixed structures.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="mindmap-wrap">
+          <img src="https://www.percivall.org/Contents/NP%20Emergent%20Form-2257cc9e-245a-482a-b911-051b3617be80.png"
+               alt="NP: Emergent Form mind map" />
+          <div class="mindmap-caption">
+            <strong>NP: Emergent Form.</strong> Reality as Becoming (Plato, Hume, Bergson, Whitehead, Prigogine), Kantian wholes (Kant, Kauffman), Habits as forms in time (Aristotle, Peirce), Evolution (Darwin, Peirce, Mayr), and Complex Adaptive Systems.
+            <br/><a class="mindmap-link" href="https://www.percivall.org/#2" target="_blank">→ Explore this slide interactively</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Four lineages -->
+    <div style="margin-top: 3rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Four Lineages of Emergence</h3>
+      <p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 1.8rem; max-width: 680px;">The mind map traces four distinct traditions in the philosophy of emergent form, each with different implications for how we understand complex systems, organisms, and minds.</p>
+
+      <div class="pillar-grid">
+        <div class="pillar">
+          <div class="pillar__icon">🌊</div>
+          <h4 class="pillar__title">Reality as Becoming</h4>
+          <p class="pillar__body">The process tradition: reality is not a collection of static objects but an ongoing flow of becoming. Plato's <em>Timaeus</em> grounds this insight; Bergson's <em>Introduction to Metaphysics</em> (1903) radicalizes it; Whitehead's <em>Process and Reality</em> (1929) systematizes it; Prigogine's <em>From Being to Becoming</em> (1980) grounds it in thermodynamics. Emergence is not a puzzle but the basic structure of time: forms arise because time flows, not despite it.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar__icon">🧬</div>
+          <h4 class="pillar__title">Kantian Wholes</h4>
+          <p class="pillar__body">Kant's <em>Critique of Judgement</em> (1790) introduces the concept of natural purpose: organisms are organized such that each part exists for the sake of the whole, and the whole exists for the sake of each part. This circularity — the whole presupposes the parts, the parts presuppose the whole — cannot be captured by mechanical explanation. Kauffman's <em>Eros and Logos</em> (2020) extends this Kantian insight into the theory of autonomous agents and the origin of meaning in biological systems.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar__icon">🔄</div>
+          <h4 class="pillar__title">Habits: Forms in Time</h4>
+          <p class="pillar__body">Aristotle's insight — "we are what we repeatedly do" — anticipates Peirce's cosmogony: in Peirce's system, change is at the basis as Firstness, imbued with the tendency to take habits. Time therefore has an arrow and is irreversible, and the laws manifested as the universe develops are themselves habits solidified over cosmic time. This was unthinkable from a mechanical point of view. Music and frequencies offer a sensory analogue: a musical phrase is a habit of sound — emergent form in time.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar__icon">🌱</div>
+          <h4 class="pillar__title">Evolution</h4>
+          <p class="pillar__body">Darwin's <em>On the Origin of Species</em> (1859) is the central text: biological forms emerge through variation, selection, and inheritance — not through design or necessity, but through the blind iteration of a simple algorithm over deep time. Peirce connects Darwinian evolution to his cosmogony: cosmic evolution is the original form of emergence. Mayr's <em>New Philosophy of Biology</em> (1988) insists on the irreducibility of biological explanation to physics — the emergence of biological form requires its own conceptual vocabulary.</p>
+        </div>
+      </div>
+
+      <!-- Key references -->
+      <div style="margin-top: 2.5rem;">
+        <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem;">Key References</h3>
+        <div class="ref-grid">
+          <div class="ref-card">
+            <p class="ref-card__date">c. 360 BC</p>
+            <h4 class="ref-card__title">Timaeus</h4>
+            <p class="ref-card__author">Plato</p>
+          </div>
+          <div class="ref-card">
+            <p class="ref-card__date">1739</p>
+            <h4 class="ref-card__title">Treatise of Human Nature</h4>
+            <p class="ref-card__author">David Hume</p>
+          </div>
+          <div class="ref-card">
+            <p class="ref-card__date">1790</p>
+            <h4 class="ref-card__title">Critique of Judgement</h4>
+            <p class="ref-card__author">Immanuel Kant</p>
+          </div>
+          <div class="ref-card">
+            <p class="ref-card__date">1859</p>
+            <h4 class="ref-card__title">On the Origin of Species</h4>
+            <p class="ref-card__author">Charles Darwin</p>
+          </div>
+          <div class="ref-card">
+            <p class="ref-card__date">1903</p>
+            <h4 class="ref-card__title">Introduction to Metaphysics</h4>
+            <p class="ref-card__author">Henri Bergson</p>
+          </div>
+          <div class="ref-card">
+            <p class="ref-card__date">1929</p>
+            <h4 class="ref-card__title">Process and Reality</h4>
+            <p class="ref-card__author">Alfred North Whitehead</p>
+          </div>
+          <div class="ref-card">
+            <p class="ref-card__date">1980</p>
+            <h4 class="ref-card__title">From Being to Becoming</h4>
+            <p class="ref-card__author">Ilya Prigogine</p>
+          </div>
+          <div class="ref-card">
+            <p class="ref-card__date">1988</p>
+            <h4 class="ref-card__title">New Philosophy of Biology</h4>
+            <p class="ref-card__author">Ernst Mayr</p>
+          </div>
+          <div class="ref-card">
+            <p class="ref-card__date">2020</p>
+            <h4 class="ref-card__title">Eros and Logos</h4>
+            <p class="ref-card__author">Stuart Kauffman</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 3 — AGENCY
+══════════════════════════════════════════════════ -->
+<span class="section-anchor" id="agency"></span>
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Movement 3</p>
+      <div class="sh__num">3</div>
+      <h2 class="sh__title">Agency</h2>
+      <p class="sh__desc">The most persistent and adaptive forms have agency. Agency is the ability to adapt to the uncertainties of change — to maintain form and pursue goals despite a world that is never fully predictable or fully known.</p>
+    </div>
+
+    <div class="two-col--wide">
+      <div>
+        <div class="prose">
+          <p>Agency is the culmination of the three movements: it is the form that change and emergence take when they produce something that can <em>act back</em> on the world. An agent is not merely a structure that persists; it is a structure that responds, adapts, pursues goals, and maintains a model of the environment that enables it to do so.</p>
+          <p>The map traces the concept of agency from Aristotle's account of the soul — the organizing principle of living things — through the modern theory of agent functions, to the epistemology of AI agents in multi-agent ecosystems. The progression is not merely historical; it is conceptual: each level of agency builds on the previous one, adding new capabilities and new epistemic requirements.</p>
+          <p>The connection to engineering is direct. The IEEE 2874-2025 Spatial Web standard defines an AGENT as an entity that <strong>senses</strong>, <strong>responds</strong>, and <strong>maintains a model of its environment</strong>. This definition is a formalization of the natural philosophical concept of agency — and it grounds the philosophy in engineering practice. The question of what it means for an AI agent to know something, to act responsibly, to participate in shared governance, is the question of agency applied to the socio-technical systems that GeoRoundtable designs and studies.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="mindmap-wrap">
+          <img src="https://www.percivall.org/Contents/NP%20Agency-882f15c4-f85f-40c5-9b36-6b37b1d6dc67.png"
+               alt="NP: Agency mind map" />
+          <div class="mindmap-caption">
+            <strong>NP: Agency.</strong> Aristotle on the soul, the evolution of agent functions, reality as concepts in social agents, cybernetics, AI, epistemology in an ecosystem of agents (single agent, agent interaction, multi-scale knowledge, Zollman network epistemology), and collective intelligence.
+            <br/><a class="mindmap-link" href="https://www.percivall.org/#3" target="_blank">→ Explore this slide interactively</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evolution of agency levels -->
+    <div style="margin-top: 3rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Evolution of Agency: Emergence of Agent Functions</h3>
+      <p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 1.8rem; max-width: 680px;">Agency is not binary but a continuum of emergent capacities, each layer presupposing the one below and adding new forms of responsiveness to the environment.</p>
+
+      <div style="max-width: 560px;">
+        <div class="agency-levels">
+          <div class="agency-level al1">
+            <div class="agency-level__badge">4</div>
+            <div>
+              <p class="agency-level__title">Social Agent</p>
+              <p class="agency-level__body">Capable of modeling other agents, communicating, cooperating, and participating in shared norms and institutions. Reality is constructed through social concepts — language, law, roles, institutions.</p>
+            </div>
+          </div>
+          <div class="agency-level al2">
+            <div class="agency-level__badge">3</div>
+            <div>
+              <p class="agency-level__title">Rational Agent</p>
+              <p class="agency-level__body">Capable of reasoning from beliefs to goals, planning, and optimizing. Reason mediates between perception and action — the agent acts on representations, not merely on stimuli.</p>
+            </div>
+          </div>
+          <div class="agency-level al3">
+            <div class="agency-level__badge">2</div>
+            <div>
+              <p class="agency-level__title">Intentional Agent</p>
+              <p class="agency-level__body">Capable of representing goals, states, and actions — of having beliefs and desires in a form that guides behavior. Intentionality is directed at objects and states of affairs in the world.</p>
+            </div>
+          </div>
+          <div class="agency-level al4">
+            <div class="agency-level__badge">1</div>
+            <div>
+              <p class="agency-level__title">Goal-Based Agent</p>
+              <p class="agency-level__body">Capable of pursuing goals in an environment — responding to feedback and adjusting behavior to maintain a target state. This is the minimal form of agency: goal-directedness without necessarily requiring full intentionality.</p>
+            </div>
+          </div>
+          <div class="agency-level al5">
+            <div class="agency-level__badge">↓</div>
+            <div>
+              <p class="agency-level__title">Environment (including other Agents)</p>
+              <p class="agency-level__body">The substrate from which agency emerges and in which it is always embedded. The environment includes other agents — making agency inherently relational from the start.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Epistemology and AI connection -->
+    <div style="margin-top: 3.5rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Epistemology in an Ecosystem of Agents</h3>
+      <p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 1.8rem; max-width: 700px;">The final branch of the Agency map — directly connecting natural philosophy to GeoRoundtable's work on AI epistemology, the Spatial Web, and the governance of agent ecosystems.</p>
+
+      <div class="pillar-grid">
+        <div class="pillar">
+          <div class="pillar__icon">🤖</div>
+          <h4 class="pillar__title">Single Agent</h4>
+          <p class="pillar__body">How does an individual agent know? The epistemic loop of sense, represent, infer, act — and the limits inherent in any perspectival, partial, temporally bounded world model. Aristotle's account of the soul as the form of a living body anticipates the IEEE 2874 definition of an agent as an entity that senses, responds, and maintains a model.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar__icon">🔗</div>
+          <h4 class="pillar__title">Agent Interaction</h4>
+          <p class="pillar__body">How does knowledge flow between agents? Social epistemology — the norms, structures, and protocols of epistemic exchange — determines what communities of agents can collectively know. Cybernetics provides the control-theoretic foundation; AI communication protocols (FIPA, HSTP) provide the engineering implementation.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar__icon">🌐</div>
+          <h4 class="pillar__title">Multi-Scale Knowledge &amp; Cognitive Computing</h4>
+          <p class="pillar__body">How do higher-order epistemic structures emerge from lower-level agent interactions? Collective intelligence as a form of emergent agency at the ecosystem level — the Universal Domain Graph (IEEE 2874) as the infrastructure for collective knowledge, and the governance challenges this creates.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar__icon">🕸️</div>
+          <h4 class="pillar__title">Network Epistemology (Zollman)</h4>
+          <p class="pillar__body">Kevin Zollman's research on epistemic network structure shows that the topology of who communicates with whom shapes what communities can collectively know — and that more communication is not always epistemically better. This has direct implications for the design and governance of the UDG and multi-agent AI systems.</p>
+        </div>
+      </div>
+
+      <div class="inset" style="margin-top: 2rem;">
+        <p class="inset__label">Collective / Shared Intelligence</p>
+        <p class="inset__body">The apex of the Agency map: <strong>collective intelligence</strong> as the social form of agency. When agents share knowledge, coordinate action, and maintain shared norms, they create a form of distributed cognition that exceeds the capacity of any individual agent. This is not merely a technical phenomenon — it is a natural philosophical one, continuous with the emergence of eusociality in biology and the development of language and culture in human evolution.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Connection to Engineering ── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "Engineering is inherently a philosophical enterprise — and explicit philosophical engagement is now indispensable for responsible socio-technical engineering."
+        </blockquote>
+        <p class="highlight__attr">— George Percivall · fPET 2026 Conference</p>
+        <div class="tags">
+          <span class="tag">Philosophy of Engineering</span>
+          <span class="tag">Agency</span>
+          <span class="tag">Emergence</span>
+          <span class="tag">Spatial Web</span>
+          <span class="tag">IEEE 2874</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>The Otium Core mind map is not an academic exercise separate from GeoRoundtable's engineering work. The three movements of natural philosophy — change, emergent form, agency — are the conceptual foundations for understanding what socio-technical systems are and what they do.</p>
+        <p>Change is the substrate of all system behavior; emergent form is what engineering creates when it works well — systems whose collective behavior exceeds the specification of their parts; agency is what the system's components possess, and what the system as a whole may come to possess at a higher level of organization.</p>
+        <p>The Spatial Web, the Universal Domain Graph, the governance of AI agent ecosystems: these are natural philosophy applied to engineering. Otium Core is the philosophical foundation beneath the technical work.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── Related Work ── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Further Reading</h2>
+      <p class="sh__desc">The natural philosophy foundation connects directly to GeoRoundtable's work on agency, epistemology, and the Spatial Web.</p>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="https://www.percivall.org/" target="_blank" class="btn btn--mint">🌀 Explore the Live Mind Map →</a>
+      <a href="epistemology-in-an-ecosystem-of-agents.html" class="btn btn--primary">Epistemology in an Ecosystem of Agents →</a>
+      <a href="evolution-of-agency-m-tomasello.html" class="btn btn--outline">Evolution of Agency — Tomasello →</a>
+      <a href="jhu-natural-philosophy-symposium-2025.html" class="btn btn--outline">JHU Natural Philosophy Symposium →</a>
+      <a href="philosophy-must-inform-socio-technical-systems-engineering.html" class="btn btn--outline">Philosophy Must Inform Engineering →</a>
+      <a href="ieee-spatial-web-standard-approved.html" class="btn btn--outline">IEEE 2874-2025 Spatial Web →</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="cta-section">
+  <div class="container">
+    <h2 class="cta-section__title">Discuss Natural Philosophy &amp; Engineering</h2>
+    <p class="cta-section__sub">Interested in the philosophical foundations of complex systems, agentic AI, or the connections between natural philosophy and the Spatial Web? Get in touch.</p>
+    <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2025 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a> · Otium Core content <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
