@@ -244,6 +244,69 @@
     .footer a { color: rgba(255,255,255,0.35); }
     .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
 
+    /* ── Mini-nav ── */
+    .mini-nav {
+      position: sticky;
+      top: 66px;
+      z-index: 90;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(8,24,64,0.06);
+    }
+    .mini-nav__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .mini-nav__label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.6rem;
+      white-space: nowrap;
+    }
+    .mini-nav__links {
+      display: flex;
+      gap: 0.3rem;
+      list-style: none;
+    }
+    .mini-nav__links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 0.28rem 0.8rem;
+      border-radius: 20px;
+      border: 1px solid transparent;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+      text-decoration: none !important;
+      white-space: nowrap;
+    }
+    .mini-nav__links a:hover {
+      color: var(--navy);
+      background: var(--light);
+      border-color: var(--border);
+    }
+    .mini-nav__links a.is-active {
+      color: var(--teal);
+      background: #edf7f8;
+      border-color: rgba(13,107,120,0.25);
+    }
+    @media (max-width: 480px) {
+      .mini-nav__label { display: none; }
+      .mini-nav__links a { font-size: 0.75rem; padding: 0.25rem 0.6rem; }
+    }
+
     /* ── Responsive ── */
     @media (max-width: 900px) {
       .two-col, .two-col--wide, .highlight__inner { grid-template-columns: 1fr; }
@@ -314,6 +377,18 @@
 </section>
 
 
+<!-- ── Mini-nav ── -->
+<nav class="mini-nav" aria-label="Jump to section">
+  <div class="mini-nav__inner">
+    <span class="mini-nav__label">Jump to</span>
+    <ul class="mini-nav__links">
+      <li><a href="#change"        data-section="change">🌊 Change</a></li>
+      <li><a href="#emergent-form" data-section="emergent-form">🌿 Emergent Form</a></li>
+      <li><a href="#agency"        data-section="agency">🧭 Agency</a></li>
+    </ul>
+  </div>
+</nav>
+
 <!-- ═══════════════════════════════════════════════
      OVERVIEW
 ══════════════════════════════════════════════════ -->
@@ -323,7 +398,7 @@
     <div class="sh">
       <p class="sh__label">Overview</p>
       <h2 class="sh__title">Natural Philosophy as a basis for Engineering Design</h2>
-      <p class="sh__desc">The themes of Natural Philosophy - expanded here as a series of interactive mind maps - has been developed as part of George Percivall's engineering experience and otium studies, e.g., Liberal Arts programme at St. John's College. The Natural Philosophy map integrates human understanding of nature — from ancient atomism through modern physics and AI — into a themes useful for design of artifacts.</p>
+      <p class="sh__desc">The themes of Natural Philosophy - expanded here as a series of interactive mind maps - has been developed as part of George Percivall's engineering experience and otium studies, e.g., Liberal Arts programme at St. John's College. The Natural Philosophy map integrates human understanding of nature — from ancient atomism through modern physics and AI — into themes useful for design of artifacts.</p>
     </div>
 
     <div class="two-col--wide">
@@ -732,7 +807,7 @@
       <div class="highlight__body">
         <p>The Natural Philosophy  mind map is not an academic exercise separate from GeoRoundtable's engineering work. The three themes — change, emergent form, agency — are the conceptual foundations for creating socio-technical systems that fit in the design process.</p>
         <p>Change is the substrate of all system behavior; emergent form is what engineering creates when it works well — systems whose collective behavior exceeds the specification of their parts; agency is what the system's components possess, and what the system as a whole may come to possess at a higher level of organization.</p>
-        <p>For example, The Spatial Web - including Agents and the Universal Domain Graph, provide reality and governance of AI agent ecosystems - was design using natural philosophy applied to engineering. Natural Philopsohy is the foundation beneath the technical engineering.</p>
+        <p>For example, The Spatial Web - including Agents and the Universal Domain Graph, based ontologies and governance for AI agent ecosystems - was designed using natural philosophy applied to engineering. Natural Philosophy is the foundation beneath the technical engineering.</p>
       </div>
     </div>
   </div>
@@ -776,5 +851,34 @@
   </div>
 </footer>
 
+<script>
+  (function () {
+    const links = document.querySelectorAll('.mini-nav__links a[data-section]');
+    const sections = ['change', 'emergent-form', 'agency'].map(id => document.getElementById(id));
+
+    // Offset = main nav (66px) + mini-nav (44px) + a little breathing room
+    const OFFSET = 66 + 44 + 16;
+
+    function activate(id) {
+      links.forEach(a => {
+        a.classList.toggle('is-active', a.dataset.section === id);
+      });
+    }
+
+    function onScroll() {
+      let current = null;
+      for (const el of sections) {
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= OFFSET) {
+          current = el.id;
+        }
+      }
+      activate(current);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
 </body>
 </html>
