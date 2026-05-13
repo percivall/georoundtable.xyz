@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon-512x512.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spatial Web Features: World-to-Vec Realized — GeoRoundtable</title>
+  <meta property="og:title" content="Spatial Web Features: World-to-Vec Realized — GeoRoundtable" />
+  <meta property="og:description" content="A workflow for identifying features in AI hyperspace — uniting Goodchild's geographic representation theory with the Spatial Web UDG and modern mechanistic interpretability." />
+  <meta property="og:image" content="https://georoundtable.xyz/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:url" content="https://georoundtable.xyz/spatial-web-features-world-to-vec-realized.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://georoundtable.xyz/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(8,24,64,.08);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; color: #1a2235; background: #fff; line-height: 1.6; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; }
+
+    /* ── Accent bar ── */
+    .accent-bar { height: 4px; background: linear-gradient(90deg, var(--navy), var(--blue), var(--teal), var(--mint)); }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy); color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .85rem 2rem; gap: 1rem;
+    }
+    .nav__brand { font-weight: 700; font-size: 1.05rem; letter-spacing: .02em; color: #fff; text-decoration: none; white-space: nowrap; }
+    .nav__links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,.82); font-size: .88rem; font-weight: 500; }
+    .nav__links a:hover { color: #fff; text-decoration: none; }
+    .nav__cta {
+      background: var(--sky); color: #fff; font-size: .83rem; font-weight: 600;
+      padding: .45rem 1rem; border-radius: 6px; white-space: nowrap;
+    }
+    .nav__cta:hover { background: var(--blue); text-decoration: none; }
+
+    /* ── Container ── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #0e2a6e 55%, var(--teal) 100%);
+      color: #fff; padding: 4.5rem 1.5rem 3.5rem;
+    }
+    .hero__inner { max-width: 1080px; margin: 0 auto; }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+      border-radius: 20px; padding: .35rem .9rem; font-size: .8rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1.2rem;
+      color: var(--mint);
+    }
+    .hero__title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.18; margin-bottom: .9rem; max-width: 820px;
+    }
+    .hero__sub {
+      font-size: 1.08rem; color: rgba(255,255,255,.82); max-width: 760px; line-height: 1.65;
+      margin-bottom: 1.8rem;
+    }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 1.2rem; font-size: .85rem; color: rgba(255,255,255,.7); }
+    .hero__meta span { display: flex; align-items: center; gap: .35rem; }
+
+    /* ── Section headings ── */
+    .sh { text-align: center; margin-bottom: 2.5rem; }
+    .sh__label { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .5rem; }
+    .sh__title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--navy); margin-bottom: .7rem; }
+    .sh__desc { font-size: 1rem; color: var(--muted); max-width: 680px; margin: 0 auto; }
+
+    /* ── Section spacing ── */
+    section { padding: 4rem 0; }
+    section:nth-child(even) { background: var(--light); }
+
+    /* ── Two-col layout ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Prose ── */
+    .prose { font-size: 1rem; line-height: 1.75; color: #2a3348; }
+    .prose p + p { margin-top: 1em; }
+    .prose strong { color: var(--navy); font-weight: 600; }
+    .prose em { color: #354063; }
+
+    /* ── Highlight block ── */
+    .highlight {
+      background: var(--navy); color: #fff; border-radius: var(--radius);
+      padding: 2rem 2.2rem; margin: 2.5rem 0;
+    }
+    .highlight__quote {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 1.25rem; line-height: 1.55; margin-bottom: 1rem;
+      color: rgba(255,255,255,.92);
+    }
+    .highlight__attr { font-size: .85rem; color: var(--mint); font-weight: 600; letter-spacing: .04em; }
+    .highlight__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem; }
+    .highlight__tag {
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px; padding: .25rem .75rem; font-size: .75rem; font-weight: 600;
+      letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,.8);
+    }
+
+    /* ── Pillar cards ── */
+    .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .pillar {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.6rem 1.4rem; box-shadow: var(--shadow);
+      border-top: 3px solid var(--teal);
+    }
+    .pillar__icon { font-size: 1.8rem; margin-bottom: .8rem; }
+    .pillar__title { font-weight: 700; color: var(--navy); margin-bottom: .5rem; font-size: .95rem; }
+    .pillar__body { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Theory grid (analog cards) ── */
+    .space-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .space-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.8rem 1.6rem; box-shadow: var(--shadow);
+    }
+    .space-card__era {
+      font-size: .73rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: .5rem;
+    }
+    .space-card__title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); margin-bottom: .7rem; }
+    .space-card__body { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+    .space-card__examples {
+      margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .4rem;
+    }
+    .space-card__ex {
+      background: var(--light); border: 1px solid var(--border);
+      border-radius: 4px; padding: .2rem .6rem; font-size: .75rem; color: var(--navy); font-weight: 500;
+    }
+
+    /* ── Concept flow diagram ── */
+    .concept-flow {
+      background: var(--light); border-radius: var(--radius); padding: 2rem;
+      border: 1px solid var(--border); margin: 2rem 0;
+    }
+    .concept-flow__title {
+      font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      color: var(--teal); margin-bottom: 1.5rem; text-align: center;
+    }
+    .flow-steps { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: center; }
+    .flow-step {
+      background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      padding: .7rem 1.1rem; font-size: .85rem; font-weight: 600; color: var(--navy);
+      text-align: center; min-width: 120px;
+    }
+    .flow-step--highlight { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .flow-arrow { color: var(--teal); font-size: 1.2rem; font-weight: 700; }
+
+    /* ── Inset box ── */
+    .inset {
+      background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--sky);
+      border-radius: var(--radius); padding: 1.4rem 1.6rem; margin: 1.5rem 0;
+    }
+    .inset__label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--sky); margin-bottom: .5rem; }
+    .inset__body { font-size: .92rem; color: #2a3348; line-height: 1.65; }
+    .inset__body strong { color: var(--navy); }
+
+    /* ── Comparison table ── */
+    .ctable-wrap { overflow-x: auto; margin-top: 1.5rem; }
+    .ctable {
+      width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 640px;
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .ctable th, .ctable td { padding: .75rem 1rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+    .ctable thead th { background: var(--navy); color: #fff; font-weight: 600; letter-spacing: .02em; font-size: .85rem; text-transform: uppercase; }
+    .ctable tbody tr:nth-child(even) td { background: var(--light); }
+    .ctable td:first-child { font-weight: 600; color: var(--navy); white-space: nowrap; }
+
+    /* ── Stage cards (workflow) ── */
+    .stage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; margin-top: 1rem; }
+    .stage {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.6rem 1.5rem; box-shadow: var(--shadow); position: relative;
+      border-left: 4px solid var(--blue);
+    }
+    .stage__num {
+      position: absolute; top: -.7rem; left: 1.2rem;
+      background: var(--blue); color: #fff; font-size: .75rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .25rem .7rem; border-radius: 12px;
+    }
+    .stage__title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); margin: .4rem 0 .6rem; }
+    .stage__body { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+    .stage__deliv {
+      margin-top: .9rem; font-size: .78rem; color: var(--teal); font-weight: 600;
+      background: var(--light); border-radius: 6px; padding: .4rem .7rem; line-height: 1.5;
+    }
+
+    /* ── Reference list ── */
+    .ref-list { list-style: none; padding: 0; margin: 0; }
+    .ref-list li {
+      padding: .8rem 0; border-bottom: 1px solid var(--border); font-size: .9rem;
+      color: #2a3348; line-height: 1.6;
+    }
+    .ref-list li:last-child { border-bottom: 0; }
+    .ref-list li strong { color: var(--navy); }
+
+    /* ── Resource strip ── */
+    .resource-strip { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .resource-link {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--light); border: 1px solid var(--border); border-radius: 8px;
+      padding: .6rem 1.1rem; font-size: .85rem; font-weight: 600; color: var(--navy);
+      transition: background .15s;
+    }
+    .resource-link:hover { background: var(--border); text-decoration: none; }
+    .resource-link__icon { font-size: 1rem; }
+
+    /* ── CTA section ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, #0e2a6e 60%, var(--teal) 100%);
+      color: #fff; padding: 3.5rem 1.5rem; text-align: center;
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: .9rem;
+    }
+    .cta-section p { color: rgba(255,255,255,.8); max-width: 620px; margin: 0 auto 1.8rem; }
+    .cta-btn {
+      display: inline-block; background: var(--sky); color: #fff; font-weight: 700;
+      font-size: .95rem; padding: .85rem 2rem; border-radius: 8px;
+    }
+    .cta-btn:hover { background: var(--mint); color: var(--navy); text-decoration: none; }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--navy); color: rgba(255,255,255,.6); font-size: .82rem;
+      padding: 2rem 1.5rem; text-align: center;
+    }
+    .footer a { color: rgba(255,255,255,.75); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .nav__cta { display: none; }
+      .hero { padding: 2.5rem 1rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <a class="nav__brand" href="index.html">GeoRoundtable</a>
+  <ul class="nav__links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#standards">Standards</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+  <a class="nav__cta" href="index.html#contact">Contact</a>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero__inner">
+    <div class="hero__badge">🧭 Spatial Web Foundation</div>
+    <h1 class="hero__title">Spatial Web Features: World-to-Vec Realized</h1>
+    <p class="hero__sub">
+      A workflow for identifying features in AI hyperspace — uniting Goodchild's general theory of geographic representation, the IEEE&nbsp;P2874 Universal Domain Graph requirements, and the convergent-features evidence from modern mechanistic interpretability research.
+    </p>
+    <div class="hero__meta">
+      <span>📐 IEEE P2874 / UDG §6.2</span>
+      <span>🧠 Sparse-autoencoder features</span>
+      <span>🗺️ Goodchild geo-objects in hyperspace</span>
+    </div>
+  </div>
+</header>
+
+<!-- Executive summary -->
+<section>
+  <div class="container">
+    <div class="two-col">
+      <div class="prose">
+        <p>
+          <strong>Artificial intelligence is changing the definition of space.</strong> The same mathematical machinery that embeds words, pixels, molecules, and locations in high-dimensional vector spaces is now used to embed the world itself — a development the IEEE&nbsp;P2874 Spatial Web community calls <em>World-to-Vec</em>.
+        </p>
+        <p>
+          This page synthesizes three threads. First, the foundations of spatial embedding in modern AI. Second, the IEEE&nbsp;/&nbsp;Spatial Web Foundation Universal Domain Graph (UDG) requirements for Hyperspace Reference Systems and entity embeddings. Third, Goodchild, Yuan and Cova's general theory of geographic representation — which we propose as the appropriate ontological lens for features in AI hyperspace.
+        </p>
+        <p>
+          Recent AI research — the Platonic Representation Hypothesis, the Linear Representation Hypothesis, and the scaling of sparse autoencoders to frontier models — demonstrates that independently trained models converge on common features. These features, accessible as directions or sparse latents in hyperspace, are the AI analog of <em>geo-objects</em> as defined by Goodchild. Treating them as first-class Spatial Web entities is what makes World-to-Vec engineerable.
+        </p>
+      </div>
+
+      <div>
+        <div class="inset">
+          <div class="inset__label">Core insight</div>
+          <div class="inset__body">
+            <strong>Features exist in AI hyperspace, and they are stable across independent models.</strong> The mechanistic-interpretability literature now has multiple lines of evidence that the same features recur in independent models trained on different data. That is the same property that makes Earth-surface features — coasts, rivers, urban cores — stable enough to catalog in a GIS.
+          </div>
+        </div>
+
+        <div class="inset">
+          <div class="inset__label">The bridge</div>
+          <div class="inset__body">
+            Goodchild's <em>geo-atom</em> &lt;location, property, value&gt; is general enough to cover both Earth-surface and hyperspace. In GIS, the location is a coordinate on Earth. In AI, the location is an activation vector. The aggregation rules, phase-space construction, and indeterminacy machinery transfer one-for-one.
+          </div>
+        </div>
+
+        <div class="inset">
+          <div class="inset__label">What this page proposes</div>
+          <div class="inset__body">
+            A nine-stage <strong>Feature Identification Workflow</strong> — scope, ingest, embed, define a Hyperspace Reference System, discover candidates with SAEs and probes, validate them across models, cartograph them for human review, mint Hyperspace Entity Locators, and operate under Spatial Web governance.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Theoretical basis -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Part 1 · Theoretical Basis</p>
+      <h2 class="sh__title">From Word2Vec to World2Vec</h2>
+      <p class="sh__desc">Five strands of theory converge to give us the basis for feature identification in AI hyperspace.</p>
+    </div>
+
+    <div class="space-grid">
+
+      <div class="space-card">
+        <div class="space-card__era">Foundation — 2013</div>
+        <h3 class="space-card__title">Spatial embedding methods from AI</h3>
+        <p class="space-card__body">Word2Vec showed that meaning has geometric structure: high-dimensional vectors whose offsets capture syntactic and semantic regularities. The textbook example, <em>King&nbsp;−&nbsp;Man&nbsp;+&nbsp;Woman&nbsp;≈&nbsp;Queen</em>, remains the canonical demonstration. Every modern foundation model rests on this primitive.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">word2vec</span>
+          <span class="space-card__ex">embeddings</span>
+          <span class="space-card__ex">vector arithmetic</span>
+        </div>
+      </div>
+
+      <div class="space-card">
+        <div class="space-card__era">UDG — §6.2</div>
+        <h3 class="space-card__title">World2Vec in the Spatial Web</h3>
+        <p class="space-card__body">PyTorch-BigGraph — internally named <strong>World2Vec</strong> — extended the idea to entities of any kind. The UDG Functional Requirements treat hyperspace as the vector-space version of the world: every Spatial Web ENTITY (actor, activity, domain, place, norm) has an embedding. Reasoning, retrieval and governance operate on those embeddings.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">PBG</span>
+          <span class="space-card__ex">HSML</span>
+          <span class="space-card__ex">UDG §6.2</span>
+        </div>
+      </div>
+
+      <div class="space-card">
+        <div class="space-card__era">Presentation — Percivall</div>
+        <h3 class="space-card__title">AI is changing the definition of space</h3>
+        <p class="space-card__body">Computation now routinely occurs in spaces of extraordinarily high dimension and non-coordinate structure. Video and agency bring time into the same hyperspace, with actors and activities as first-class objects. Tobler's First Law generalizes to <em>telecoupling</em> — relatedness in hyperspace independent of Earth-surface distance.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">tensors</span>
+          <span class="space-card__ex">telecoupling</span>
+          <span class="space-card__ex">hyperspace geography</span>
+        </div>
+      </div>
+
+      <div class="space-card">
+        <div class="space-card__era">Convergence — 2024</div>
+        <h3 class="space-card__title">Common features across models</h3>
+        <p class="space-card__body">Independently trained models discover the same features. The <strong>Platonic Representation Hypothesis</strong> (Huh&nbsp;et&nbsp;al.&nbsp;ICML 2024) shows representational alignment grows with scale and task diversity. The <strong>Linear Representation Hypothesis</strong> (Park, Choe, Veitch ICML 2024) shows concepts live as linear directions. <strong>Scaling Monosemanticity</strong> (Anthropic 2024) extracts tens of millions of features from Claude&nbsp;3 Sonnet.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">Platonic</span>
+          <span class="space-card__ex">linear concepts</span>
+          <span class="space-card__ex">SAE features</span>
+        </div>
+      </div>
+
+      <div class="space-card" style="border-top: 3px solid var(--teal);">
+        <div class="space-card__era">Bridge — Goodchild 2007</div>
+        <h3 class="space-card__title">Features as geo-objects in hyperspace</h3>
+        <p class="space-card__body">Goodchild's atomic form &lt;location, property, value&gt; — the <em>geo-atom</em> — produces geo-fields (continuous properties) and geo-objects (aggregated points satisfying rules). Phase space, <em>c(x)&nbsp;=&nbsp;f(z₁,…,zₘ)</em>, induces bona fide objects. <strong>This is exactly the construction AI feature identification performs:</strong> an embedding is a phase space; coherent regions are features.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">geo-atom</span>
+          <span class="space-card__ex">phase space</span>
+          <span class="space-card__ex">ISO 19110</span>
+        </div>
+      </div>
+
+      <div class="space-card">
+        <div class="space-card__era">UDG — §6.2.3</div>
+        <h3 class="space-card__title">Hyperspace Reference Systems</h3>
+        <p class="space-card__body">An HRS is the AI analog of a Coordinate Reference System: a Coordinate System (CS — dimensions, units) plus a <em>Datum</em> that anchors the abstract CS to real-world semantics. Once an HRS is defined, <strong>Hyperspace Entity Locators (HELs)</strong> address features the way URLs address documents.</p>
+        <div class="space-card__examples">
+          <span class="space-card__ex">HRS</span>
+          <span class="space-card__ex">semantic datum</span>
+          <span class="space-card__ex">HEL</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Highlight quote -->
+    <div class="highlight">
+      <div class="highlight__quote">
+        "Representations in AI models, particularly deep networks, are converging — driving toward a shared statistical model of reality."
+      </div>
+      <div class="highlight__attr">Huh, Cheung, Wang, Isola — The Platonic Representation Hypothesis, ICML 2024</div>
+      <div class="highlight__tags">
+        <span class="highlight__tag">Platonic</span>
+        <span class="highlight__tag">Linear Rep.</span>
+        <span class="highlight__tag">Monosemanticity</span>
+        <span class="highlight__tag">Cross-model</span>
+        <span class="highlight__tag">Convergence</span>
+      </div>
+    </div>
+
+    <!-- Side-by-side comparison -->
+    <div class="sh" style="margin-top: 3rem;">
+      <p class="sh__label">Side by side</p>
+      <h2 class="sh__title">GIS Features and AI Hyperspace Features</h2>
+      <p class="sh__desc">Mapped concept-by-concept against Goodchild's general theory and the UDG requirements.</p>
+    </div>
+
+    <div class="ctable-wrap">
+      <table class="ctable">
+        <thead>
+          <tr>
+            <th>Concept</th>
+            <th>Geographic Information Systems</th>
+            <th>AI / Spatial Web hyperspace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Atomic form</td><td>Geo-atom: &lt;x, property, value&gt; on Earth surface</td><td>Activation tuple: &lt;v, property, value&gt; in hyperspace</td></tr>
+          <tr><td>Reference frame</td><td>Coordinate Reference System (CS + Datum, e.g. WGS-84)</td><td>Hyperspace Reference System (CS + semantic datum)</td></tr>
+          <tr><td>Locator</td><td>URL, URI, geo-URI</td><td>Hyperspace Entity Locator (HEL)</td></tr>
+          <tr><td>Continuous representation</td><td>Geo-field (six standard discretizations)</td><td>Embedding manifold; activation field over data</td></tr>
+          <tr><td>Discrete representation</td><td>Geo-object / Feature (OGC Simple Features)</td><td>Sparse-autoencoder feature; linear concept direction</td></tr>
+          <tr><td>Aggregation principle</td><td>Tobler's First Law (proximity → similarity)</td><td>Platonic / distributional hypothesis (training proximity → representational proximity)</td></tr>
+          <tr><td>Phase-space construction</td><td>c(x) = f(z₁, …, zₘ) over m fields</td><td>Concept = partition of activation space along learned directions</td></tr>
+          <tr><td>Boundary indeterminacy</td><td>Membership function m(x); fuzzy classes</td><td>Polysemantic neurons; sparse-feature activation strength</td></tr>
+          <tr><td>Catalog standard</td><td>ISO 19110 Feature Catalog; OGC API – Features</td><td>(Emerging) SAE feature catalogs, Neuronpedia, Embedding Atlas</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Tools, datasets, models -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Part 2 · Tools, Datasets, Models</p>
+      <h2 class="sh__title">An Ecosystem for Feature Identification</h2>
+      <p class="sh__desc">Feature identification draws on two complementary toolchains: mechanistic interpretability from AI safety, and geospatial foundation models from GeoAI.</p>
+    </div>
+
+    <!-- Interpretability tools -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--navy);margin-bottom:1rem;">Mechanistic interpretability and embedding analysis</h3>
+    <div class="ctable-wrap">
+      <table class="ctable">
+        <thead>
+          <tr><th>Tool / method</th><th>What it does</th><th>Theory fit</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sparse Autoencoders (SAE)</td><td>Decompose model activations into sparse, monosemantic latents. Foundational to Anthropic's <em>Scaling Monosemanticity</em>.</td><td>Strong. Directly produces feature candidates — the AI analog of geo-objects.</td></tr>
+          <tr><td>TransformerLens</td><td>Library for accessing internal activations; standard substrate for SAE and circuit work.</td><td>Strong. Provides the activation tuples that SAEs and probes operate on.</td></tr>
+          <tr><td>Neuronpedia</td><td>Open platform hosting &gt;50M SAE latents across many models, with autointerp explanations, search, steering, circuit-tracing demos.</td><td>Strong. A working analog of an ISO 19110 feature catalog for hyperspace.</td></tr>
+          <tr><td>Goodfire (Ember API)</td><td>Commercial platform turning SAE features into steering / analysis for production models. Backed by Anthropic.</td><td>Strong as a production realization; closed parts limit fully open verification.</td></tr>
+          <tr><td>Embedding Atlas (Apple, 2025)</td><td>Open-source interactive viewer for million-point embeddings with density clustering, automated labels, metadata filtering.</td><td>Strong for human-in-the-loop cartographic visualization (UDG §6.2.2).</td></tr>
+          <tr><td>UMAP / t-SNE / PCA</td><td>Dimensionality reduction for visual exploration and preprocessing.</td><td>Moderate. Useful but lossy; should never be the sole basis for feature definition.</td></tr>
+          <tr><td>Linear probes</td><td>Train a linear classifier from activations to a labeled concept.</td><td>Strong validator under the Linear Representation Hypothesis.</td></tr>
+          <tr><td>CKA / SVCCA / Model stitching</td><td>Quantify representational similarity between models; test whether one model's layer substitutes for another's.</td><td>Strong. Empirical evidence for or against convergence on each candidate feature.</td></tr>
+          <tr><td>Natural Language Autoencoders</td><td>Map activations to natural language and back; verbalize internal states.</td><td>Useful for automated labeling of discovered features.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GeoAI tools -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--navy);margin:2.5rem 0 1rem;">GeoAI foundation models and libraries</h3>
+    <div class="ctable-wrap">
+      <table class="ctable">
+        <thead>
+          <tr><th>Model / library</th><th>What it provides</th><th>Theory fit</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Prithvi (NASA / IBM)</td><td>Earth Observation foundation model. Variants Prithvi-EO (6-band multispectral) and Prithvi-WxC (weather/climate). 100M – 2B parameters.</td><td>Strong. Embeddings of Earth tiles are simultaneously geo-objects and hyperspace features.</td></tr>
+          <tr><td>SatMAE / SatMAE++ / SpectralGPT / CROMA / SkySense</td><td>Self-supervised vision transformers for satellite imagery; spectral and temporal awareness.</td><td>Strong for raw embedding generation; less interpretable out-of-the-box.</td></tr>
+          <tr><td>SatCLIP (Microsoft Research)</td><td>Global, general-purpose location encoder. Contrastively aligns satellite imagery with coordinates using spherical-harmonics encoding.</td><td>Strong. A direct World-to-Vec primitive — raw location into a vector usable downstream.</td></tr>
+          <tr><td>GeoCLIP</td><td>CLIP-based location-image alignment for geo-localization. Random Fourier feature encoder.</td><td>Moderate. Tuned for geo-localization; less general than SatCLIP.</td></tr>
+          <tr><td>MOSAIKS / CSP / S2Vec</td><td>Alternative location/image embedding methods. S2Vec (2025) is self-supervised geospatial.</td><td>Moderate. Useful baselines and ablation comparators.</td></tr>
+          <tr><td>TorchGeo</td><td>PyTorch domain library: geospatial datasets, samplers, transforms, pretrained models.</td><td>Strong foundation for any geospatial embedding pipeline.</td></tr>
+          <tr><td>TerraTorch (IBM, 2025)</td><td>Fine-tuning toolkit for geospatial foundation models on TorchGeo + PyTorch Lightning. HPO, benchmarking, full workflows.</td><td>Strong for operationalizing GeoFMs.</td></tr>
+          <tr><td>GeoAI Python package</td><td>Higher-level wrapper that generates geospatial embeddings via TorchGeo foundation models for similarity search, clustering, change detection.</td><td>Strong as an applied-side runtime.</td></tr>
+          <tr><td>H3 (Uber) / DGGS</td><td>Hexagonal hierarchical spatial index; basis for the OGC AI-DGGS Disaster Pilot (2025) exposing DGGS-indexed data via OGC APIs for AI agents.</td><td>Strong as a cellular indexing layer beneath any HRS — directly cited in UDG §6.1.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Datasets + Gap analysis -->
+    <div class="two-col" style="margin-top:2.5rem;">
+      <div>
+        <div class="inset">
+          <div class="inset__label">Datasets</div>
+          <div class="inset__body">
+            Earth Observation archives (Sentinel-2, Landsat, MODIS, NAIP, GEO-Bench); location-image corpora (S2-100K, MP-16, OpenStreetMap derivatives); activation datasets for SAE training from open-weights models (Llama-3, Mistral, Gemma, Pythia, GPT-2 Small, with <em>Gemma Scope</em> as canonical cross-layer SAE reference); cross-model alignment benchmarks (ImageNet, COCO, LAION subsets) used in Platonic Representation experiments; UDG-referenced ontologies (Common Core, SUMO, IEEE Ethics) as candidate semantic datums.
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="inset">
+          <div class="inset__label">Gaps against the framework</div>
+          <div class="inset__body">
+            <strong>Three notable gaps.</strong> First, no widely adopted HRS standard — each model defines its own coordinate basis with no agreed semantic datum. Second, feature catalogs are model-specific — Neuronpedia indexes features per model, but no equivalent of ISO 19110 lets features be shared and cited across models. Third, datums for transformation between HRSs are open research; recent CKA / stitching / Platonic work provides the empirical raw material, but a normative procedure is missing.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Workflow -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Part 3 · Recommended Workflow</p>
+      <h2 class="sh__title">Feature Identification via Spatial Embedding</h2>
+      <p class="sh__desc">Nine stages that operationalize World-to-Vec. Each stage produces an output that maps to a concept in either GIS practice (after Goodchild) or the Spatial Web UDG.</p>
+    </div>
+
+    <div class="concept-flow">
+      <div class="concept-flow__title">The Nine-Stage Workflow</div>
+      <div class="flow-steps">
+        <div class="flow-step">1 Scope</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">2 Ingest</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">3 Embed</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">4 Define HRS</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step flow-step--highlight">5 Discover</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step flow-step--highlight">6 Validate</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">7 Visualize</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">8 Catalog</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">9 Operate</div>
+      </div>
+    </div>
+
+    <div class="stage-grid" style="margin-top: 2.5rem;">
+
+      <div class="stage">
+        <span class="stage__num">Stage 1</span>
+        <h3 class="stage__title">Scope and define the world to embed</h3>
+        <p class="stage__body">Define the entities, properties, and relations of interest. State the use case and the questions discovered features must answer. In UDG terms, choose which ENTITIES will be embedded; in Goodchild terms, choose which geo-atom properties matter.</p>
+        <div class="stage__deliv">Deliverable: scope document listing entity types, relations, source datasets, downstream queries.</div>
+      </div>
+
+      <div class="stage">
+        <span class="stage__num">Stage 2</span>
+        <h3 class="stage__title">Ingest and prepare the source data</h3>
+        <p class="stage__body">Assemble data: text corpora, knowledge graphs, satellite imagery, sensor streams, OSM. Normalize, deduplicate, and index. For geographic data, index with H3 or another DGGS so the cellular structure of UDG §6.1 is preserved end-to-end.</p>
+        <div class="stage__deliv">Tools: TorchGeo for geospatial; LlamaIndex/LangChain for text; PyTorch-BigGraph for very large graphs.</div>
+      </div>
+
+      <div class="stage">
+        <span class="stage__num">Stage 3</span>
+        <h3 class="stage__title">Generate or load embeddings</h3>
+        <p class="stage__body">Embed prepared data with a domain-appropriate foundation model — Prithvi-EO or SatCLIP for Earth Observation, SatCLIP or GeoCLIP for raw location, a Llama- or Mistral-class model for text, PyTorch-BigGraph for graphs. Persist activations or final embeddings in a queryable store (FAISS, ScaNN, vector DB).</p>
+        <div class="stage__deliv">Output: labeled tensor of vectors. Each row is an activation tuple — the AI analog of a geo-atom.</div>
+      </div>
+
+      <div class="stage">
+        <span class="stage__num">Stage 4</span>
+        <h3 class="stage__title">Define a working Hyperspace Reference System</h3>
+        <p class="stage__body">Specify the CS (dimensions, units, normalization) and a tentative semantic datum. Early-stage: a fixed set of probe concepts (<em>is_a_country</em>, <em>is_a_river</em>, <em>is_a_road</em>) with measured directions. Over time, align datums to an ontology such as Common Core or the Spatial Web HSML.</p>
+        <div class="stage__deliv">Deliverable: HRS specification; vector of probe directions; versioned datum manifest.</div>
+      </div>
+
+      <div class="stage">
+        <span class="stage__num">Stage 5</span>
+        <h3 class="stage__title">Discover candidate features</h3>
+        <p class="stage__body">Train an SAE on activations from a chosen layer (or on final embeddings if no layered model is used), recover monosemantic latents, rank by activation density and reconstruction loss. Complement with linear probes for predefined concepts and density-based clustering for emergent groupings.</p>
+        <div class="stage__deliv">Output: candidate-feature catalog — each with description, activation direction, top examples, tentative name.</div>
+      </div>
+
+      <div class="stage">
+        <span class="stage__num">Stage 6</span>
+        <h3 class="stage__title">Validate features across models</h3>
+        <p class="stage__body">Test whether each candidate is a property of the world rather than a quirk of one model. Apply Centered Kernel Alignment or canonical correlation against features from at least one other model trained on related data. Use model stitching for stronger evidence.</p>
+        <div class="stage__deliv">Theory: operationalizes the Platonic Representation Hypothesis. Features that recur in independent models reflect reality.</div>
+      </div>
+
+      <div class="stage">
+        <span class="stage__num">Stage 7</span>
+        <h3 class="stage__title">Cartographically visualize and label</h3>
+        <p class="stage__body">Project validated features to 2D / 3D using UMAP or related methods, render in Embedding Atlas or a similar viewer, apply automated labels (Natural Language Autoencoders, or an LLM autointerp pipeline as used by Neuronpedia). Subject-matter experts review and rename. Implements UDG §6.2.2.</p>
+        <div class="stage__deliv">Output: human-readable atlas of features, each linked to its activation evidence.</div>
+      </div>
+
+      <div class="stage">
+        <span class="stage__num">Stage 8</span>
+        <h3 class="stage__title">Assign Hyperspace Entity Locators and catalog</h3>
+        <p class="stage__body">For each validated, named feature, mint a HEL referencing the HRS and a stable identifier. Publish using a schema modeled on ISO&nbsp;19110, bound to the Spatial Web (HSML / HSTP), so other systems can resolve and reuse features. Record cross-model alignment evidence and HRS-to-HRS transformations.</p>
+        <div class="stage__deliv">Deliverable: published, citable feature catalog. Each entry: HEL, name, definition, evidence, alignment record.</div>
+      </div>
+
+      <div class="stage">
+        <span class="stage__num">Stage 9</span>
+        <h3 class="stage__title">Operate, monitor, and govern</h3>
+        <p class="stage__body">Use cataloged features downstream: as steering vectors for generative models, as variables for spatial analysis, as queryable entities for AI agents. Monitor feature drift as models are retrained. Apply IEEE&nbsp;P2874 governance — norms, contracts, ratings — to consequential features (e.g. those covering deception, bias, dangerous content).</p>
+        <div class="stage__deliv">Closure: features become first-class Spatial Web entities under the same governance as any other ENTITY.</div>
+      </div>
+
+    </div>
+
+    <!-- At-a-glance table -->
+    <div class="sh" style="margin-top: 3.5rem;">
+      <p class="sh__label">Workflow at a glance</p>
+      <h2 class="sh__title">Mapped to GIS and to the UDG</h2>
+    </div>
+
+    <div class="ctable-wrap">
+      <table class="ctable">
+        <thead>
+          <tr><th>Stage</th><th>Output</th><th>GIS analog</th><th>UDG concept</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1 Scope</td><td>Scope document</td><td>Geographic area of interest</td><td>ENTITY type selection</td></tr>
+          <tr><td>2 Ingest</td><td>Cleaned, indexed data</td><td>Spatial database</td><td>Source DOMAINS</td></tr>
+          <tr><td>3 Embed</td><td>Vector store</td><td>Coordinate transformation</td><td>Spatial embedding (§6.2)</td></tr>
+          <tr><td>4 HRS</td><td>Reference-frame spec</td><td>CRS = CS + Datum</td><td>HRS = CS + semantic datum</td></tr>
+          <tr><td>5 Discover</td><td>Candidate features</td><td>Object extraction</td><td>Feature candidates in hyperspace</td></tr>
+          <tr><td>6 Validate</td><td>Cross-model evidence</td><td>Ground truthing</td><td>Datum-to-datum transformation</td></tr>
+          <tr><td>7 Visualize</td><td>Atlas + labels</td><td>Cartographic map</td><td>Cartographic visualization (§6.2.2)</td></tr>
+          <tr><td>8 Catalog</td><td>Published features + HELs</td><td>ISO 19110 catalog</td><td>HEL-addressable ENTITIES</td></tr>
+          <tr><td>9 Operate</td><td>Used, monitored, governed</td><td>GIS in production</td><td>Spatial Web governance (P2874)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Why this matters -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Why this matters</p>
+      <h2 class="sh__title">Engineering Implications</h2>
+      <p class="sh__desc">Treating hyperspace features as first-class entities closes the long-standing gap between "embedding" and "feature".</p>
+    </div>
+
+    <div class="pillar-grid">
+
+      <div class="pillar">
+        <div class="pillar__icon">🧭</div>
+        <h4 class="pillar__title">Reference frames for AI</h4>
+        <p class="pillar__body">Just as WGS-84 turned latitude/longitude into a globally interoperable system, a semantic-datum HRS turns embedding coordinates into something models can share. Without it, every embedding is provincial.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">🗂️</div>
+        <h4 class="pillar__title">Catalogable features</h4>
+        <p class="pillar__body">Features that recur across independent models can be named, cited, and reused. ISO&nbsp;19110-style feature catalogs for hyperspace would let one team's "fraud-detection direction" be the same direction another team trusts.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">🛰️</div>
+        <h4 class="pillar__title">Geo and AI unified</h4>
+        <p class="pillar__body">Prithvi and SatCLIP embed Earth-surface places into hyperspace. SAEs extract concepts. The same workflow handles both because they share Goodchild's atomic form.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">🛡️</div>
+        <h4 class="pillar__title">Governance with traction</h4>
+        <p class="pillar__body">Once safety-relevant features (deception, bias, dangerous content) are catalogued and HEL-addressable, IEEE&nbsp;P2874 governance can attach norms, contracts, and ratings to them — instead of to opaque whole models.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- References -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Key References</p>
+      <h2 class="sh__title">Source Material</h2>
+      <p class="sh__desc">The survey draws on UDG functional requirements, Percivall's presentation, the Goodchild paper, and recent literature on representational convergence and mechanistic interpretability.</p>
+    </div>
+
+    <ul class="ref-list">
+      <li><strong>Percivall, G.</strong> Spatial Web: AI agents operating in hyperspace (presentation script, 2024). IEEE AI Standards Committee / Spatial Web Foundation / OGC.</li>
+      <li><strong>IEEE P2874 / Spatial Web Foundation.</strong> UDG Functional Requirements (Working Draft). §6.1 Cellular space, DGGS, H3; §6.2 Spatial embedding of entities, Cartographic visualization, Hyperspace Reference Systems, HELs.</li>
+      <li><strong>Goodchild, M. F., Yuan, M., Cova, T. J.</strong> Towards a general theory of geographic representation in GIS. <em>Int. J. Geographic Information Science</em> 21(3): 239–260, 2007. <a href="https://doi.org/10.1080/13658810600965271" target="_blank">DOI</a></li>
+      <li><strong>Mikolov, T., et&nbsp;al.</strong> Efficient Estimation of Word Representations in Vector Space (word2vec), 2013. <a href="https://arxiv.org/abs/1301.3781" target="_blank">arXiv:1301.3781</a></li>
+      <li><strong>Lerer, A., et&nbsp;al.</strong> PyTorch-BigGraph: A Large-scale Graph Embedding System (the project internally called World2Vec). <a href="https://arxiv.org/abs/1903.12287" target="_blank">arXiv:1903.12287</a></li>
+      <li><strong>Huh, M., Cheung, B., Wang, T., Isola, P.</strong> The Platonic Representation Hypothesis, ICML 2024. <a href="https://arxiv.org/abs/2405.07987" target="_blank">arXiv:2405.07987</a></li>
+      <li><strong>Park, K., Choe, Y.&nbsp;J., Veitch, V.</strong> The Linear Representation Hypothesis and the Geometry of Large Language Models, ICML 2024. <a href="https://arxiv.org/abs/2311.03658" target="_blank">arXiv:2311.03658</a></li>
+      <li><strong>Templeton, A., et&nbsp;al.&nbsp;(Anthropic).</strong> Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet, 2024. <a href="https://transformer-circuits.pub/2024/scaling-monosemanticity/" target="_blank">Transformer Circuits</a></li>
+      <li><strong>Bricken, T., et&nbsp;al.&nbsp;(Anthropic).</strong> Towards Monosemanticity: Decomposing Language Models with Dictionary Learning, 2023. <a href="https://transformer-circuits.pub/2023/monosemantic-features" target="_blank">Transformer Circuits</a></li>
+      <li><strong>Klemmer, K., Rolf, E., et&nbsp;al.&nbsp;(Microsoft Research).</strong> SatCLIP: Global, General-Purpose Location Embeddings with Satellite Imagery, AAAI 2025. <a href="https://arxiv.org/abs/2311.17179" target="_blank">arXiv:2311.17179</a></li>
+      <li><strong>Jakubik, J., et&nbsp;al.&nbsp;(NASA / IBM).</strong> Foundation Models for Generalist Geospatial Artificial Intelligence (Prithvi), 2023. <a href="https://arxiv.org/abs/2310.18660" target="_blank">arXiv:2310.18660</a></li>
+      <li><strong>Robles, P., et&nbsp;al.&nbsp;(Apple).</strong> Embedding Atlas: Low-Friction, Interactive Embedding Visualization, 2025. <a href="https://arxiv.org/abs/2505.06386" target="_blank">arXiv:2505.06386</a></li>
+      <li><strong>Lin, J., et&nbsp;al.</strong> Neuronpedia: open interpretability platform for sparse-autoencoder features. <a href="https://www.neuronpedia.org/" target="_blank">neuronpedia.org</a></li>
+      <li><strong>Stewart, A. J., et&nbsp;al.</strong> TorchGeo: Deep Learning with Geospatial Data, ACM TSAS 2025. <a href="https://torchgeo.org/" target="_blank">torchgeo.org</a></li>
+      <li><strong>IBM Research.</strong> TerraTorch: Geospatial Foundation Models Toolkit, 2025. <a href="https://arxiv.org/abs/2503.20563" target="_blank">arXiv:2503.20563</a></li>
+      <li><strong>OGC.</strong> AI-DGGS Disaster Pilot 2025 — Discrete Global Grid Systems as a universal geolocation framework. <a href="https://www.ogc.org/" target="_blank">ogc.org</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- Related work -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Explore Further</h2>
+      <p class="sh__desc">GeoRoundtable work connecting AI hyperspace, Spatial Web standards, and geographic theory.</p>
+    </div>
+
+    <div class="resource-strip">
+      <a class="resource-link" href="spatial-web-concepts-of-space-from-ai.html">
+        <span class="resource-link__icon">🌐</span> Concepts of Space from AI
+      </a>
+      <a class="resource-link" href="ieee-spatial-web-standard-approved.html">
+        <span class="resource-link__icon">📜</span> IEEE 2874-2025 Standard Approval
+      </a>
+      <a class="resource-link" href="udg-physical-design-synthesis.html">
+        <span class="resource-link__icon">🧩</span> UDG Physical Design Synthesis
+      </a>
+      <a class="resource-link" href="spatial-web-to-the-open-geospatial-consortium.html">
+        <span class="resource-link__icon">🌍</span> Spatial Web at OGC
+      </a>
+      <a class="resource-link" href="nsf-hdr-ecosystem-and-the-spatial-web.html">
+        <span class="resource-link__icon">🔬</span> NSF HDR Ecosystem &amp; Spatial Web
+      </a>
+      <a class="resource-link" href="https://sagroups.ieee.org/2874/" target="_blank">
+        <span class="resource-link__icon">🔗</span> IEEE P2874 Working Group
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Make hyperspace features first-class</h2>
+    <p>GeoRoundtable brings together expertise in geospatial standards, agentic AI, mechanistic interpretability, and philosophy of engineering. We help organizations build the bridges between embeddings and features that the next generation of AI infrastructure depends on.</p>
+    <a class="cta-btn" href="index.html#contact">Get in touch</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2025 GeoRoundtable · <a href="index.html">Home</a> · <a href="https://www.linkedin.com/company/geo-roundtable" target="_blank">LinkedIn</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
