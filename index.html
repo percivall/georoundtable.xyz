@@ -323,6 +323,44 @@
     .footer a { color: rgba(255,255,255,0.35); }
     .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
 
+    /* ── Archive section ────────────────────────────────── */
+    .archive {
+      margin-top: 3rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .archive__header {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      background: var(--light);
+      border-bottom: 1px solid var(--border);
+    }
+    .archive__header-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .archive__list { list-style: none; }
+    .archive__item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .archive__item:last-child { border-bottom: none; }
+    .archive__item-title {
+      font-size: 0.92rem; font-weight: 600; color: var(--navy);
+    }
+    .archive__item-title a { color: var(--navy); }
+    .archive__item-title a:hover { color: var(--blue); }
+    .archive__item-desc {
+      font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem;
+    }
+
     /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 900px) {
       .hero__inner  { grid-template-columns: 1fr; text-align: center; }
@@ -534,35 +572,6 @@
       </div>
 --> 
 
-      <div class="card">
-        <div class="card__icon">🎓</div>
-        <p class="card__label">Seminar — July 2025</p>
-        <h3 class="card__title">Thinking Machines Seminar- St John's College </h3>
-        <p class="card__body">Part of a sustained collaboration between GeoRoundtable and St. John's College Graduate Institute on ethical technology and participatory socio-technical design for AI.</p>
-        <ul class="card__links">
-          <li><a href="st-johns-college-thinking-machines-seminar-july-2025.html" target="_blank">View seminar materials</a></li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card__icon">📐</div>
-        <p class="card__label">Standards Development</p>
-        <h3 class="card__title">Innovation, Maturation, and Adaptation in Standards Development</h3>
-        <p class="card__body">Seven heuristics for standards development drawn from personal experience with the Open Geospatial Consortium — covering open process, STEM foundations, implementation-first, innovation, maturation, and complex adaptive systems.</p>
-        <ul class="card__links">
-          <li><a href="innovation-maturation-adaptation-standards-development.html" target="_blank">Read the article</a></li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card__icon">🔭</div>
-        <p class="card__label">Symposium — May 2025</p>
-        <h3 class="card__title">JHU Natural Philosophy Symposium 2025</h3>
-        <p class="card__body">Johns Hopkins symposium bringing together scientists, philosophers, and engineers to reclaim natural philosophy. Features Michael Tomasello, Alison Gopnik, Anil Seth, Thomas Nagel, and others — with direct implications for the philosophical foundations of AI engineering.</p>
-        <ul class="card__links">
-          <li><a href="jhu-natural-philosophy-symposium-2025.html" target="_blank">View symposium page</a></li>
-        </ul>
-      </div>
 
       <div class="card">
         <div class="card__icon">🌀</div>
@@ -575,15 +584,6 @@
         </ul>
       </div>
 
-      <div class="card">
-        <div class="card__icon">🌐</div>
-        <p class="card__label">Spatial Web</p>
-        <h3 class="card__title">Spatial Web: Concepts of Space from AI</h3>
-        <p class="card__body">How AI is expanding humanity's concept of space — from Cartesian coordinates and geographic GIS to high-dimensional tensor spaces, relational graphs, and the Hyperspace framework of IEEE 2874-2025. Explores the "World-to-Vectors" principle and its implications for agentic systems.</p>
-        <ul class="card__links">
-          <li><a href="spatial-web-concepts-of-space-from-ai.html" target="_blank">Explore the concepts</a></li>
-        </ul>
-      </div>
 
       <div class="card">
         <div class="card__icon">🧭</div>
@@ -616,16 +616,47 @@
         </ul>
       </div>
 
-      <div class="card">
-        <div class="card__icon">&#x26A1;</div>
-        <p class="card__label">Systems Engineering &middot; AI Design</p>
-        <h3 class="card__title">EV Design Synthesis: Function-to-Form Architecture</h3>
-        <p class="card__body">Function-to-form synthesis of an electric vehicle from a 74-page Vehicle Technical Specification. Claude Cowork independently derived 12 subsystems from performance requirements, then compared the result against the original program specification tree (GSP3, 11 subsystems). Strong convergence on 10 of 11 subsystems.</p>
-        <ul class="card__links">
-          <li><a href="ev-design-synthesis.html">Read the EV design synthesis</a></li>
-        </ul>
-      </div>
 
+    </div>
+
+    <!-- Archive -->
+    <div class="archive">
+      <div class="archive__header">
+        <span style="font-size:1rem;">🗄️</span>
+        <span class="archive__header-label">Archive</span>
+      </div>
+      <ul class="archive__list">
+        <li class="archive__item">
+          <div>
+            <div class="archive__item-title"><a href="st-johns-college-thinking-machines-seminar-july-2025.html" target="_blank">Thinking Machines Seminar — St. John's College</a></div>
+            <div class="archive__item-desc">A sustained collaboration with St. John's College Graduate Institute on ethical technology and participatory socio-technical design for AI.</div>
+          </div>
+        </li>
+        <li class="archive__item">
+          <div>
+            <div class="archive__item-title"><a href="innovation-maturation-adaptation-standards-development.html" target="_blank">Innovation, Maturation, and Adaptation in Standards Development</a></div>
+            <div class="archive__item-desc">Seven heuristics for standards development drawn from personal experience with the Open Geospatial Consortium.</div>
+          </div>
+        </li>
+        <li class="archive__item">
+          <div>
+            <div class="archive__item-title"><a href="jhu-natural-philosophy-symposium-2025.html" target="_blank">JHU Natural Philosophy Symposium 2025</a></div>
+            <div class="archive__item-desc">Johns Hopkins symposium bringing together scientists, philosophers, and engineers to reclaim natural philosophy as a foundation for AI and engineering.</div>
+          </div>
+        </li>
+        <li class="archive__item">
+          <div>
+            <div class="archive__item-title"><a href="spatial-web-concepts-of-space-from-ai.html" target="_blank">Spatial Web: Concepts of Space from AI</a></div>
+            <div class="archive__item-desc">How AI is expanding humanity's concept of space — from Cartesian coordinates to high-dimensional tensor spaces and the Hyperspace framework of IEEE 2874-2025.</div>
+          </div>
+        </li>
+        <li class="archive__item">
+          <div>
+            <div class="archive__item-title"><a href="ev-design-synthesis.html" target="_blank">EV Design Synthesis: Function-to-Form Architecture</a></div>
+            <div class="archive__item-desc">Function-to-form synthesis of an electric vehicle comparing AI-derived and human-designed subsystem architectures, with strong convergence on 10 of 11 subsystems.</div>
+          </div>
+        </li>
+      </ul>
     </div>
 
     <!-- Standards panels -->
