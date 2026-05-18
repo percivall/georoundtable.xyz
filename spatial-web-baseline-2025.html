@@ -267,6 +267,54 @@
     }
     .back-strip__meta { font-size: 0.85rem; color: var(--muted); }
 
+    /* ── On-page mini nav ───────────────────────────────── */
+    .section-nav {
+      position: sticky;
+      top: 66px; /* sit flush under the main nav */
+      z-index: 90;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0.7rem 0;
+      transition: box-shadow 0.2s;
+    }
+    .section-nav.is-stuck {
+      box-shadow: 0 2px 12px rgba(8,24,64,0.10);
+    }
+    .section-nav__inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .section-nav__label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-right: 0.5rem;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .section-nav__links {
+      display: flex; gap: 0.3rem; flex-wrap: wrap; list-style: none;
+    }
+    .section-nav__links a {
+      display: inline-block; font-size: 0.8rem; font-weight: 600;
+      color: var(--teal); padding: 0.3rem 0.75rem;
+      border-radius: 999px; border: 1px solid var(--border);
+      background: var(--white);
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .section-nav__links a:hover {
+      background: var(--light); border-color: var(--teal);
+      text-decoration: none; color: var(--navy);
+    }
+    .section-nav__links a.is-active {
+      background: var(--navy); border-color: var(--navy);
+      color: var(--white);
+    }
+    /* Scroll offset so sticky navs don't hide anchor targets */
+    /* main nav (66px) + mini nav (~46px) + 8px breathing room = 120px */
+    [id].phase-header, [id].sh, [id].card, [id].cta-section {
+      scroll-margin-top: 120px;
+    }
+
     @media (max-width: 900px) {
       .two-col { grid-template-columns: 1fr; }
     }
@@ -347,11 +395,25 @@
   </div>
 </div>
 
+<!-- ── On-page mini nav ─────────────────────────────────── -->
+<nav class="section-nav" aria-label="Page sections">
+  <div class="section-nav__inner">
+    <span class="section-nav__label">Jump to:</span>
+    <ul class="section-nav__links">
+      <li><a href="#ratified">Ratified Standards</a></li>
+      <li><a href="#specs">Implementation Specs</a></li>
+      <li><a href="#implementations">Implementations</a></li>
+      <li><a href="#critical-design">Critical Design</a></li>
+      <li><a href="#ioc">IOC</a></li>
+    </ul>
+  </div>
+</nav>
+
 <!-- ── Status ───────────────────────────────────────────── -->
 <section class="section">
   <div class="container">
 
-    <div class="phase-header">
+    <div class="phase-header" id="ratified">
       <div class="phase-header__title">Spatial Web Protocol, Architecture &amp; Governance</div>
       <span class="phase-header__tag phase-header__tag--done">Ratified</span>
     </div>
@@ -376,7 +438,7 @@
       </div>
     </div>
 
-    <div class="phase-header" style="margin-top:3rem;">
+    <div class="phase-header" id="specs" style="margin-top:3rem;">
       <div class="phase-header__title">Spatial Web Implementation Specifications</div>
     </div>
 
@@ -501,7 +563,7 @@
     </div>
 
     <!-- Agent framework -->
-    <div class="card">
+    <div class="card" id="agent-framework" style="scroll-margin-top:84px;">
       <div class="card__label">Agent Framework</div>
       <div class="card__title">STD-7 Spatial Web Agent Framework Implementation Specification <span class="pill pill--draft">Draft</span></div>
       <div class="card__body">
@@ -509,7 +571,7 @@
       </div>
     </div>
 
-    <div class="phase-header" style="margin-top:3rem;">
+    <div class="phase-header" id="implementations" style="margin-top:3rem;">
       <div class="phase-header__title">Implementations</div>
       <span class="phase-header__tag phase-header__tag--done">Underway</span>
     </div>
@@ -540,7 +602,7 @@
       </p>
     </div>
 
-    <div class="phase-header">
+    <div class="phase-header" id="critical-design">
       <div class="phase-header__title">Critical Design</div>
       <span class="phase-header__tag phase-header__tag--todo">Next Phase</span>
     </div>
@@ -566,7 +628,7 @@
       </div>
     </div>
 
-    <div class="phase-header" style="margin-top:3rem;">
+    <div class="phase-header" id="ioc" style="margin-top:3rem;">
       <div class="phase-header__title">Initial Operating Capability</div>
       <span class="phase-header__tag phase-header__tag--todo">Planned</span>
     </div>
@@ -581,7 +643,7 @@
       </div>
     </div>
 
-    <div class="phase-header" style="margin-top:3rem;">
+    <div class="phase-header" id="continuous" style="margin-top:3rem;">
       <div class="phase-header__title">Continuous Operations</div>
       <span class="phase-header__tag phase-header__tag--todo">Future</span>
     </div>
@@ -595,7 +657,7 @@
 </section>
 
 <!-- ── CTA ──────────────────────────────────────────────── -->
-<section class="cta-section">
+<section class="cta-section" id="engage" style="scroll-margin-top:84px;">
   <div class="container cta-section__inner">
     <h2 class="cta-section__title">Engage with the Spatial Web</h2>
     <p class="cta-section__sub">
@@ -613,5 +675,51 @@
   </div>
 </footer>
 
+<script>
+  (function () {
+    var miniNav  = document.querySelector('.section-nav');
+    var navLinks = Array.from(document.querySelectorAll('.section-nav__links a'));
+    var sectionIds = navLinks.map(function (a) { return a.getAttribute('href').slice(1); });
+
+    /* ── Shadow when stuck ──────────────────────────────── */
+    var sentinel = document.createElement('div');
+    sentinel.style.cssText = 'position:absolute;top:0;height:1px;width:1px;pointer-events:none;';
+    miniNav.parentElement.insertBefore(sentinel, miniNav);
+
+    new IntersectionObserver(function (entries) {
+      miniNav.classList.toggle('is-stuck', !entries[0].isIntersecting);
+    }, { threshold: 1.0 }).observe(sentinel);
+
+    /* ── Active section highlight ───────────────────────── */
+    var activeId = null;
+
+    function setActive(id) {
+      if (id === activeId) return;
+      activeId = id;
+      navLinks.forEach(function (a) {
+        a.classList.toggle('is-active', a.getAttribute('href') === '#' + id);
+      });
+    }
+
+    var targets = sectionIds.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+
+    /* Offset = main nav (66) + mini nav (~46) + buffer */
+    var OFFSET = 130;
+
+    function onScroll() {
+      var scrollY = window.scrollY + OFFSET;
+      var current = targets[0] ? targets[0].id : null;
+      for (var i = 0; i < targets.length; i++) {
+        if (targets[i].getBoundingClientRect().top + window.scrollY <= scrollY) {
+          current = targets[i].id;
+        }
+      }
+      if (current) setActive(current);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
 </body>
 </html>
