@@ -292,42 +292,14 @@
 <!-- ── Introduction ──────────────────────────────────────── -->
 <section class="section">
   <div class="container">
-    <div class="two-col">
-      <div>
-        <div class="sh">
-          <p class="sh__label">Introduction</p>
-          <h2 class="sh__title">From Engineering Practice to Philosophical Foundations</h2>
-        </div>
-        <div class="abstract-body">
-          <p>This presentation lays out a plan for developing a theme followed implicitly across a four-decade engineering career: philosophy must inform engineering. Drawing on systems engineering at Hughes Aircraft and General Motors (including the EV1 electric vehicle), Digital Earth information systems with NASA, OGC, and the Spatial Web Foundation, and recent work on cyber-physical agents under IEEE 2874, it presents an explicit approach to anchoring standard engineering practices in deeper intellectual foundations.</p>
+    <div class="sh">
+      <p class="sh__label">Introduction</p>
+      <h2 class="sh__title">From Engineering Practice to Philosophical Foundations</h2>
+    </div>
+    <div class="abstract-body">
+      <p>This presentation lays out a plan for developing the theme  "philosophy must inform engineering". Drawing on four decades of engineering, it presents an  approach to anchoring standard engineering practices in deeper intellectual foundations.</p>
 
-          <p>Two background topics set the stage. First, engineering is defined from practice: systems engineering traces to the early 1900s, was formalized in Hall's <em>A Methodology for Systems Engineering</em> (1962), and is carried internationally by INCOSE into IEEE and ISO standards. An engineering project moves among stakeholder concerns, next-generation technology, design and build, and deployment, operation, and assessment — every phase, fully linked, all at once. Second, the fora where philosophy of engineering is discussed remain split between academic venues (fPET, the POET series, the <em>Handbook of Engineering Systems Design</em>, the Cosmos Institute, St. John's College Graduate Institute) and professional societies (IEEE Ethically Aligned Design and the 7000-series standards, IEEE SSIT, ACM SIGCAS, INCOSE) — with few cross-references between the two communities.</p>
-
-          <p>The core of the presentation is four engineering practices, each developed in real projects and each now being given a more robust philosophical standing: addressing stakeholder concerns, design as the creation of order, balancing innovation with liberty, and the agency of AI in cyber-physical ecosystems. Engineers exercise power in shaping infrastructure; making that power visible takes moral-philosophy practice.</p>
-        </div>
-      </div>
-
-      <div>
-        <div class="sidebar-block">
-          <p class="sidebar-block__label">Roadmap of the Talk</p>
-          <div class="theme-item">
-            <div class="theme-item__dot"></div>
-            <p class="theme-item__text"><strong>01 · Engineering in practice</strong> — systems engineering, Digital Earth, cyber-physical agents</p>
-          </div>
-          <div class="theme-item">
-            <div class="theme-item__dot"></div>
-            <p class="theme-item__text"><strong>02 · Philosophy for engineering</strong> — fora for philosophy relevant to engineering practice</p>
-          </div>
-          <div class="theme-item">
-            <div class="theme-item__dot"></div>
-            <p class="theme-item__text"><strong>03 · Four practices</strong> — Stakeholders · Design · Innovation · Agency</p>
-          </div>
-          <div class="theme-item">
-            <div class="theme-item__dot"></div>
-            <p class="theme-item__text"><strong>04 · Where next</strong> — advancing the Builder-Philosopher in practice</p>
-          </div>
-        </div>
-      </div>
+      <p>The core of the presentation is four engineering practices, each developed in real projects and each now being given a more robust philosophical standing: 1) addressing stakeholder concerns, 2)design as the wise creation of order, 3) balancing innovation with liberty, and 4) the agency of AI in cyber-physical ecosystems. </p>
     </div>
   </div>
 </section>
@@ -344,29 +316,23 @@
       <div class="pillar">
         <div class="pillar__icon">🧭</div>
         <h3 class="pillar__title">Identify Stakeholders of the System of Interest</h3>
-        <p class="pillar__body">ISO/IEC/IEEE 42010 provides the method for identifying stakeholders and their concerns. In commercial automobile development this was the "Voice of the Customer"; on GM's EV1, vehicle range and recharge time were the requirements on which success rested. Safety and ethical concerns are secondary effects the engineer must equally surface.</p>
+        <p class="pillar__body">ISO/IEC/IEEE 42010 provides the method for identifying stakeholders and their concerns. In commercial automobile development this was the "Voice of the Customer"; on GM's EV1, vehicle range and recharge time were the requirements on which success rested. </p>
       </div>
       <div class="pillar">
         <div class="pillar__icon">⚖️</div>
         <h3 class="pillar__title">Ethically Aligned Design — IEEE 7000</h3>
-        <p class="pillar__body">Ethics supplies theories and reasons for thinking that this or that is right. IEEE 7000 translates them into Stakeholder Ethical Value Requirements (EVRs), drawing on utilitarian, virtue, and duty ethics — the key step being translation of the language of ethics into technical requirements.</p>
+        <p class="pillar__body">IEEE 7000 frames stakeholder ethical considerations as Ethical Value Requirements (EVRs), using for example utilitarian, virtue, and duty ethics.  A key step being translation of the EVRs into technical requirements.</p>
       </div>
       <div class="pillar">
         <div class="pillar__icon">🌐</div>
         <h3 class="pillar__title">Ethical Systems Ontologies</h3>
-        <p class="pillar__body">IEEE 7007 and IEEE 2874 define ontologies for the entities relevant to a system's definition and operation — spanning virtuous, deontological, consequentialist, and composite ethical theories. As systems become more abstract and virtual, these ontologies too benefit from philosophical grounding.</p>
+        <p class="pillar__body">IEEE 7007 and IEEE 2874 define ontologies for the entities relevant to a system's definition and operation — spanning virtuous, deontological, consequentialist, and composite ethical theories.  These ontologies benefit from philosophical grounding.</p>
       </div>
       <div class="pillar">
         <div class="pillar__icon">🔍</div>
         <h3 class="pillar__title">Early Prototypes Identify Concerns</h3>
         <p class="pillar__body">Evaluating a partially viable product before deployment — including "red teaming" — surfaces stakeholder concerns that surveys and requirement documents miss. A well-developed set of stakeholder concerns is a valuable input to system design.</p>
       </div>
-    </div>
-    <div class="evr-flow">
-      <p class="evr-flow__label">From Ethical Value Requirement to Technical Requirement</p>
-      <div class="evr-flow__step"><strong>EVR</strong> "Privacy of scanned passengers."</div>
-      <div class="evr-flow__arrow">↓</div>
-      <div class="evr-flow__step"><strong>Technical Requirement</strong> "System shall display images of suspected items on a generic body outline."</div>
     </div>
   </div>
 </section>
@@ -381,11 +347,12 @@
     </div>
     <div class="two-col">
       <div class="abstract-body">
-        <p>The key design method is the <strong>allocation of functional requirements to physical components</strong> — function-to-form synthesis. The functional objective is decomposed, and each function is allocated to a physical element of the architecture, making the design traceable from stakeholder concern to component. This rational method sits among complementary design methodologies catalogued by INCOSE (Rechtin, Maier): participative methods grounded in stakeholders, normative methods grounded in standards, and heuristics drawn from experience. GeoRoundtable has exercised the method directly — synthesizing physical architectures from the same functional requirements for the IEEE 2874 Universal Domain Graph and for an electric vehicle, by human engineer and by AI, then comparing the results.</p>
+        <p>Philosophy gives this practice its depth. Herbert Simon framed design as an artifact's relation to its environment, seeking to survive and achieve (<em>The Sciences of the Artificial</em>, 1969/1996). Christopher Alexander derived order from functional analysis and fitness to the environment (1964, 2004), and at OOPSLA 1996 charged that "software engineers should take aesthetic-moral responsibility for the wholeness of what they build."</p>
 
-        <p>Philosophy gives this practice its depth. Herbert Simon framed design as an artifact's relation to its environment, seeking to survive and achieve (<em>The Sciences of the Artificial</em>, 1969/1996). Christopher Alexander derived order from functional analysis and fitness to the environment (1964, 2004), and at OOPSLA 1996 charged that "software engineers should take aesthetic-moral responsibility for the wholeness of what they build." The Agile manifesto designs while building, with no plans. And designs produce unanticipated results — affordances (Gibson) and mediation (Verbeek) — that no allocation matrix fully predicts.</p>
+        <p>A key design method is the <strong>allocation of functional requirements to physical components</strong> — function-to-form synthesis. The functional objective is decomposed, and each function is allocated to a physical element of the architecture, making the design traceable from stakeholder concern to component. This rational method sits among complementary design methodologies catalogued by INCOSE (Rechtin, Maier): participative methods grounded in stakeholders, normative methods grounded in standards, and heuristics drawn from experience. GeoRoundtable has exercised the method directly — synthesizing physical architectures from the same functional requirements for the IEEE 2874 Universal Domain Graph and for an electric vehicle, by human engineer and by AI, then comparing the results.</p>
 
-        <p>A philosophy for design must therefore address design practice, wise ordering, and emergent forms together — a need taken up in the <em>Handbook of Engineering Systems Design</em> (Maier, Oehmen, Vermaas, 2022) and in natural philosophy's three themes: change as a constant stream of events, form as persistent structures that emerge, and agency as adaptive form.</p>
+
+        <p>A philosophy for design must address design practice, wise ordering, and emergent forms together. A need taken up in natural philosophy's three themes: change as a constant stream of events, form as persistent structures that emerge, and agency as adaptive form.</p>
         <div class="tags">
           <span class="tag">Function-to-form synthesis</span>
           <span class="tag">Functional decomposition</span>
@@ -410,14 +377,6 @@
           </div>
           <div class="theme-item">
             <div class="theme-item__dot"></div>
-            <p class="theme-item__text">Agile: design while building; no plans</p>
-          </div>
-          <div class="theme-item">
-            <div class="theme-item__dot"></div>
-            <p class="theme-item__text">Unanticipated results: affordances &amp; mediation</p>
-          </div>
-          <div class="theme-item">
-            <div class="theme-item__dot"></div>
             <p class="theme-item__text">Applied: <a href="udg-physical-design-synthesis.html">UDG design synthesis</a> · <a href="ev-design-synthesis.html">EV design synthesis</a></p>
           </div>
         </div>
@@ -425,30 +384,6 @@
     </div>
   </div>
 </section>
-
-<!-- ── Quote ─────────────────────────────────────────────── -->
-<div class="highlight">
-  <div class="container">
-    <div class="highlight__inner">
-      <div>
-        <blockquote class="highlight__quote">
-          "Software engineers should take aesthetic-moral responsibility for the wholeness of what they build."
-        </blockquote>
-        <p class="highlight__attr">— Christopher Alexander, OOPSLA 1996</p>
-        <div class="dims">
-          <span class="dim">Stakeholders</span>
-          <span class="dim">Design</span>
-          <span class="dim">Innovation</span>
-          <span class="dim">Agency</span>
-        </div>
-      </div>
-      <div class="highlight__body">
-        <p>Alexander's alternative to developers as "guns for hire" was a call to create living structures: when you build a thing, you must also repair the world around it and within it, so that the larger world at that one place becomes more coherent and more whole.</p>
-        <p>Each of the four practices answers that call in a different phase of engineering — making stakeholder values explicit, ordering wisely, governing the freedom to innovate, and taking responsibility for the agents we now set loose in the world.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ── Practice 3: Innovation ────────────────────────────── -->
 <section class="section section--alt">
@@ -540,6 +475,31 @@
     </div>
   </div>
 </section>
+
+<!-- ── Quote ─────────────────────────────────────────────── -->
+<div class="highlight">
+  <div class="container">
+    <div class="highlight__inner">
+      <div>
+        <blockquote class="highlight__quote">
+          "Software engineers should take aesthetic-moral responsibility for the wholeness of what they build."
+        </blockquote>
+        <p class="highlight__attr">— Christopher Alexander, OOPSLA 1996</p>
+        <div class="dims">
+          <span class="dim">Stakeholders</span>
+          <span class="dim">Design</span>
+          <span class="dim">Innovation</span>
+          <span class="dim">Agency</span>
+        </div>
+      </div>
+      <div class="highlight__body">
+        <p>Alexander's alternative to developers as "guns for hire" was a call to create living structures: when you build a thing, you must also repair the world around it and within it, so that the larger world at that one place becomes more coherent and more whole.</p>
+        <p>Each of the four practices answers that call in a different phase of engineering — making stakeholder values explicit, ordering wisely, governing the freedom to innovate, and taking responsibility for the agents we now set loose in the world.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- ── Where Next ────────────────────────────────────────── -->
 <section class="section section--alt">
