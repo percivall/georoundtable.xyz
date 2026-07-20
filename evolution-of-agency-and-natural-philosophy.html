@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon-512x512.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evolution of Agency and Natural Philosophy — GeoRoundtable</title>
+  <meta property="og:title" content="Evolution of Agency and Natural Philosophy — GeoRoundtable" />
+  <meta property="og:description" content="Agents as relevant to Natural Philosophy: the evolution of natural agency (Tomasello, 2022) and agent types defined by the functions they perform (Norvig), grounded in IEEE 2874-2025." />
+  <meta property="og:image" content="https://georoundtable.xyz/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:url" content="https://georoundtable.xyz/evolution-of-agency-and-natural-philosophy.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://georoundtable.xyz/og-image.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; color: #1a2133; background: #fff; }
+    a { color: #1d6fa4; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #0d5280; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --white:  #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 14px rgba(8,24,64,0.08);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5rem 0; }
+    .section--alt { background: var(--light); }
+    .accent-bar { height: 3px; background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 30%, var(--sky) 60%, var(--navy) 100%); }
+
+    /* ── Nav ── */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .nav__brand { display: flex; align-items: center; gap: 11px; color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; text-decoration: none; }
+    .nav__logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); object-fit: cover; flex-shrink: 0; }
+    .nav__links { display: flex; gap: 0.2rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,0.78); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav__links a:hover { color: var(--white); background: rgba(255,255,255,0.11); text-decoration: none; }
+
+    /* ── Hero ── */
+    .hero { background: linear-gradient(140deg, #081840 0%, #0d2660 50%, #163a70 100%); color: var(--white); padding: 6rem 0 5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 55% 80% at 76% 52%, rgba(13,107,120,0.20) 0%, transparent 65%), radial-gradient(ellipse 30% 40% at 8% 85%, rgba(29,111,164,0.12) 0%, transparent 55%); }
+    .hero__inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .hero__breadcrumb { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .hero__breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero__breadcrumb a:hover { color: var(--mint); }
+    .hero__breadcrumb span { color: rgba(255,255,255,0.3); }
+    .hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(94,207,219,0.12); border: 1px solid rgba(94,207,219,0.28); border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600; color: var(--mint); letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+    .hero__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; max-width: 860px; }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 2rem; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; }
+    .hero__meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .hero__meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero__meta-value { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* ── Section headings ── */
+    .sh { margin-bottom: 2.5rem; }
+    .sh__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+    .sh__title { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+    .sh__desc { margin-top: 0.7rem; color: var(--muted); max-width: 660px; line-height: 1.7; }
+
+    /* ── Prose ── */
+    .prose { font-size: 0.97rem; color: #2a3a50; line-height: 1.85; }
+    .prose p + p { margin-top: 1.1rem; }
+    .prose strong { color: var(--navy); }
+
+    /* ── Pull quotes ── */
+    .quote { background: var(--light); border-left: 4px solid var(--teal); border-radius: 0 var(--radius) var(--radius) 0; padding: 1.3rem 1.6rem; margin: 1.2rem 0; box-shadow: var(--shadow); }
+    .quote p { font-style: italic; font-size: 1rem; color: var(--navy); line-height: 1.6; }
+    .quote cite { display: block; margin-top: 0.5rem; font-style: normal; font-size: 0.82rem; font-weight: 600; color: var(--teal); }
+
+    /* ── Figure ── */
+    .figure-block { border-radius: var(--radius); overflow: hidden; box-shadow: 0 6px 28px rgba(8,24,64,0.14); border: 1px solid var(--border); background: var(--white); max-width: 380px; margin: 0 auto; }
+    .figure-block img { width: 100%; display: block; padding: 1.2rem; }
+    .figure-caption { background: var(--light); padding: 0.9rem 1.2rem; font-size: 0.82rem; color: var(--muted); line-height: 1.6; border-top: 1px solid var(--border); text-align: center; }
+    .figure-caption strong { color: var(--navy); }
+
+    /* ── Tables ── */
+    .data-table-wrap { overflow-x: auto; margin: 1.5rem 0; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+    table.data-table { width: 100%; border-collapse: collapse; background: var(--white); font-size: 0.88rem; }
+    table.data-table caption { caption-side: top; text-align: left; font-size: 0.8rem; font-weight: 600; color: var(--muted); padding: 0.9rem 1.2rem 0; background: var(--white); }
+    table.data-table th { background: var(--navy); color: var(--white); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.85rem 1.1rem; text-align: left; }
+    table.data-table td { padding: 0.9rem 1.1rem; border-top: 1px solid var(--border); color: #2a3a50; line-height: 1.55; vertical-align: top; white-space: pre-line; }
+    table.data-table tr:nth-child(even) td { background: var(--light); }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.18s; text-decoration: none !important; border: none; cursor: pointer; white-space: nowrap; }
+    .btn--primary { background: var(--teal); color: var(--white); }
+    .btn--primary:hover { background: #0a5965; transform: translateY(-1px); }
+    .btn--outline-navy { background: transparent; border: 1.5px solid var(--border); color: var(--navy); }
+    .btn--outline-navy:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--navy); color: var(--white); padding: 5rem 0; text-align: center; }
+    .cta-section__title { font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cta-section__sub { color: rgba(255,255,255,0.66); margin-bottom: 2.25rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .cta-section__cta { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--mint); color: var(--navy); border-radius: 9px; padding: 0.88rem 2.2rem; font-weight: 700; font-size: 1rem; transition: background 0.18s, transform 0.15s; }
+    .cta-section__cta:hover { background: #78dde7; transform: translateY(-1px); text-decoration: none; color: var(--navy); }
+
+    /* ── Footer ── */
+    .footer { background: #05101e; color: rgba(255,255,255,0.35); padding: 2rem 0; font-size: 0.82rem; }
+    .footer__inner { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .footer a { color: rgba(255,255,255,0.35); }
+    .footer__logo { width: 22px; height: 22px; border-radius: 50%; opacity: 0.38; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .two-col--wide { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .section { padding: 3.5rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <img class="nav__logo" src="logo.svg" alt="GeoRoundtable" />
+      GeoRoundtable
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Featured Work</a></li>
+      <li><a href="index.html#principal">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__breadcrumb">
+      <a href="index.html">GeoRoundtable</a>
+      <span>›</span>
+      <a href="otium-core-natural-philosophy.html#agency">Agency</a>
+      <span>›</span>
+      Evolution of Agency and Natural Philosophy
+    </div>
+    <div class="hero__badge">🧭 Agency · Natural Philosophy</div>
+    <h1 class="hero__title">Evolution of Agency and Natural Philosophy</h1>
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Natural Agency</span>
+        <span class="hero__meta-value">M. Tomasello, 2022</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Agent Functions</span>
+        <span class="hero__meta-value">Norvig</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Engineering Definition</span>
+        <span class="hero__meta-value">IEEE 2874-2025</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Overview ── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Overview</p>
+      <h2 class="sh__title">Agents as relevant to Natural Philosophy</h2>
+    </div>
+    <div class="quote">
+      <p>Agency is the most generalized organizational framework within which individuals formulate and produce their actions.</p>
+      <cite>— M. Tomasello</cite>
+    </div>
+    <div class="quote">
+      <p>An agent senses, responds, and maintains a model of its environment, while performing activities to achieve its goals.</p>
+      <cite>— IEEE 2874-2025</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ── Evolution of Natural Agency ── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Natural Agency</p>
+      <h2 class="sh__title">Evolution of Natural Agency</h2>
+    </div>
+    <div class="prose">
+      <p>Agency predates contemporary AI. Agency in natural organisms is the most generalized organizational framework within which individuals formulate and produce their actions (Evolution of Agency, Tomasello, 2022). Agents decide for themselves what to do according to their own best judgment in a given situation. Types of psychological agents in evolutionary order of emergence are shown in the Table.</p>
+      <p>Each new form of psychological organization represented increased complexity in the planning, decision-making, and executive control of behavior. Each also led to new types of experience of the environment and, in some cases, of the organism's own psychological functioning, leading ultimately to humans' experience of an objective and normative world that governs their thoughts and actions.</p>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <caption>Table. Agents in evolutionary order of emergence (Tomasello, 2022)</caption>
+        <thead>
+          <tr>
+            <th>Agent Type</th>
+            <th>Architecture</th>
+            <th>Direction of actions and attention</th>
+            <th>Controlling of Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Goal-Directed Agents:
+Lizards, 300 mya</td>
+            <td>Feedback Control Systems</td>
+            <td>Goals
+Attention to relevant situations</td>
+            <td>Global Inhibition of Go/No-Go decisions</td>
+          </tr>
+          <tr>
+            <td>Intentional Agent: Squirrels, Rats;
+250 mya</td>
+            <td>Additional Executive Tier with working memory</td>
+            <td>Intentions as Plans to Goals
+Attention to goals and actions</td>
+            <td>Monitoring uncertainty in Either-Or decisions</td>
+          </tr>
+          <tr>
+            <td>Rational Agent: Great apes, Chimpanzees;
+20 mya</td>
+            <td>Additional 2nd order Executive Tier</td>
+            <td>Plans for future goals
+Attention to executive decision</td>
+            <td>Diagnosing problems and intervening to make "better" decisions</td>
+          </tr>
+          <tr>
+            <td>Normative Agents: Human groups 6 mya;
+Societies 150 kya</td>
+            <td>Social self-regulation of executive tiers
+Obligation</td>
+            <td>Shared Goals with meshing plans
+Perspective flexibility</td>
+            <td>Social-normative self-regulation via rational and moral norms</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── Agents: Functions and Operations ── -->
+<section class="section">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Agent Functions</p>
+      <h2 class="sh__title">Agents: Functions and Operations</h2>
+    </div>
+    <div class="prose">
+      <p>Agent types are distinguished by the functions they perform (Norvig) which are visible through behavior or statements of the agent's developer.</p>
+    </div>
+
+    <div class="figure-block">
+      <img src="evolution-of-agency-hierarchy.png" alt="Canonical Agent Types as a hierarchy: Social Agent, Rational Agent, Intentional Agent, and Goal-Based Agent, each built on Environment, including other Agents, with feedback loops among all levels." />
+      <div class="figure-caption"><strong>Figure.</strong> Canonical Agent Types as a hierarchy.</div>
+    </div>
+
+    <div class="data-table-wrap" style="margin-top: 2rem;">
+      <table class="data-table">
+        <caption>Table. Agent Types defined by the Functions they perform</caption>
+        <thead>
+          <tr>
+            <th>Agent Type</th>
+            <th>Agent Functions (cumulative going up)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Social Agent</td>
+            <td>Joint goals with other agents
+Joint planning; Coordinating roles during activities
+Awareness of rational and moral norms; Mediation between agents
+Shared world models; Care</td>
+          </tr>
+          <tr>
+            <td>Rational Agent</td>
+            <td>Causal models: plan for future goals, causal learning
+Assess value of additional information, prior to decision
+Reflective executive tier; Controller selection
+Attribute mental states to other agents</td>
+          </tr>
+          <tr>
+            <td>Intentional Agent</td>
+            <td>Models beliefs, goals, intentions (what it's committed to doing).
+Utility based planning and decision-making
+Curiosity; Vicarious, trial and error: OODA loop
+Monitoring uncertainty in decisions: inhibition, cognitive flexibility</td>
+          </tr>
+          <tr>
+            <td>Goal-Directed Agent</td>
+            <td>Sense and actuate the environment; Memory
+Model creation and update; Goal recognition
+Feedback control based on model and goals</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── Related ── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Further Reading</h2>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="otium-core-natural-philosophy.html#agency" class="btn btn--primary">Natural Philosophy — Agency →</a>
+      <a href="evolution-of-agency-m-tomasello.html" class="btn btn--outline-navy">Agency of Agents — Epistemological Approach →</a>
+      <a href="epistemology-in-an-ecosystem-of-agents.html" class="btn btn--outline-navy">Epistemology in an Ecosystem of Agents →</a>
+      <a href="ieee-spatial-web-standard-approved.html" class="btn btn--outline-navy">IEEE 2874-2025 Standard →</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2 class="cta-section__title">Discuss Agency &amp; Natural Philosophy</h2>
+    <p class="cta-section__sub">Interested in the natural philosophy of agency or its application to agentic AI design? Get in touch.</p>
+    <a href="mailto:percivall@ieee.org" class="cta-section__cta">✉️&nbsp; percivall@ieee.org</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo" src="logo.svg" alt="" />
+      <span>© 2026 GeoRoundtable · <a href="mailto:percivall@ieee.org">percivall@ieee.org</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
