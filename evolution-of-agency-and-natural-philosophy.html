@@ -99,6 +99,9 @@
     table.data-table caption { caption-side: top; text-align: left; font-size: 0.8rem; font-weight: 600; color: var(--muted); padding: 0.9rem 1.2rem 0; background: var(--white); }
     table.data-table th { background: var(--navy); color: var(--white); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.85rem 1.1rem; text-align: left; }
     table.data-table td { padding: 0.9rem 1.1rem; border-top: 1px solid var(--border); color: #2a3a50; line-height: 1.55; vertical-align: top; white-space: pre-line; }
+    table.data-table td ul { margin: 0; padding-left: 1.1rem; }
+    table.data-table td ul li { margin-bottom: 0.35rem; }
+    table.data-table td ul li:last-child { margin-bottom: 0; }
     table.data-table tr:nth-child(even) td { background: var(--light); }
 
     /* ── Buttons ── */
@@ -207,53 +210,9 @@
       <p>Each new form of psychological organization represented increased complexity in the planning, decision-making, and executive control of behavior. Each also led to new types of experience of the environment and, in some cases, of the organism's own psychological functioning, leading ultimately to humans' experience of an objective and normative world that governs their thoughts and actions.</p>
     </div>
 
-    <div class="data-table-wrap">
-      <table class="data-table">
-        <caption>Table. Agents in evolutionary order of emergence (Tomasello, 2022)</caption>
-        <thead>
-          <tr>
-            <th>Agent Type</th>
-            <th>Architecture</th>
-            <th>Direction of actions and attention</th>
-            <th>Controlling of Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Goal-Directed Agents:
-Lizards, 300 mya</td>
-            <td>Feedback Control Systems</td>
-            <td>Goals
-Attention to relevant situations</td>
-            <td>Global Inhibition of Go/No-Go decisions</td>
-          </tr>
-          <tr>
-            <td>Intentional Agent: Squirrels, Rats;
-250 mya</td>
-            <td>Additional Executive Tier with working memory</td>
-            <td>Intentions as Plans to Goals
-Attention to goals and actions</td>
-            <td>Monitoring uncertainty in Either-Or decisions</td>
-          </tr>
-          <tr>
-            <td>Rational Agent: Great apes, Chimpanzees;
-20 mya</td>
-            <td>Additional 2nd order Executive Tier</td>
-            <td>Plans for future goals
-Attention to executive decision</td>
-            <td>Diagnosing problems and intervening to make "better" decisions</td>
-          </tr>
-          <tr>
-            <td>Normative Agents: Human groups 6 mya;
-Societies 150 kya</td>
-            <td>Social self-regulation of executive tiers
-Obligation</td>
-            <td>Shared Goals with meshing plans
-Perspective flexibility</td>
-            <td>Social-normative self-regulation via rational and moral norms</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="figure-block" style="max-width: 900px;">
+      <img src="Tomasello.png" alt="Table of agents in evolutionary order of emergence: Goal-Directed Agents (lizards), Intentional Agent (squirrels, rats), Rational Agent (great apes, chimpanzees), and Normative Agents (human groups), each row showing Architecture, Direction of Actions, and Controlling of Actions." style="padding: 0;" />
+      <div class="figure-caption">Table. Agents in evolutionary order of emergence (Tomasello, 2022)</div>
     </div>
   </div>
 </section>
@@ -280,36 +239,51 @@ Perspective flexibility</td>
         <thead>
           <tr>
             <th>Agent Type</th>
-            <th>Agent Functions (cumulative going up)</th>
+            <th>Agent Functions (cumulative going down)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Social Agent</td>
-            <td>Joint goals with other agents
-Joint planning; Coordinating roles during activities
-Awareness of rational and moral norms; Mediation between agents
-Shared world models; Care</td>
-          </tr>
-          <tr>
-            <td>Rational Agent</td>
-            <td>Causal models: plan for future goals, causal learning
-Assess value of additional information, prior to decision
-Reflective executive tier; Controller selection
-Attribute mental states to other agents</td>
+            <td>Goal-Directed Agent</td>
+            <td><ul>
+              <li>Sense and actuate the environment</li>
+              <li>Memory</li>
+              <li>Model creation and update</li>
+              <li>Goal recognition</li>
+              <li>Feedback control based on model and goals</li>
+            </ul></td>
           </tr>
           <tr>
             <td>Intentional Agent</td>
-            <td>Models beliefs, goals, intentions (what it's committed to doing).
-Utility based planning and decision-making
-Curiosity; Vicarious, trial and error: OODA loop
-Monitoring uncertainty in decisions: inhibition, cognitive flexibility</td>
+            <td><ul>
+              <li>Models beliefs, goals, intentions (what it's committed to doing)</li>
+              <li>Utility based planning and decision-making</li>
+              <li>Curiosity</li>
+              <li>Vicarious, trial and error: OODA loop</li>
+              <li>Monitoring uncertainty in decisions: inhibition, cognitive flexibility</li>
+            </ul></td>
           </tr>
           <tr>
-            <td>Goal-Directed Agent</td>
-            <td>Sense and actuate the environment; Memory
-Model creation and update; Goal recognition
-Feedback control based on model and goals</td>
+            <td>Rational Agent</td>
+            <td><ul>
+              <li>Causal models: plan for future goals, causal learning</li>
+              <li>Assess value of additional information, prior to decision</li>
+              <li>Reflective executive tier</li>
+              <li>Controller selection</li>
+              <li>Attribute mental states to other agents</li>
+            </ul></td>
+          </tr>
+          <tr>
+            <td>Social Agent</td>
+            <td><ul>
+              <li>Joint goals with other agents</li>
+              <li>Joint planning</li>
+              <li>Coordinating roles during activities</li>
+              <li>Awareness of rational and moral norms</li>
+              <li>Mediation between agents</li>
+              <li>Shared world models</li>
+              <li>Care</li>
+            </ul></td>
           </tr>
         </tbody>
       </table>
