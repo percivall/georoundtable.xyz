@@ -435,6 +435,45 @@
       </div>
     </div>
 
+    <!-- SAE vs VAE rationale -->
+    <div class="sh" style="margin-top: 3rem;">
+      <p class="sh__label">Design choice</p>
+      <h2 class="sh__title">Why Sparse Autoencoders, Not Variational Autoencoders</h2>
+      <p class="sh__desc">Both are autoencoder architectures. Only one produces features that can be catalogued.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="prose">
+        <p>
+          The workflow on this page is built around <strong>sparse autoencoders (SAEs)</strong>, not variational autoencoders (VAEs) — and the distinction is not incidental. It follows directly from what a Hyperspace Entity Locator is meant to address: a single, nameable, individually interpretable feature, treated as a first-class object analogous to a road or a parcel boundary in a traditional GIS layer.
+        </p>
+        <p>
+          A VAE's latent dimensions are entangled by construction. The KL-to-Gaussian prior organizes the space for smooth sampling and interpolation, not for each axis to mean one legible thing. There is no reason axis&nbsp;47 of a VAE's latent space would mean &ldquo;coastline&rdquo; to a human — let alone mean the same thing in a second, independently trained VAE. That breaks the requirement this page's theoretical basis depends on: features that are monosemantic and shareable across models, per the <strong>Platonic Representation Hypothesis</strong>.
+        </p>
+        <p>
+          An SAE's sparsity penalty forces most latents to be zero for any given input, leaving a small active set that behaves like a set of tags or labels — discrete, addressable, and citable, the way ISO&nbsp;19110 catalogs discrete geo-objects rather than continuous fields. A VAE instead produces a dense, always-fully-active low-dimensional code: closer to a compressed coordinate than a set of on/off feature detectors.
+        </p>
+        <p>
+          A VAE would be the right tool if the goal were generative — sampling plausible new synthetic terrain, interpolating smoothly between two locations in embedding space, or building a compact continuous coordinate system for downstream regression. Feature identification, as scoped in this workflow, is not doing that; it is doing feature <em>discovery</em> and <em>cataloging</em>, which is SAE territory almost by definition. A VAE would work against that goal, smearing meaning across dense, entangled dimensions rather than isolating it into sparse, individually interpretable ones.
+        </p>
+      </div>
+
+      <div class="ctable-wrap">
+        <table class="ctable">
+          <thead>
+            <tr><th>Property</th><th>Sparse Autoencoder</th><th>Variational Autoencoder</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Latent structure</td><td>Sparse — most latents inactive per input</td><td>Dense — all latents active per input</td></tr>
+            <tr><td>Design intent</td><td>Isolate individually meaningful directions</td><td>Smooth, continuous space for sampling / interpolation</td></tr>
+            <tr><td>Interpretability</td><td>Monosemantic latents; nameable, addressable</td><td>Entangled dimensions; no single-axis meaning</td></tr>
+            <tr><td>Cross-model stability</td><td>Individual latents can align across independently trained models</td><td>No expectation that axis <em>n</em> means the same thing twice</td></tr>
+            <tr><td>Best fit</td><td>Feature discovery &amp; cataloging (this workflow)</td><td>Generative sampling, interpolation, compact regression coordinates</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- Side-by-side comparison -->
     <div class="sh" style="margin-top: 3rem;">
       <p class="sh__label">Side by side</p>
