@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon-512x512.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Contracts and Spatial Web Governance — GeoRoundtable</title>
+  <meta name="description" content="How the IEEE 2874-2025 CONTRACT entity forms the core of Spatial Web Governance for agent coordination, with law as code, the Dentons report, and eFLINT. Percivall." />
+  <meta property="og:title" content="Agent Contracts and Spatial Web Governance — GeoRoundtable" />
+  <meta property="og:description" content="How the IEEE 2874-2025 CONTRACT entity forms the core of Spatial Web Governance for agent coordination, with law as code, the Dentons report, and eFLINT. Percivall." />
+  <meta property="og:image" content="https://georoundtable.xyz/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:url" content="https://georoundtable.xyz/agent-contracts-spatial-web-governance.html" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://georoundtable.xyz/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #081840;
+      --blue:   #1d6fa4;
+      --teal:   #0d6b78;
+      --sky:    #3b9edd;
+      --mint:   #5ecfdb;
+      --light:  #f0f5fb;
+      --border: #d8e4ef;
+      --muted:  #5a6880;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(8,24,64,.08);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; color: #1a2235; background: #fff; line-height: 1.6; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; }
+
+    /* ── Accent bar ── */
+    .accent-bar { height: 4px; background: linear-gradient(90deg, var(--navy), var(--blue), var(--teal), var(--mint)); }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy); color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .85rem 2rem; gap: 1rem;
+    }
+    .nav__brand { font-weight: 700; font-size: 1.05rem; letter-spacing: .02em; color: #fff; text-decoration: none; white-space: nowrap; }
+    .nav__links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav__links a { color: rgba(255,255,255,.82); font-size: .88rem; font-weight: 500; }
+    .nav__links a:hover { color: #fff; text-decoration: none; }
+    .nav__cta {
+      background: var(--sky); color: #fff; font-size: .83rem; font-weight: 600;
+      padding: .45rem 1rem; border-radius: 6px; white-space: nowrap;
+    }
+    .nav__cta:hover { background: var(--blue); text-decoration: none; }
+
+    /* ── Container ── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #0e2a6e 55%, var(--teal) 100%);
+      color: #fff; padding: 4.5rem 1.5rem 3.5rem;
+    }
+    .hero__inner { max-width: 1080px; margin: 0 auto; }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+      border-radius: 20px; padding: .35rem .9rem; font-size: .8rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1.2rem;
+      color: var(--mint);
+    }
+    .hero__title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.18; margin-bottom: .9rem; max-width: 820px;
+    }
+    .hero__sub {
+      font-size: 1.08rem; color: rgba(255,255,255,.82); max-width: 760px; line-height: 1.65;
+      margin-bottom: 1.8rem;
+    }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 1.2rem; font-size: .85rem; color: rgba(255,255,255,.7); }
+    .hero__meta span { display: flex; align-items: center; gap: .35rem; }
+
+    /* ── Section headings ── */
+    .sh { text-align: center; margin-bottom: 2.5rem; }
+    .sh__label { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .5rem; }
+    .sh__title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--navy); margin-bottom: .7rem; }
+    .sh__desc { font-size: 1rem; color: var(--muted); max-width: 680px; margin: 0 auto; }
+
+    /* ── Section spacing ── */
+    section { padding: 4rem 0; }
+    section:nth-child(even) { background: var(--light); }
+
+    /* ── Two-col layout ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Prose ── */
+    .prose { font-size: 1rem; line-height: 1.75; color: #2a3348; }
+    .prose p + p { margin-top: 1em; }
+    .prose strong { color: var(--navy); font-weight: 600; }
+    .prose em { color: #354063; }
+
+    /* ── Highlight block ── */
+    .highlight {
+      background: var(--navy); color: #fff; border-radius: var(--radius);
+      padding: 2rem 2.2rem; margin: 2.5rem 0;
+    }
+    .highlight__quote {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 1.25rem; line-height: 1.55; margin-bottom: 1rem;
+      color: rgba(255,255,255,.92);
+    }
+    .highlight__attr { font-size: .85rem; color: var(--mint); font-weight: 600; letter-spacing: .04em; }
+    .highlight__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem; }
+    .highlight__tag {
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px; padding: .25rem .75rem; font-size: .75rem; font-weight: 600;
+      letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,.8);
+    }
+
+    /* ── Pillar cards ── */
+    .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .pillar {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.6rem 1.4rem; box-shadow: var(--shadow);
+      border-top: 3px solid var(--teal);
+    }
+    .pillar__icon { font-size: 1.8rem; margin-bottom: .8rem; }
+    .pillar__title { font-weight: 700; color: var(--navy); margin-bottom: .5rem; font-size: .95rem; }
+    .pillar__body { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Theory grid (analog cards) ── */
+    .space-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .space-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.8rem 1.6rem; box-shadow: var(--shadow);
+    }
+    .space-card__era {
+      font-size: .73rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: .5rem;
+    }
+    .space-card__title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); margin-bottom: .7rem; }
+    .space-card__body { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+    .space-card__examples {
+      margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .4rem;
+    }
+    .space-card__ex {
+      background: var(--light); border: 1px solid var(--border);
+      border-radius: 4px; padding: .2rem .6rem; font-size: .75rem; color: var(--navy); font-weight: 500;
+    }
+
+    /* ── Concept flow diagram ── */
+    .concept-flow {
+      background: var(--light); border-radius: var(--radius); padding: 2rem;
+      border: 1px solid var(--border); margin: 2rem 0;
+    }
+    .concept-flow__title {
+      font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      color: var(--teal); margin-bottom: 1.5rem; text-align: center;
+    }
+    .flow-steps { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: center; }
+    .flow-step {
+      background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      padding: .7rem 1.1rem; font-size: .85rem; font-weight: 600; color: var(--navy);
+      text-align: center; min-width: 120px;
+    }
+    .flow-step--highlight { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .flow-arrow { color: var(--teal); font-size: 1.2rem; font-weight: 700; }
+
+    /* ── Inset box ── */
+    .inset {
+      background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--sky);
+      border-radius: var(--radius); padding: 1.4rem 1.6rem; margin: 1.5rem 0;
+    }
+    .inset__label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--sky); margin-bottom: .5rem; }
+    .inset__body { font-size: .92rem; color: #2a3348; line-height: 1.65; }
+    .inset__body strong { color: var(--navy); }
+
+    /* ── Comparison table ── */
+    .ctable-wrap { overflow-x: auto; margin-top: 1.5rem; }
+    .ctable {
+      width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 640px;
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .ctable th, .ctable td { padding: .75rem 1rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+    .ctable thead th { background: var(--navy); color: #fff; font-weight: 600; letter-spacing: .02em; font-size: .85rem; text-transform: uppercase; }
+    .ctable tbody tr:nth-child(even) td { background: var(--light); }
+    .ctable td:first-child { font-weight: 600; color: var(--navy); white-space: nowrap; }
+
+    /* ── Stage cards (workflow) ── */
+    .stage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; margin-top: 1rem; }
+    .stage {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.6rem 1.5rem; box-shadow: var(--shadow); position: relative;
+      border-left: 4px solid var(--blue);
+    }
+    .stage__num {
+      position: absolute; top: -.7rem; left: 1.2rem;
+      background: var(--blue); color: #fff; font-size: .75rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .25rem .7rem; border-radius: 12px;
+    }
+    .stage__title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); margin: .4rem 0 .6rem; }
+    .stage__body { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+    .stage__deliv {
+      margin-top: .9rem; font-size: .78rem; color: var(--teal); font-weight: 600;
+      background: var(--light); border-radius: 6px; padding: .4rem .7rem; line-height: 1.5;
+    }
+
+    /* ── Reference list ── */
+    .ref-list { list-style: none; padding: 0; margin: 0; }
+    .ref-list li {
+      padding: .8rem 0; border-bottom: 1px solid var(--border); font-size: .9rem;
+      color: #2a3348; line-height: 1.6;
+    }
+    .ref-list li:last-child { border-bottom: 0; }
+    .ref-list li strong { color: var(--navy); }
+
+    /* ── Resource strip ── */
+    .resource-strip { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .resource-link {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--light); border: 1px solid var(--border); border-radius: 8px;
+      padding: .6rem 1.1rem; font-size: .85rem; font-weight: 600; color: var(--navy);
+      transition: background .15s;
+    }
+    .resource-link:hover { background: var(--border); text-decoration: none; }
+    .resource-link__icon { font-size: 1rem; }
+
+    /* ── CTA section ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, #0e2a6e 60%, var(--teal) 100%);
+      color: #fff; padding: 3.5rem 1.5rem; text-align: center;
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: .9rem;
+    }
+    .cta-section p { color: rgba(255,255,255,.8); max-width: 620px; margin: 0 auto 1.8rem; }
+    .cta-btn {
+      display: inline-block; background: var(--sky); color: #fff; font-weight: 700;
+      font-size: .95rem; padding: .85rem 2rem; border-radius: 8px;
+    }
+    .cta-btn:hover { background: var(--mint); color: var(--navy); text-decoration: none; }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--navy); color: rgba(255,255,255,.6); font-size: .82rem;
+      padding: 2rem 1.5rem; text-align: center;
+    }
+    .footer a { color: rgba(255,255,255,.75); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .nav__cta { display: none; }
+      .hero { padding: 2.5rem 1rem 2rem; }
+    }
+
+    /* ── Figures ── */
+    .figure {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.4rem; box-shadow: var(--shadow); margin: 2rem 0; text-align: center;
+    }
+    .figure img { display: block; margin: 0 auto; border-radius: 6px; }
+    .figure__cap {
+      margin-top: 1rem; font-size: .82rem; color: var(--muted); line-height: 1.6;
+      max-width: 760px; margin-left: auto; margin-right: auto; text-align: center;
+    }
+    .figure__cap strong { color: var(--navy); }
+    .figure--narrow img { max-width: 420px; }
+    .figure--mid img { max-width: 560px; }
+
+    /* ── Author line ── */
+    .authors { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.6rem; }
+    .author { font-size: .88rem; color: rgba(255,255,255,.85); }
+    .author strong { color: #fff; display: block; font-size: .95rem; }
+    .author span { color: var(--mint); font-size: .8rem; }
+    /* ── Page-specific ── */
+    .ctable.wrap-first td:first-child { white-space: normal; min-width: 180px; }
+    .two-col > * { min-width: 0; }
+    .figure--mid img { max-width: min(560px, 100%); }
+    a.space-card__ex:hover { background: var(--border); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav class="nav">
+  <a class="nav__brand" href="index.html">GeoRoundtable</a>
+  <ul class="nav__links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#standards">Standards</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+  <a class="nav__cta" href="index.html#contact">Contact</a>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero__inner">
+    <h1 class="hero__title">Agent Contracts and Spatial Web Governance</h1>
+    <p class="hero__sub">
+      How the IEEE&nbsp;2874-2025 CONTRACT entity forms the core of Spatial Web Governance for coordinating autonomous agents. The page also covers law as code, how it relates to normative languages such as eFLINT, and the implementations that put these ideas into practice.
+    </p>
+    <div class="hero__meta">
+      <span>📜 IEEE 2874-2025 Spatial Web</span>
+      <span>🤝 CONTRACT · ACTIVITY · AGENT</span>
+      <span>⚖️ Law as code</span>
+    </div>
+    <div class="authors">
+      <div class="author"><strong>George Percivall</strong><span>GeoRoundtable · October 2026</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- Executive summary -->
+<section>
+  <div class="container">
+    <div class="two-col">
+      <div class="prose">
+        <p>
+          <strong>Autonomy means self-governance.</strong> As AI systems gain autonomy, governance has to reach the systems themselves, not only the people who build and deploy them. The Dentons report, <em>The Future of Global AI Governance</em>, makes this case and points to socio-technical standards and law as code as the way forward.
+        </p>
+        <p>
+          The <strong>IEEE Spatial Web Protocol, Architecture, and Governance Standard (IEEE&nbsp;2874-2025)</strong> provides that standard. In IEEE&nbsp;2874, agents coordinate by forming contracts for activities. A requesting agent asks for an ACTIVITY to be performed, and a performing agent with the capability signs a CONTRACT to carry it out. IEEE&nbsp;2874 states that <em>“a contract shall be the mechanism used for connecting entities interacting on the Spatial Web”</em> (6.3.6).
+        </p>
+        <p>
+          The Spatial Web Foundation’s HSML Implementation Specification encodes the CONTRACT as <strong>gov:Contract</strong>, the “universal trigger and single enforcement point” for every Activity. It binds deontic norms, authority-issued policies, and verifiable credentials into one auditable record.
+        </p>
+      </div>
+      <div>
+        <div class="inset">
+          <div class="inset__label">The problem</div>
+          <div class="inset__body">Regulating only developers and deployers will not scale to systems that make <strong>billions of autonomous decisions a day</strong>. Principles, values, and law must be encoded into the AI systems themselves.</div>
+        </div>
+        <div class="inset">
+          <div class="inset__label">The mechanism</div>
+          <div class="inset__body">Agents form <strong>contracts based on activities</strong>. A CONTRACT is a Spatial Web ENTITY with a five-state lifecycle: Requested, Executed, Fulfilled, Rescinded, Breached.</div>
+        </div>
+        <div class="inset">
+          <div class="inset__label">The formalism</div>
+          <div class="inset__body">Contract status is <strong>decidable</strong>. It evaluates as True or False against the HSML domain model, so conditions can be checked by machine in real time.</div>
+        </div>
+        <div class="inset" style="border-left-color: var(--teal);">
+          <div class="inset__label" style="color: var(--teal);">Law as code</div>
+          <div class="inset__body">Flying Forward 2020 parsed EU drone regulation into HSML. IEEE&nbsp;2874 adopts the law-as-code paradigm and notes parallels with <strong>eFLINT</strong> and PDDL as possible avenues for exploration.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 1: Dentons -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Part 1 · The governance case</p>
+      <h2 class="sh__title">The Dentons Report</h2>
+      <p class="sh__desc">The Dentons report <em>The Future of Global AI Governance</em> (July 2023) combines legal analysis, AI research, and standards guidance. It presents the Spatial Web standards, then in development as IEEE&nbsp;P2874, as a response to a governance gap.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="prose">
+        <p>The Dentons report starts from the etymology of autonomy: <em>auto</em> (self) plus <em>nomos</em> (law or governance). Autonomy is therefore self-governance. As the report puts it, AI governance <em>“must also be about governing the AI systems themselves, and the networks that connect them to the data and devices they operate on.”</em></p>
+        <p>In its section on the limitations of current proposed regulations, the Dentons report concludes that frameworks relying only on penalizing developers and operators will become inadequate. Its example is autonomous vehicles, which will make billions of decisions a day, beyond what humans can manage one decision at a time.</p>
+        <p>The report follows NIST in calling for <strong>socio-technical standards</strong> that combine technical, social, legal, and ethical requirements. At the center of these is <strong>HSML</strong>, a modeling language that grounds AI in the Who, What, When, Where, How, and Why of any situation. The report’s example is a hospital robot: an identified robot holds a credential, issued by Health and Human Services, granting it the right to perform a medical procedure within USC Medical Center.</p>
+      </div>
+      <div>
+        <div class="highlight" style="margin-top:0;">
+          <p class="highlight__quote">“How do we govern AI systems that are on a path to becoming self-governing?”</p>
+          <p class="highlight__attr">— The Dentons report, The Future of Global AI Governance</p>
+          <div class="highlight__tags">
+            <span class="highlight__tag">Govern the systems</span>
+            <span class="highlight__tag">Encode values</span>
+            <span class="highlight__tag">Interoperate</span>
+            <span class="highlight__tag">Law as code</span>
+          </div>
+        </div>
+        <div class="inset">
+          <div class="inset__label">Disclaimer noted in the report</div>
+          <div class="inset__body">The Dentons report’s summary of the Spatial Web standards is not an endorsement by any individual author, including Dentons US LLP.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sh__title" style="font-size:1.35rem; margin-top:2.5rem; text-align:left;">Five core needs, mapped to IEEE&nbsp;2874</h3>
+    <div class="ctable-wrap">
+      <table class="ctable wrap-first">
+        <thead><tr><th>Dentons report core need</th><th>Where it lands in IEEE&nbsp;2874 / HSML</th></tr></thead>
+        <tbody>
+          <tr><td>Shared understanding of meaning and context between humans and AIs</td><td>HSML entity model (SPACE, AGENT, ACTIVITY, DOMAIN, CREDENTIAL, CONTRACT …) as a common grounded vocabulary</td></tr>
+          <tr><td>Explainability through explicit modeling of decision-making</td><td>ACTIVITY schemas with explicit initial and resulting conditions; contract evidence and audit trail</td></tr>
+          <tr><td>Interoperability across organizations, networks, and borders</td><td>HSML entities with Spatial Web IDs (W3C DIDs), registered in the Universal Domain Graph (UDG)</td></tr>
+          <tr><td>Compliance with diverse regulatory demands, cultural norms, and ethics</td><td>Domain Authorities, gov:Policy and gov:Norm, contract validation against Domain rules</td></tr>
+          <tr><td>Authentication and credentialing, with privacy and security by design</td><td>W3C Verifiable Credentials and CredentialProfiles, checked when a contract is validated</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh__title" style="font-size:1.35rem; margin-top:2.5rem; text-align:left;">Law as code in the Dentons report</h3>
+    <div class="pillar-grid">
+      <div class="pillar"><div class="pillar__icon">🚗</div><div class="pillar__title">Law assumes a person</div><div class="pillar__body">Driving laws define a “driver” as a “person” in “physical control of a vehicle.” That definition fails for self-driving cars.</div></div>
+      <div class="pillar"><div class="pillar__icon">⚙️</div><div class="pillar__title">Machine-executable law</div><div class="pillar__body">Laws need to be machine-readable, machine-interpretable, and machine-executable. They can then govern machine behaviour directly and adapt as conditions change.</div></div>
+      <div class="pillar"><div class="pillar__icon">🌍</div><div class="pillar__title">Semantic representation</div><div class="pillar__body">Law as code needs semantics, not just code, to handle multilingual, multi-jurisdictional, and changing regulation while staying globally interoperable.</div></div>
+      <div class="pillar"><div class="pillar__icon">🔁</div><div class="pillar__title">Exposing ambiguity</div><div class="pillar__body">Encoding law reveals ambiguities in natural-language law and feeds them back to the people who draft it.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 2: Agent coordination -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Part 2 · Agent coordination</p>
+      <h2 class="sh__title">Agents Forming Contracts Based on Activities</h2>
+      <p class="sh__desc">IEEE&nbsp;2874 describes the Spatial Web as intelligent AGENTS with CREDENTIALS, performing ACTIVITIES discussed in CHANNELS, on and in DOMAINS represented in HYPERSPACES, fulfilling CONTRACTS with other AGENTS.</p>
+    </div>
+
+    <div class="figure figure--mid">
+      <img src="agent-contract-activity-relationships.png" alt="Diagram: a Performing AGENT has capability for an ACTIVITY Schema, signs a CONTRACT and performs the ACTIVITY Instance; a Requesting AGENT requests the CONTRACT, which is a contract for the ACTIVITY Instance." />
+      <p class="figure__cap"><strong>AGENT–CONTRACT–ACTIVITY relationships</strong> (IEEE&nbsp;2874, Figure 24, clause 6.6.11). A requesting agent requests a contract. A performing agent with the capability for the activity schema signs it, then performs the activity instance the contract is for.</p>
+    </div>
+
+    <div class="pillar-grid">
+      <div class="pillar"><div class="pillar__icon">🏛️</div><div class="pillar__title">Domain Authorities</div><div class="pillar__body">Credentialed to define the norms and terms under which contracts governing agents, activities, and credentials are created in a DOMAIN. Requests and rules are evaluated as queries against the HSML Domain model (6.5.5.4).</div></div>
+      <div class="pillar"><div class="pillar__icon">🪪</div><div class="pillar__title">Credentials</div><div class="pillar__body">Support claims of identity, domain relationships, an agent’s ability to perform an activity, and the right to sign contracts (6.5.3).</div></div>
+      <div class="pillar"><div class="pillar__icon">🤝</div><div class="pillar__title">Coordination</div><div class="pillar__body">Agents decide collectively through “consensus, voting mechanisms, or contractual agreements” and resolve conflicts over contract assignment, goals, and resources (6.4.3).</div></div>
+      <div class="pillar"><div class="pillar__icon">🧾</div><div class="pillar__title">Audit</div><div class="pillar__body">The UDG records activities executed under a contract, with verification and progress tracking. Every UDG registry network has a contract with the Spatial Web Authority (6.3.6, 6.4.4.8).</div></div>
+    </div>
+
+    <div class="inset" style="margin-top:2rem;">
+      <div class="inset__label">Governance regardless of intelligence</div>
+      <div class="inset__body">Where agents cannot avoid conflicts themselves, ACTIVITY instances and CONTRACTS supply the conflict-resolution and normative constraints, <strong>“regardless of the AGENTS levels of ability or intelligence”</strong> (6.4.4.7). In the IEEE&nbsp;2874 warehouse scenario, a human worker and a robot are credentialed for a pick/pack activity. They negotiate a contract and then carry out the work together.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 3: CONTRACT entity -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Part 3 · The CONTRACT entity</p>
+      <h2 class="sh__title">CONTRACT in IEEE&nbsp;2874 and HSML</h2>
+      <p class="sh__desc">IEEE&nbsp;2874 defines a CONTRACT as “a Spatial Web ENTITY that represents a request to perform an instance of an ACTIVITY” (6.6.5). The HSML Implementation Specification turns it into a machine-actionable class.</p>
+    </div>
+
+    <div class="ctable-wrap">
+      <table class="ctable wrap-first">
+        <thead><tr><th>Aspect</th><th>IEEE&nbsp;2874 normative content</th></tr></thead>
+        <tbody>
+          <tr><td>Definition</td><td>“A binding agreement between two parties, especially enforceable by law, or a similar internal agreement wholly within an organization” (adapted from IEEE Std 730-2014).</td></tr>
+          <tr><td>Relationships (6.6.5)</td><td>Requested by a DOMAIN or an AGENT; accepted (signed) by an AGENT; fulfilled by an AGENT; an agreement for the performance of an ACTIVITY; an agreement between two or more parties.</td></tr>
+          <tr><td>Attributes</td><td>All mandatory ENTITY fields; a parties field; a contract status of Requested | Executed | Fulfilled | Rescinded | Breached; a timestamp for each status change.</td></tr>
+          <tr><td>Decidable status (6.5.4.5)</td><td>“Contract status shall be a function of the status of the associated Activity instance, such that the contract conditions can be evaluated as True or False against the relevant Domain description(s).”</td></tr>
+          <tr><td>Automatic execution (6.5.4.5)</td><td>Domain architectures shall enable automatic execution of contracts when mutually agreed conditions are reached, as close to real time as possible, including at the network edge.</td></tr>
+          <tr><td>Economics (6.5.1.3)</td><td>“This standard does not require that a CONTRACT contain any particular economic terms.”</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh__title" style="font-size:1.35rem; margin-top:2.5rem; text-align:left;">gov:Contract in the HSML Implementation Specification</h3>
+    <div class="prose">
+      <p>SWF STD-2:2025 (v0.2.0) defines <strong>gov:Contract</strong> as “a binding agreement governing the execution of one or more act:Activity instances by specific agt:Agents within a core:Domain context.” Its design principle, <em>Contracts as the Universal Trigger</em>, states: <em>“Execution of every act:Activity is mediated through a gov:Contract. The Contract acts as the universal trigger and single enforcement point.”</em> Every contract carries a W3C DID-compliant Spatial Web ID. The specification lists its properties as follows (Table 87):</p>
+    </div>
+    <div class="ctable-wrap">
+      <table class="ctable">
+        <thead><tr><th>Predicate</th><th>JSON-LD name</th><th>Description</th><th>Range</th><th>Cardinality</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr><td>gov:isRequestedBy</td><td>requestedBy</td><td>The core:Domain that initiated the contract.</td><td>core:Domain</td><td>1..1</td><td>Mandatory</td></tr>
+          <tr><td>gov:isAcceptedBy</td><td>acceptedBy</td><td>The agt:Agent(s) that accepted the contract.</td><td>agt:Agent</td><td>1..*</td><td>Mandatory</td></tr>
+          <tr><td>gov:isFulfilledBy</td><td>fulfilledBy</td><td>The agt:Agent(s) responsible for fulfilling the contract.</td><td>agt:Agent</td><td>1..*</td><td>Mandatory</td></tr>
+          <tr><td>gov:contractFor</td><td>contractFor</td><td>The act:Activity the contract governs.</td><td>act:Activity</td><td>1..*</td><td>Mandatory</td></tr>
+          <tr><td>gov:contractStatus</td><td>contractStatus</td><td>The current lifecycle status: Requested, Executed, Fulfilled, Rescinded, or Breached.</td><td>xsd:string</td><td>1..1</td><td>Mandatory</td></tr>
+          <tr><td>gov:hasParticipation</td><td>hasParticipation</td><td>Links to detailed participation records.</td><td>core:Participation</td><td>0..*</td><td>Optional</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="space-grid" style="margin-top:2rem;">
+      <div class="space-card"><div class="space-card__era">gov:Norm</div><h3 class="space-card__title">Atomic deontic rules</h3><p class="space-card__body">One modality (Obligation, Prohibition, or Permission), applied to targets through executable conditions in SHACL, SPARQL ASK, JSON Schema, or CEL. May declare onViolation enforcement.</p></div>
+      <div class="space-card"><div class="space-card__era">gov:Policy</div><h3 class="space-card__title">Authority-issued bundles</h3><p class="space-card__body">Package Norms with scope, validity window, precedence for conflict resolution, jurisdiction, and the credential profiles a contract must satisfy.</p></div>
+      <div class="space-card"><div class="space-card__era">gov:Credential</div><h3 class="space-card__title">Verifiable trust</h3><p class="space-card__body">W3C Verifiable Credentials, checked when a contract is validated against CredentialProfiles covering issuer trust, subject binding, proof, and freshness.</p></div>
+    </div>
+
+    <div class="concept-flow">
+      <p class="concept-flow__title">Contract evaluation flow (HSML 9.1.7)</p>
+      <div class="flow-steps">
+        <span class="flow-step">Discover Policies</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Resolve Norms by precedence</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Verify credentials</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Evaluate conditions</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step flow-step--highlight">Record decision in Contract</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 4: Law as code -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Part 4 · Law as code</p>
+      <h2 class="sh__title">From Legal Text to HSML</h2>
+      <p class="sh__desc">The EU Flying Forward 2020 (FF2020) project, the case study in the Dentons report, built urban air mobility infrastructure on draft IEEE Spatial Web standards. It translated drone regulations into HSML so that autonomous drones could comply automatically.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="figure" style="margin-top:0;">
+        <img src="ff2020-law-as-code-worked-example.png" alt="FF2020 worked example: the 120 m altitude obligation expressed as tagged markup with Actor, Authority, Domain, Right, Activity, Asset, Credentials, Claim, Time, Space, Reality and Channel." />
+        <p class="figure__cap"><strong>Worked example.</strong> FF2020 took an obligation from the EU drone regulation and expressed it by hand in tagged markup, mapping each phrase of the legal text to an HSML element.</p>
+      </div>
+      <div class="figure" style="margin-top:0;">
+        <img src="ff2020-law-as-code-automated-approach.png" alt="FF2020 automated approach: legal text parsed into core triplets and concepts/patterns, combined into JSON output, then converted to eFLINT and HSML." />
+        <p class="figure__cap"><strong>Automated approach.</strong> NLP grammar parsing extracts subject–verb–object triplets, a semantic ontology extracts concepts and patterns, and the JSON output is converted into HSML and eFLINT.</p>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:1rem;">
+      <p>The Dentons report highlights two further results. First, encoding law exposes ambiguity. In “UA operators must fly safely,” what does “safely” mean? HSML can flag such clauses, creating <em>“a virtuous two-way loop between analog law and digital law.”</em> Second, conditional spatial rules can be encoded. For example, within 50&nbsp;m horizontally of an artificial obstacle taller than 105&nbsp;m, the maximum operating height may rise to 15&nbsp;m above the obstacle (UAS.STS-02.010). FF2020 used an earlier HSML entity model than the 2025 standard.</p>
+    </div>
+
+    <div class="highlight">
+      <p class="highlight__quote">“During flight, the unmanned aircraft shall be maintained within 120m from the closest point of the surface of the earth.”</p>
+      <p class="highlight__attr">EASA rule — IEEE&nbsp;2874 law-as-code worked example (6.5.5.2)</p>
+      <div class="highlight__tags">
+        <span class="highlight__tag">Remote pilot · AGENT</span>
+        <span class="highlight__tag">Jurisdiction · DOMAIN</span>
+        <span class="highlight__tag">Authorized · CREDENTIAL</span>
+        <span class="highlight__tag">EASA · DOMAIN AUTHORITY</span>
+        <span class="highlight__tag">Fly · ACTIVITY</span>
+        <span class="highlight__tag">Below 120 m · SPACE condition</span>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>IEEE&nbsp;2874 (6.5.5.1) adopts the <strong>“rules-as-code”</strong> (MIT Computational Law) or <strong>“law-as-code”</strong> paradigm. The paradigm covers both translating existing law into executable code and designing new law for autonomous systems. Agents assent to governance by signing a contract to take part in the enforcement Activity. Domains govern by granting credentials only for Activity types consistent with Domain Authority rules. The EASA rule becomes a spatial predicate that can be checked against the domain model when the flight is executed.</p>
+    </div>
+
+    <h3 class="sh__title" style="font-size:1.35rem; margin-top:2.5rem; text-align:left;">Relation to other normative languages: possible explorations</h3>
+    <div class="prose">
+      <p>IEEE&nbsp;2874 (6.5.4.2) notes that HSML’s representation of Activities and norms is closely related to existing languages for automated planning and for assessing normative status. These relationships are <strong>informative, not normative</strong>. IEEE&nbsp;2874 does not require these languages. It identifies them as candidate implementation approaches worth exploring.</p>
+    </div>
+    <div class="ctable-wrap">
+      <table class="ctable wrap-first">
+        <thead><tr><th>Language</th><th>Core construct</th><th>Relationship noted in IEEE&nbsp;2874</th></tr></thead>
+        <tbody>
+          <tr><td>eFLINT</td><td>Act frames (actions with preconditions and effects on normative status); Fact frames (facts holding in a situation)</td><td>HSML ACTIVITY conditions parallel the pre- and post-conditions of eFLINT Act frames (6.6). eFLINT “could be used” to implement HSML Activities and Contracts (6.5.4.2).</td></tr>
+          <tr><td>PDDL</td><td>Actions with preconditions and effects for automated planning</td><td>Parallels the use of HSML Activities in planning; likewise “could be used” to implement Activities and Contracts.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="inset" style="margin-top:1.5rem;">
+      <div class="inset__label">One abstraction for planning and governance</div>
+      <div class="inset__body">IEEE&nbsp;2874 argues that HSML Activities and Contracts form <strong>“an abstraction suitable for the purposes of both automated planning and automated governance.”</strong> Planning asks how to reach a desired state. Governance asks whether a state is ideal, and what follows if it is not. FF2020’s pipeline already produced both HSML and eFLINT from the same parsed legal text, which makes an HSML–eFLINT mapping a natural exploration.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 5: Implementations -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Part 5 · Implementations</p>
+      <h2 class="sh__title">From Standard to Practice</h2>
+      <p class="sh__desc">Implementations range from the open HSML governance ontology to running demonstrations and a governance runtime.</p>
+    </div>
+    <div class="space-grid">
+      <div class="space-card">
+        <div class="space-card__era">Reference encoding</div>
+        <h3 class="space-card__title">HSML Governance Module</h3>
+        <p class="space-card__body">SWF STD-2:2025 v0.2.0 and the open governance.ttl ontology on GitHub define Contract, Norm, Policy, Credential, CredentialProfile, and DeonticModality, along with an evaluation flow.</p>
+        <div class="space-card__examples"><a class="space-card__ex" href="https://github.com/Spatial-Web-Foundation/HSML-schema/blob/main/governance.ttl" target="_blank" rel="noopener">governance.ttl</a><span class="space-card__ex">OWL / RDF</span></div>
+      </div>
+      <div class="space-card">
+        <div class="space-card__era">Law as code</div>
+        <h3 class="space-card__title">Flying Forward 2020</h3>
+        <p class="space-card__body">Urban air mobility infrastructure that encodes EU and EASA rules in draft HSML so that drones comply automatically. Use cases included emergency delivery, infrastructure maintenance, and security monitoring.</p>
+        <div class="space-card__examples"><a class="space-card__ex" href="https://www.ff2020.eu/" target="_blank" rel="noopener">ff2020.eu</a><span class="space-card__ex">UAM</span></div>
+      </div>
+      <div class="space-card">
+        <div class="space-card__era">Interoperability</div>
+        <h3 class="space-card__title">Lunar Digital Twins</h3>
+        <p class="space-card__body">NASA JPL, CSUN, VERSES, and the Spatial Web Foundation demonstrated real-time collaboration between distributed NVIDIA Omniverse systems, and between Omniverse and Unity, by exchanging HSML messages. Contracts were not the focus of this demo.</p>
+        <div class="space-card__examples"><a class="space-card__ex" href="https://ieeexplore.ieee.org/document/11068549" target="_blank" rel="noopener">IEEE Aerospace 2025</a></div>
+      </div>
+      <div class="space-card">
+        <div class="space-card__era">Agent coordination</div>
+        <h3 class="space-card__title">EcoNet</h3>
+        <p class="space-card__body">Two AI agents, one running a thermostat and one a home battery, coordinate on comfort, cost, and emissions, with their entities, goals, and activities expressed in HSML.</p>
+        <div class="space-card__examples"><a class="space-card__ex" href="https://spectrum.ieee.org/spatial-web-standard" target="_blank" rel="noopener">IEEE Spectrum</a></div>
+      </div>
+      <div class="space-card">
+        <div class="space-card__era">Governance runtime</div>
+        <h3 class="space-card__title">Interbilla BILLA OS</h3>
+        <p class="space-card__body">BILLA OS (Backbone for Intelligent Agent Lifecycle &amp; Autonomy) is a federated governance and coordination runtime built on IEEE&nbsp;2874. It provides policy enforcement, explainability, trust mediation, and observability, and keeps humans in control as autonomous systems operate at machine speed.</p>
+        <div class="space-card__examples"><a class="space-card__ex" href="https://interbilla.com/" target="_blank" rel="noopener">interbilla.com</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 6: Open directions -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Part 6 · Open directions</p>
+      <h2 class="sh__title">What Remains to Explore</h2>
+    </div>
+    <div class="pillar-grid">
+      <div class="pillar"><div class="pillar__icon">💱</div><div class="pillar__title">Incentives</div><div class="pillar__body">IEEE&nbsp;2874 deliberately leaves economic terms out of the CONTRACT entity, and HSML allows monetary terms only by extension. Its urban digital twin scenario already has residents responding to “incentives in contracting.”</div></div>
+      <div class="pillar"><div class="pillar__icon">✅</div><div class="pillar__title">Formal guarantees</div><div class="pillar__body">IEEE&nbsp;2874 makes contract status decidable and auditable, but does not require proofs of consistency across composed policies. An HSML–eFLINT mapping could add formal normative reasoning.</div></div>
+      <div class="pillar"><div class="pillar__icon">🕸️</div><div class="pillar__title">Decentralized evaluation</div><div class="pillar__body">Edge evaluation, a priori parity, and trust that accrues across chained workflows are left to domain-specific architectures (IEEE&nbsp;2874 6.5.4.5).</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- References -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Key References</p>
+      <h2 class="sh__title">Source Material</h2>
+    </div>
+    <ul class="ref-list">
+      <li><strong>IEEE.</strong> (2025). IEEE Std 2874™-2025, IEEE Standard for Spatial Web Protocol, Architecture, and Governance. Clauses 6.3.6, 6.4.3–6.4.4, 6.5, 6.6.5, 6.6.11.</li>
+      <li><strong>The Dentons report:</strong> René, G., Sayegh, P., Petersen, C., Pletts, C. (VERSES); Richardson, D. (Spatial Web Foundation); Stockburger, P., Tanenblatt, E. (Dentons). (2023). <em>The Future of Global AI Governance</em>. Dentons, VERSES, and the Spatial Web Foundation. <a href="https://www.dentons.com/en/insights/articles/2023/july/27/the-future-of-ai-global-governance" target="_blank" rel="noopener">dentons.com</a></li>
+      <li><strong>Spatial Web Foundation.</strong> (2025). SWF STD-2:2025 (0.2.0), The Spatial Web — Hyperspace Modeling Language (HSML) Implementation Specification, Clause 9 Governance Module. <a href="docs/spatial-web-baseline-2025/SWF_STD-2_2025_v0.2_HSML.pdf" target="_blank">PDF</a></li>
+      <li><strong>Spatial Web Foundation.</strong> HSML-schema governance ontology (v0.2). <a href="https://github.com/Spatial-Web-Foundation/HSML-schema/blob/main/governance.ttl" target="_blank" rel="noopener">GitHub</a></li>
+      <li><strong>Flying Forward 2020.</strong> Urban Air Mobility law-as-code results (source of the worked-example and automated-approach figures). <a href="https://www.ff2020.eu/" target="_blank" rel="noopener">ff2020.eu</a></li>
+      <li><strong>Enabling Interoperable Digital Twins for Collaborative Lunar Exploration.</strong> (2025). 2025 IEEE Aerospace Conference. <a href="https://ieeexplore.ieee.org/document/11068549" target="_blank" rel="noopener">DOI 10.1109/AERO63441.2025.11068549</a></li>
+      <li><strong>van Binsbergen, L.&nbsp;T., Liu, L.-C., van Doesburg, R., &amp; van Engers, T.</strong> eFLINT: a domain-specific language for executable norm specifications (IEEE&nbsp;2874 ref. [B122]).</li>
+      <li><strong>IEEE Spectrum.</strong> Here Comes the World Wide Web of Everything. <a href="https://spectrum.ieee.org/spatial-web-standard" target="_blank" rel="noopener">spectrum.ieee.org</a></li>
+      <li><strong>Interbilla.</strong> <a href="https://interbilla.com/" target="_blank" rel="noopener">interbilla.com</a>; personal correspondence with Ed Chow.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Related work -->
+<section>
+  <div class="container">
+    <div class="sh">
+      <p class="sh__label">Related Work</p>
+      <h2 class="sh__title">Explore Further</h2>
+    </div>
+    <div class="resource-strip">
+      <a class="resource-link" href="ieee-spatial-web-standard-approved.html"><span class="resource-link__icon">📜</span> IEEE 2874-2025 Standard Approval</a>
+      <a class="resource-link" href="spatial-web-baseline-2025.html"><span class="resource-link__icon">🛰️</span> Spatial Web Baseline 2025</a>
+      <a class="resource-link" href="spatial-web-multi-agent-fusion.html"><span class="resource-link__icon">🧠</span> Spatial Web: Multi-Agent Information Fusion</a>
+      <a class="resource-link" href="epistemology-in-an-ecosystem-of-agents.html"><span class="resource-link__icon">🌐</span> Epistemology in an Ecosystem of Agents</a>
+      <a class="resource-link" href="https://spatialwebfoundation.org/" target="_blank"><span class="resource-link__icon">🔗</span> Spatial Web Foundation</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Govern autonomous agents with contracts they can read</h2>
+    <p>GeoRoundtable brings together expertise in geospatial standards, agentic AI, governance, and systems engineering. We help organizations put IEEE&nbsp;2874 contracts and law as code into practice.</p>
+    <a class="cta-btn" href="index.html#contact">Get in touch</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 GeoRoundtable · <a href="index.html">Home</a> · <a href="https://spatialwebfoundation.org/" target="_blank">Spatial Web Foundation</a> · <a href="https://www.linkedin.com/company/geo-roundtable" target="_blank">LinkedIn</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
